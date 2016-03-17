@@ -14,6 +14,7 @@
 		62D734D01C9A3288009FE1DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62D734CE1C9A3288009FE1DB /* LaunchScreen.storyboard */; };
 		62D734DB1C9A3288009FE1DB /* AutopiaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D734DA1C9A3288009FE1DB /* AutopiaTests.swift */; };
 		62D734E61C9A3288009FE1DB /* AutopiaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D734E51C9A3288009FE1DB /* AutopiaUITests.swift */; };
+		D6AFF54BED7B48CBC575F37D /* Pods_Autopia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D68E59AA4B197B86DC378FDF /* Pods_Autopia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,9 @@
 		62D734E11C9A3288009FE1DB /* AutopiaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutopiaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62D734E51C9A3288009FE1DB /* AutopiaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutopiaUITests.swift; sourceTree = "<group>"; };
 		62D734E71C9A3288009FE1DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85715DCE908AF7BCA3283756 /* Pods-Autopia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autopia.release.xcconfig"; path = "Pods/Target Support Files/Pods-Autopia/Pods-Autopia.release.xcconfig"; sourceTree = "<group>"; };
+		D68E59AA4B197B86DC378FDF /* Pods_Autopia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Autopia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1F1F2A4F92A4BB7DE3EA414 /* Pods-Autopia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Autopia.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Autopia/Pods-Autopia.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6AFF54BED7B48CBC575F37D /* Pods_Autopia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +86,8 @@
 				62D734D91C9A3288009FE1DB /* AutopiaTests */,
 				62D734E41C9A3288009FE1DB /* AutopiaUITests */,
 				62D734C31C9A3288009FE1DB /* Products */,
+				F1FA6985566D0626A347468C /* Pods */,
+				E6529146D0F1A1BC9DF268F0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +132,23 @@
 			path = AutopiaUITests;
 			sourceTree = "<group>";
 		};
+		E6529146D0F1A1BC9DF268F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D68E59AA4B197B86DC378FDF /* Pods_Autopia.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F1FA6985566D0626A347468C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E1F1F2A4F92A4BB7DE3EA414 /* Pods-Autopia.debug.xcconfig */,
+				85715DCE908AF7BCA3283756 /* Pods-Autopia.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +156,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 62D734EA1C9A3288009FE1DB /* Build configuration list for PBXNativeTarget "Autopia" */;
 			buildPhases = (
+				00B5DE02945653A4D65350A1 /* Check Pods Manifest.lock */,
 				62D734BE1C9A3288009FE1DB /* Sources */,
 				62D734BF1C9A3288009FE1DB /* Frameworks */,
 				62D734C01C9A3288009FE1DB /* Resources */,
+				787D072CF4B8AE7CD0269A80 /* Embed Pods Frameworks */,
+				FEE58C5D0A285D628B574837 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -250,6 +277,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00B5DE02945653A4D65350A1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		787D072CF4B8AE7CD0269A80 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Autopia/Pods-Autopia-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FEE58C5D0A285D628B574837 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Autopia/Pods-Autopia-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		62D734BE1C9A3288009FE1DB /* Sources */ = {
@@ -395,6 +470,7 @@
 		};
 		62D734EB1C9A3288009FE1DB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1F1F2A4F92A4BB7DE3EA414 /* Pods-Autopia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Autopia/Info.plist;
@@ -406,6 +482,7 @@
 		};
 		62D734EC1C9A3288009FE1DB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85715DCE908AF7BCA3283756 /* Pods-Autopia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Autopia/Info.plist;
@@ -482,6 +559,7 @@
 				62D734EC1C9A3288009FE1DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		62D734ED1C9A3288009FE1DB /* Build configuration list for PBXNativeTarget "AutopiaTests" */ = {
 			isa = XCConfigurationList;
@@ -490,6 +568,7 @@
 				62D734EF1C9A3288009FE1DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		62D734F01C9A3288009FE1DB /* Build configuration list for PBXNativeTarget "AutopiaUITests" */ = {
 			isa = XCConfigurationList;
@@ -498,6 +577,7 @@
 				62D734F21C9A3288009FE1DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
