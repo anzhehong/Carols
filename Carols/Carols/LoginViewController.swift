@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     let background = UIImageView()
@@ -65,17 +65,18 @@ class LoginViewController: UIViewController {
         
         userTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
         userTextField.textColor = UIColor.GlobalGray()
+        userTextField.delegate = self
         superView.addSubview(userTextField)
         userTextField.snp_makeConstraints { (make) in
-            make.top.equalTo(logoDescription.snp_bottom).offset(51)
+            make.top.equalTo(logoDescription.snp_bottom).offset(64)
             make.centerX.equalTo(superView)
-            make.width.equalTo(240)
+            make.width.equalTo(200)
         }
         
         userIcon.image = UIImage(named: "user")
         superView.addSubview(userIcon)
         userIcon.snp_makeConstraints { (make) in
-            make.right.equalTo(userTextField.snp_left).offset(-10)
+            make.right.equalTo(userTextField.snp_left).offset(-15)
             make.centerY.equalTo(userTextField)
             make.height.width.equalTo(24)
         }
@@ -84,24 +85,25 @@ class LoginViewController: UIViewController {
         redLine1.backgroundColor = UIColor.GlobalRed()
         superView.addSubview(redLine1)
         redLine1.snp_makeConstraints { (make) in
-            make.top.equalTo(userTextField.snp_bottom).offset(2)
-            make.width.equalTo(userTextField)
+            make.top.equalTo(userTextField.snp_bottom).offset(8)
+            make.left.equalTo(userIcon.snp_left).offset(-5)
             make.height.equalTo(1.5)
             make.centerX.equalTo(superView)
         }
         
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor.GlobalGray()])
         passwordTextField.textColor = UIColor.GlobalRed()
+        passwordTextField.delegate = self
         superView.addSubview(passwordTextField)
         passwordTextField.snp_makeConstraints { (make) in
             make.centerX.width.equalTo(userTextField)
-            make.top.equalTo(userTextField.snp_bottom).offset(26)
+            make.top.equalTo(userTextField.snp_bottom).offset(45)
         }
         
         lockIcon.image = UIImage(named: "lock")
         superView.addSubview(lockIcon)
         lockIcon.snp_makeConstraints { (make) in
-            make.right.equalTo(passwordTextField.snp_left).offset(-10)
+            make.right.equalTo(passwordTextField.snp_left).offset(-15)
             make.centerY.equalTo(passwordTextField)
             make.height.width.equalTo(userIcon)
         }
@@ -110,19 +112,21 @@ class LoginViewController: UIViewController {
         redLine2.backgroundColor = UIColor.GlobalRed()
         superView.addSubview(redLine2)
         redLine2.snp_makeConstraints { (make) in
-            make.top.equalTo(passwordTextField.snp_bottom).offset(2)
+            make.top.equalTo(passwordTextField.snp_bottom).offset(8)
             make.width.centerX.height.equalTo(redLine1)
         }
         
         loginDescription.text = "New User?"
         loginDescription.textColor = UIColor.GlobalGray()
+        loginDescription.font = UIFont.boldSystemFontOfSize(15)
         superView.addSubview(loginDescription)
         loginDescription.snp_makeConstraints { (make) in
-            make.top.equalTo(passwordTextField.snp_bottom).offset(11)
+            make.top.equalTo(passwordTextField.snp_bottom).offset(15)
             make.right.equalTo(superView.snp_centerX).offset(-3)
         }
         
         signUpButton.setTitle("Sign Up", forState: .Normal)
+        signUpButton.titleLabel?.font = UIFont.boldSystemFontOfSize(15)
         signUpButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         signUpButton.setTitleColor(UIColor.GlobalGray(), forState: .Selected)
         superView.addSubview(signUpButton)
@@ -153,6 +157,25 @@ class LoginViewController: UIViewController {
             make.top.equalTo(loginButton.snp_bottom).offset(44)
         }
         
+        let grayLineLeft = UIView()
+        grayLineLeft.backgroundColor = UIColor.grayColor()
+        superView.addSubview(grayLineLeft)
+        grayLineLeft.snp_makeConstraints { (make) in
+            make.right.equalTo(thirdDescriptionLabel.snp_left).offset(-26)
+            make.left.equalTo(superView).offset(30)
+            make.height.equalTo(1)
+            make.centerY.equalTo(thirdDescriptionLabel)
+        }
+        
+        let grayLineRight = UIView()
+        grayLineRight.backgroundColor = UIColor.grayColor()
+        superView.addSubview(grayLineRight)
+        grayLineRight.snp_makeConstraints { (make) in
+            make.left.equalTo(thirdDescriptionLabel.snp_right).offset(26)
+            make.right.equalTo(superView).offset(-30)
+            make.height.centerY.equalTo(grayLineLeft)
+        }
+        
         superView.addSubview(wechatButton)
         wechatButton.setBackgroundImage(UIImage(named: "wechat"), forState: .Normal)
         wechatButton.snp_makeConstraints { (make) in
@@ -175,4 +198,20 @@ class LoginViewController: UIViewController {
         let vc = SingUpViewController()
         self.presentViewController(vc, animated: true, completion: nil)
     }
+    
+    //MARK: - UITextFieldDelegate
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        userTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+    }
+    
 }

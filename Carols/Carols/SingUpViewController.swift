@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SingUpViewController: UIViewController {
+class SingUpViewController: UIViewController, UITextFieldDelegate {
 
     var background = UIImageView()
     
@@ -35,7 +35,7 @@ class SingUpViewController: UIViewController {
         background.image = UIImage(named: "loginBack")
         superView.addSubview(background)
         
-        signUpLabel.text = "Sinn Up"
+        signUpLabel.text = "Sign Up"
         signUpLabel.textColor = UIColor.GlobalRed()
         signUpLabel.font = UIFont.boldSystemFontOfSize(30)
         superView.addSubview(signUpLabel)
@@ -57,6 +57,7 @@ class SingUpViewController: UIViewController {
         usernameTextField.attributedPlaceholder = NSAttributedString(string: "User Name", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
         usernameTextField.textColor = UIColor.GlobalGray()
         usernameTextField.textAlignment = .Center
+        usernameTextField.delegate = self
         superView.addSubview(usernameTextField)
         usernameTextField.snp_makeConstraints { (make) in
             make.top.equalTo(avator.snp_bottom).offset(72)
@@ -84,6 +85,7 @@ class SingUpViewController: UIViewController {
         phoneNumTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
         phoneNumTextField.textColor = UIColor.GlobalGray()
         phoneNumTextField.textAlignment = .Center
+        phoneNumTextField.delegate = self
         superView.addSubview(phoneNumTextField)
         phoneNumTextField.snp_makeConstraints { (make) in
             make.bottom.equalTo(line2.snp_top).offset(-5)
@@ -100,6 +102,7 @@ class SingUpViewController: UIViewController {
         
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
         passwordTextField.textAlignment = .Center
+        passwordTextField.delegate = self
         superView.addSubview(passwordTextField)
         passwordTextField.snp_makeConstraints { (make) in
             make.bottom.equalTo(line3.snp_top).offset(-5)
@@ -114,5 +117,22 @@ class SingUpViewController: UIViewController {
             make.centerX.equalTo(superView)
         }
     }
+    
+    //MARK: - UITextFieldDelegate
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        usernameTextField.resignFirstResponder()
+        phoneNumTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+    }
+
     
 }
