@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		623C81E71CAE432C00A6A3D5 /* AAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C81E61CAE432C00A6A3D5 /* AAColor.swift */; };
 		623C81E91CAE438F00A6A3D5 /* AALog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C81E81CAE438F00A6A3D5 /* AALog.swift */; };
+		623C81EB1CAE4F8E00A6A3D5 /* SingUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C81EA1CAE4F8E00A6A3D5 /* SingUpViewController.swift */; };
 		62A2A06C1CAE213E00B2D4DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A2A06B1CAE213E00B2D4DC /* AppDelegate.swift */; };
 		62A2A06E1CAE213E00B2D4DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A2A06D1CAE213E00B2D4DC /* ViewController.swift */; };
 		62A2A0711CAE213E00B2D4DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62A2A06F1CAE213E00B2D4DC /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		623C81E61CAE432C00A6A3D5 /* AAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAColor.swift; sourceTree = "<group>"; };
 		623C81E81CAE438F00A6A3D5 /* AALog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AALog.swift; sourceTree = "<group>"; };
+		623C81EA1CAE4F8E00A6A3D5 /* SingUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingUpViewController.swift; sourceTree = "<group>"; };
 		62A2A0681CAE213E00B2D4DC /* Carols.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Carols.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A2A06B1CAE213E00B2D4DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		62A2A06D1CAE213E00B2D4DC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */,
+				623C81EA1CAE4F8E00A6A3D5 /* SingUpViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				62FBE5361CAE22CA0059AD66 /* LoginViewController.swift in Sources */,
 				62A2A06E1CAE213E00B2D4DC /* ViewController.swift in Sources */,
 				623C81E71CAE432C00A6A3D5 /* AAColor.swift in Sources */,
+				623C81EB1CAE4F8E00A6A3D5 /* SingUpViewController.swift in Sources */,
 				62A2A06C1CAE213E00B2D4DC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

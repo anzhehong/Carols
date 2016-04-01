@@ -37,6 +37,11 @@ class LoginViewController: UIViewController {
         
         superView = self.view
         
+        initUIComponents()
+    }
+    
+    //MARK: - UI
+    func initUIComponents() {
         background.frame = superView.frame
         background.image = UIImage(named: "loginBack")
         superView.addSubview(background)
@@ -126,6 +131,8 @@ class LoginViewController: UIViewController {
             make.centerY.equalTo(loginDescription)
         }
         
+        signUpButton.addTarget(self, action: #selector(LoginViewController.signButtonClicked), forControlEvents: .TouchUpInside)
+        
         superView.addSubview(loginButton)
         loginButton.backgroundColor = UIColor.GlobalRed()
         loginButton.setTitle("Login", forState: .Normal)
@@ -163,8 +170,9 @@ class LoginViewController: UIViewController {
         }
     }
     
-    //MARK: - UI
-    
-    
-    
+    //MARK: - Button Functions
+    func signButtonClicked()  {
+        let vc = SingUpViewController()
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
 }
