@@ -7,6 +7,8 @@ use_frameworks!
 target 'Carols' do
 pod 'SnapKit', '~> 0.15.0'
 pod 'SwiftyBeaver'
+pod 'PageMenu'
+pod 'SlideMenuControllerSwift'
 end
 
 target 'CarolsTests' do

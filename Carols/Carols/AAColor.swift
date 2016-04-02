@@ -18,4 +18,8 @@ extension UIColor {
     class func GlobalGray() -> UIColor {
         return UIColor(red: 0.6824, green: 0.702, blue: 0.7373, alpha: 1.0)
     }
+    
+    class func GlobalMenuBlack() -> UIColor {
+        return UIColor ( red: 0.0627, green: 0.0471, blue: 0.051, alpha: 1.0 )
+    }
 }
