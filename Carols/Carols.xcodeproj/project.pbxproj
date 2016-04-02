@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6222D7511CAFEE3B00F46C44 /* SongLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6222D7501CAFEE3B00F46C44 /* SongLibraryViewController.swift */; };
+		6222D7531CAFEE7800F46C44 /* ChosenSongsLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6222D7521CAFEE7800F46C44 /* ChosenSongsLibraryViewController.swift */; };
+		6222D7551CAFF15100F46C44 /* LeftSideCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6222D7541CAFF15100F46C44 /* LeftSideCell.xib */; };
 		623C81E71CAE432C00A6A3D5 /* AAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C81E61CAE432C00A6A3D5 /* AAColor.swift */; };
 		623C81E91CAE438F00A6A3D5 /* AALog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C81E81CAE438F00A6A3D5 /* AALog.swift */; };
 		623C81EB1CAE4F8E00A6A3D5 /* SingUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623C81EA1CAE4F8E00A6A3D5 /* SingUpViewController.swift */; };
@@ -40,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6222D7501CAFEE3B00F46C44 /* SongLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongLibraryViewController.swift; sourceTree = "<group>"; };
+		6222D7521CAFEE7800F46C44 /* ChosenSongsLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChosenSongsLibraryViewController.swift; sourceTree = "<group>"; };
+		6222D7541CAFF15100F46C44 /* LeftSideCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftSideCell.xib; sourceTree = "<group>"; };
 		623C81E61CAE432C00A6A3D5 /* AAColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAColor.swift; sourceTree = "<group>"; };
 		623C81E81CAE438F00A6A3D5 /* AALog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AALog.swift; sourceTree = "<group>"; };
 		623C81EA1CAE4F8E00A6A3D5 /* SingUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingUpViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +174,9 @@
 				623C81EA1CAE4F8E00A6A3D5 /* SingUpViewController.swift */,
 				62A2A06D1CAE213E00B2D4DC /* MainViewController.swift */,
 				6256E12B1CAF7F15003BC7E3 /* LeftSideViewController.swift */,
+				6222D7541CAFF15100F46C44 /* LeftSideCell.xib */,
+				6222D7501CAFEE3B00F46C44 /* SongLibraryViewController.swift */,
+				6222D7521CAFEE7800F46C44 /* ChosenSongsLibraryViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -288,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62A2A0761CAE213E00B2D4DC /* LaunchScreen.storyboard in Resources */,
+				6222D7551CAFF15100F46C44 /* LeftSideCell.xib in Resources */,
 				62A2A0731CAE213E00B2D4DC /* Assets.xcassets in Resources */,
 				62A2A0711CAE213E00B2D4DC /* Main.storyboard in Resources */,
 			);
@@ -367,7 +377,9 @@
 				62FBE5361CAE22CA0059AD66 /* LoginViewController.swift in Sources */,
 				62A2A06E1CAE213E00B2D4DC /* MainViewController.swift in Sources */,
 				623C81E71CAE432C00A6A3D5 /* AAColor.swift in Sources */,
+				6222D7511CAFEE3B00F46C44 /* SongLibraryViewController.swift in Sources */,
 				623C81EB1CAE4F8E00A6A3D5 /* SingUpViewController.swift in Sources */,
+				6222D7531CAFEE7800F46C44 /* ChosenSongsLibraryViewController.swift in Sources */,
 				62A2A06C1CAE213E00B2D4DC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

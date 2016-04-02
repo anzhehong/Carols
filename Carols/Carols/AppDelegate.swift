@@ -23,10 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let mainViewController = MainViewController()
 //        window?.rootViewController = mainViewController
 
-        
+        let screenWidth = UIScreen.mainScreen().bounds.width
         let mainViewController = MainViewController()
         let leftViewController = LeftSideViewController()
         let slideMenuController = SlideMenuController(mainViewController: mainViewController, leftMenuViewController: leftViewController)
+        slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
         self.window?.rootViewController = slideMenuController
         self.window?.makeKeyAndVisible()
         
