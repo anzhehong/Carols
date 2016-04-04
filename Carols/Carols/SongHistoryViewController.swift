@@ -10,30 +10,18 @@ import UIKit
 import SnapKit
 import PageMenu
 
-class SongHistoryViewController: UIViewController {
+class SongHistoryViewController: BaseViewController{
 
-    var pageMenu : CAPSPageMenu?
-    var controllerArray : [UIViewController] = []
-    let menuHeight = 38
-    let titleHeight = 44
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        initMenu()
     }
     
-    
-    
-    //MARK: - init menu
-    func initMenu()  {
+    //MARK: - CAPSPageMenuDelegate
+    func initMenu() {
+        
         let chosenSongsLibraryVC = ChosenSongsLibraryViewController()
-        chosenSongsLibraryVC.title = "Songs History"
+        chosenSongsLibraryVC.title = "Chosen Songs"
         controllerArray.append(chosenSongsLibraryVC)
         
         let parameters: [CAPSPageMenuOption] = [
@@ -51,18 +39,8 @@ class SongHistoryViewController: UIViewController {
             ]
         
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat( titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
-//        pageMenu!.delegate = self
+        pageMenu!.delegate = self
         self.addChildViewController(pageMenu!)
         self.view.addSubview(pageMenu!.view)
     }
-    
-    // MARK: - Container View Controller
-    override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
-        return true
-    }
-    
-    override func shouldAutomaticallyForwardRotationMethods() -> Bool {
-        return true
-    }
-    
 }

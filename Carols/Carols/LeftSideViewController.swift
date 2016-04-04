@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SlideMenuControllerSwift
 
 class LeftSideViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -74,10 +75,23 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 4 {
-            let vc = ChosenSongsLibraryViewController()
-            self.presentViewController(vc, animated: true, completion: nil)
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let mainViewController = SongHistoryViewController()
+        let leftViewController = LeftSideViewController()
+        let slideMenuController = SlideMenuController(mainViewController: mainViewController, leftMenuViewController: leftViewController)
+        slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+        
+        if indexPath.row == 0 {
+            slideMenuController.mainViewController = MainViewController()
+        }else if indexPath.row == 2 {
+//            let vc = MainViewController()
+//            slideMenuController.mainViewController = vc
         }
+        else if indexPath.row == 4 {
+            slideMenuController.mainViewController = SongHistoryViewController()
+        }
+        
+        self.presentViewController(slideMenuController, animated: false, completion: nil)
     }
     
     
