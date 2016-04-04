@@ -14,14 +14,19 @@ class MainViewController: UIViewController, CAPSPageMenuDelegate {
     
     
     //MARK: - Title
-    let titleHeight = 52
+    let titleHeight = 44
     var userName = "Harold"
     var superView = UIView()
     let nameLabel = UILabel()
     
     //MARK: - Side Menu
+    let menuHeight = 38
     let sideButton = UIButton()
     let historyButton = UIButton()
+    
+    
+    
+    
     
     //MARK: - Page Menu
     //MARK: Controller Array
@@ -34,8 +39,8 @@ class MainViewController: UIViewController, CAPSPageMenuDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         superView = self.view
-        initTitle()
         initMenu()
+        initTitle()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,27 +49,41 @@ class MainViewController: UIViewController, CAPSPageMenuDelegate {
     }
     
     //MARK: - UI
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     func initTitle() {
         
         nameLabel.text = "Hello,\(userName)"
-        nameLabel.textColor = UIColor.GlobalRed()
-        nameLabel.font = UIFont(name: "HelveticaNeue", size: 18)!
+        nameLabel.textColor = UIColor ( red: 0.9843, green: 0.0549, blue: 0.2667, alpha: 1.0 )
+        nameLabel.font = UIFont.systemFontOfSize(16.8)
         superView.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(superView)
-            make.centerY.equalTo(superView.snp_top).offset(titleHeight/2)
+            make.centerY.equalTo(superView.snp_top).offset(titleHeight/2 + 4)
         }
         
         sideButton.setImage(UIImage(named: "Left View Button"), forState: .Normal)
         superView.addSubview(sideButton)
         sideButton.addTarget(self, action: #selector(MainViewController.leftSideButtonClicked), forControlEvents: .TouchUpInside)
         sideButton.snp_makeConstraints { (make) in
-            make.centerY.equalTo(superView.snp_top).offset(titleHeight/2)
-            make.left.equalTo(15)
-            make.height.width.equalTo(titleHeight/2)
+            make.centerY.equalTo(nameLabel)
+            make.left.equalTo(superView.snp_left).offset(20)
+            make.height.width.equalTo(24)
         }
         
-//        historyButton.setImage(UIImage(named: ), forState: <#T##UIControlState#>)
+        historyButton.setImage(UIImage(named: "History Icon"), forState: .Normal)
+        superView.addSubview(historyButton)
+        historyButton.snp_makeConstraints { (make) in
+            make.centerY.equalTo(nameLabel)
+            make.right.equalTo(superView.snp_right).offset(-20)
+            make.height.width.equalTo(24)
+        }
+        
+        let titleLine = UIView(frame: CGRect(x: 0, y: titleHeight, width: Int (self.view.frame.width), height: 1))
+        titleLine.backgroundColor = UIColor ( red: 0.2275, green: 0.2275, blue: 0.2275, alpha: 1.0 )
+        superView.addSubview(titleLine)
     }
     
     //MARK: - CAPSPageMenuDelegate
@@ -80,15 +99,16 @@ class MainViewController: UIViewController, CAPSPageMenuDelegate {
         controllerArray.append(chosenSongsLibraryVC)
         
         let parameters: [CAPSPageMenuOption] = [
+            .MenuHeight(CGFloat(menuHeight)),
             .MenuItemSeparatorWidth(0),
             .UseMenuLikeSegmentedControl(true),
             .MenuItemSeparatorPercentageHeight(0.1),
             .SelectionIndicatorColor(UIColor.GlobalRed()),
             .ScrollMenuBackgroundColor(UIColor.GlobalMenuBlack()),
             .ViewBackgroundColor(UIColor.GlobalMenuBlack()),
-            .SelectedMenuItemLabelColor(UIColor ( red: 0.6627, green: 0.651, blue: 0.6549, alpha: 1.0 )),
-            .UnselectedMenuItemLabelColor(UIColor ( red: 0.5725, green: 0.5608, blue: 0.5647, alpha: 1.0 )),
-            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 13.0)!),
+            .SelectedMenuItemLabelColor(UIColor.whiteColor()),
+            .UnselectedMenuItemLabelColor(UIColor.whiteColor()),
+            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 14.5)!),
             .BottomMenuHairlineColor(UIColor.GlobalMenuBlack()),
             ]
         
@@ -97,6 +117,8 @@ class MainViewController: UIViewController, CAPSPageMenuDelegate {
         self.addChildViewController(pageMenu!)
         self.view.addSubview(pageMenu!.view)
     }
+    
+    
     
     //MARK: - Actions
     func leftSideButtonClicked()  {

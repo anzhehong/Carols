@@ -30,6 +30,7 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.separatorStyle = .None
         tableView.scrollEnabled = false
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.rowHeight = (screenHeight - 250) / CGFloat(cellNames.count)
         
         let avator = UIImageView()
@@ -73,6 +74,10 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row == 4 {
+            let vc = ChosenSongsLibraryViewController()
+            self.presentViewController(vc, animated: true, completion: nil)
+        }
     }
     
     
