@@ -13,7 +13,7 @@ import PageMenu
 class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     
     //MARK: - Title
-    let titleHeight = 44
+    let titleHeight = 64
     var userName = "Harold"
     var superView = UIView()
     let nameLabel = UILabel()
@@ -28,6 +28,7 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     //MARK: Controller Array
     var controllerArray : [UIViewController] = []
     var pageMenu : CAPSPageMenu?
+    var parameters: [CAPSPageMenuOption]?
     
     //MARK: - ViewController Life Circle
     override func viewDidLoad() {
@@ -35,6 +36,7 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         superView = self.view
         initTitle()
+        initPageParams()
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,11 +45,28 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     }
     
     //MARK: - UI
+    func initPageParams() {
+        parameters = [
+            .MenuHeight(CGFloat(menuHeight)),
+            .MenuItemSeparatorWidth(0),
+            .MenuItemFont(UIFont.systemFontOfSize(20)),
+            .UseMenuLikeSegmentedControl(true),
+            .MenuItemSeparatorPercentageHeight(0.1),
+            .SelectionIndicatorColor(UIColor.GlobalRed()),
+            .ScrollMenuBackgroundColor(UIColor.GlobalMenuBlack()),
+            .ViewBackgroundColor(UIColor.GlobalMenuBlack()),
+            .SelectedMenuItemLabelColor(UIColor.whiteColor()),
+            .UnselectedMenuItemLabelColor(UIColor.whiteColor()),
+//            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 14.5)!),
+            .BottomMenuHairlineColor(UIColor.GlobalMenuBlack()),
+            ]
+    }
+    
     func initTitle() {
         
         nameLabel.text = "Hello,\(userName)"
         nameLabel.textColor = UIColor ( red: 0.9843, green: 0.0549, blue: 0.2667, alpha: 1.0 )
-        nameLabel.font = UIFont.systemFontOfSize(16.8)
+        nameLabel.font = UIFont.boldSystemFontOfSize(16.8)
         superView.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(superView)

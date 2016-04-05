@@ -155,16 +155,26 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
             make.centerY.equalTo(recommendationContainer)
         }
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        superView.addSubview(tableView)
-        tableView.snp_makeConstraints { (make) in
+//        tableView.dataSource = self
+//        tableView.delegate = self
+//        superView.addSubview(tableView)
+//        tableView.snp_makeConstraints { (make) in
+//            make.left.right.bottom.equalTo(superView)
+//            make.top.equalTo(recommendationContainer.snp_bottom)
+//            make.bottom.equalTo(superView)
+//        }
+//        tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
+//        tableView.separatorColor = UIColor.blackColor()
+        
+        let ttt = RecommendationViewContainerController.GetTableView()
+        superView.addSubview(ttt)
+        ttt.dataSource = self
+        ttt.delegate = self
+        ttt.snp_makeConstraints { (make) in
             make.left.right.bottom.equalTo(superView)
             make.top.equalTo(recommendationContainer.snp_bottom)
             make.bottom.equalTo(superView)
         }
-        tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
-        tableView.separatorColor = UIColor.blackColor()
         
     }
     

@@ -1,15 +1,15 @@
 //
-//  SongLibraryCell.swift
+//  RankingCell.swift
 //  Carols
 //
-//  Created by FOWAFOLO on 16/4/5.
+//  Created by FOWAFOLO on 16/4/6.
 //  Copyright © 2016年 TAC. All rights reserved.
 //
 
 import UIKit
 
-class SongLibraryCell: UITableViewCell {
-    
+class RankingCell: UITableViewCell {
+
     //TODO: 确定是64吗？
     static let cellHeight = 64
     let albumWidth = 50
@@ -33,7 +33,7 @@ class SongLibraryCell: UITableViewCell {
     func configureUI() {
         self.addSubview(album)
         album.snp_makeConstraints { (make) in
-//            make.height.width.equalTo(albumWidth)
+            //            make.height.width.equalTo(albumWidth)
             make.left.equalTo(self).offset(11)
             make.centerY.equalTo(self)
         }
@@ -68,4 +68,5 @@ class SongLibraryCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }

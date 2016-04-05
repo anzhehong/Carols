@@ -1,5 +1,5 @@
 //
-//  ChosenSongCell.swift
+//  HistoryCell.swift
 //  Carols
 //
 //  Created by FOWAFOLO on 16/4/5.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class ChosenSongCell: UITableViewCell {
-    
+class HistoryCell: UITableViewCell {
+
     static let cellHeight = 64
     
     let songNameLabel = UILabel()
@@ -39,11 +39,12 @@ class ChosenSongCell: UITableViewCell {
             make.top.equalTo(songNameLabel.snp_bottom).offset(3)
         }
         
-        actionImage.setImage(UIImage(named: "To top Icon"), forState: .Normal)
+        actionImage.setImage(UIImage(named: "SingIcon"), forState: .Normal)
         self.addSubview(actionImage)
         actionImage.snp_makeConstraints { (make) in
             make.right.equalTo(self.snp_right).offset(-18)
-            make.height.width.equalTo(25)
+            make.height.equalTo(21)
+            make.width.equalTo(46)
             make.centerY.equalTo(self)
         }
         
@@ -53,6 +54,4 @@ class ChosenSongCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-}
+    }}
