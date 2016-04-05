@@ -31,6 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = slideMenuController
         self.window?.makeKeyAndVisible()
         
+        
+        //set statusbar hidden
+        application.statusBarHidden = true
+        
         return true
     }
 

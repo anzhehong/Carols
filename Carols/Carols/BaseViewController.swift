@@ -43,10 +43,6 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     }
     
     //MARK: - UI
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
     func initTitle() {
         
         nameLabel.text = "Hello,\(userName)"

@@ -76,8 +76,8 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         
         let chooseSongLabel = UILabel()
         chooseSongLabel.text = "Choose Song"
-        chooseSongLabel.font = UIFont.italicSystemFontOfSize(18)
-        chooseSongLabel.textColor = UIColor.whiteColor()
+        chooseSongLabel.font = UIFont.systemFontOfSize(18)
+        chooseSongLabel.textColor = UIColor.UIColorFromRGB(0xFFFFFF)
         containerView.addSubview(chooseSongLabel)
         chooseSongLabel.snp_makeConstraints { (make) in
             make.top.equalTo(containerView.snp_top).offset(5)
@@ -129,8 +129,8 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         
         let recommendationLabel = UILabel()
         recommendationLabel.text = "Recommendation"
-        recommendationLabel.font = UIFont.italicSystemFontOfSize(18)
-        recommendationLabel.textColor = UIColor.whiteColor()
+        recommendationLabel.font = UIFont.systemFontOfSize(18)
+        recommendationLabel.textColor = UIColor.UIColorFromRGB(0xFFFFFF)
         recommendationContainer.addSubview(recommendationLabel)
         recommendationLabel.snp_makeConstraints { (make) in
             make.centerY.equalTo(recommendationContainer)
@@ -148,15 +148,15 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         }
 
         let redArrow = UIImageView()
-        redArrow.image = UIImage(named: "arrow")
+        redArrow.image = UIImage(named: "RightArrowIcon")
         recommendationContainer.addSubview(redArrow)
         redArrow.snp_makeConstraints { (make) in
             make.right.equalTo(recommendationContainer).offset(-20)
             make.centerY.equalTo(recommendationContainer)
-            make.height.width.equalTo(25)
         }
         
         tableView.dataSource = self
+        tableView.delegate = self
         superView.addSubview(tableView)
         tableView.snp_makeConstraints { (make) in
             make.left.right.bottom.equalTo(superView)
@@ -165,6 +165,7 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         }
         tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
         tableView.separatorColor = UIColor.blackColor()
+        
     }
     
     //MARK: - UITableViewDatasource 
@@ -184,64 +185,6 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(SongLibraryCell.cellHeight)
     }
+    
 }
 
-class SongLibraryCell: UITableViewCell {
-    
-    //TODO: 确定是64吗？
-    static let cellHeight = 80
-    let albumWidth = 50
-    
-    let album = UIImageView()
-    let songName = UILabel()
-    let singerName = UILabel()
-    let singButton = UIButton()
-    
-    init(style: UITableViewCellStyle, reuseIdentifier: String?,
-         songName: String, singerName: String, albumPic: UIImage) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.album.image = albumPic
-        self.songName.text = songName
-        self.singerName.text = singerName
-        
-        configureUI()
-    }
-    
-    func configureUI() {
-        self.addSubview(album)
-        album.snp_makeConstraints { (make) in
-            make.height.width.equalTo(albumWidth)
-            make.left.equalTo(self).offset(11)
-            make.centerY.equalTo(self)
-        }
-        
-        self.addSubview(songName)
-        songName.textColor = UIColor.whiteColor()
-        songName.font = UIFont.systemFontOfSize(20)
-        songName.snp_makeConstraints { (make) in
-            make.left.equalTo(album.snp_right).offset(20)
-            make.top.equalTo(album).offset(3)
-        }
-        
-        self.addSubview(singerName)
-        singerName.textColor = UIColor.whiteColor()
-        singerName.font = UIFont.italicSystemFontOfSize(15)
-        singerName.snp_makeConstraints { (make) in
-            make.left.equalTo(songName)
-            make.bottom.equalTo(album.snp_bottom).offset(-3)
-        }
-        
-        singButton.setImage(UIImage(named: "SingIcon"), forState: .Normal)
-        self.addSubview(singButton)
-        singButton.snp_makeConstraints { (make) in
-            make.centerY.equalTo(self)
-            make.right.equalTo(self).offset(-18)
-        }
-        
-        self.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}

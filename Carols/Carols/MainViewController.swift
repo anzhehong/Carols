@@ -32,6 +32,7 @@ class MainViewController: BaseViewController {
         let parameters: [CAPSPageMenuOption] = [
             .MenuHeight(CGFloat(menuHeight)),
             .MenuItemSeparatorWidth(0),
+            .MenuItemFont(UIFont.systemFontOfSize(20)),
             .UseMenuLikeSegmentedControl(true),
             .MenuItemSeparatorPercentageHeight(0.1),
             .SelectionIndicatorColor(UIColor.GlobalRed()),
@@ -42,7 +43,6 @@ class MainViewController: BaseViewController {
             .MenuItemFont(UIFont(name: "HelveticaNeue", size: 14.5)!),
             .BottomMenuHairlineColor(UIColor.GlobalMenuBlack()),
             ]
-        
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat( titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
         pageMenu!.delegate = self
         self.addChildViewController(pageMenu!)
