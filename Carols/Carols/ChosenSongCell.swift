@@ -11,21 +11,21 @@ import UIKit
 class ChosenSongCell: UITableViewCell {
     
     static let cellHeight = 64
-    
-    let songNameLabel = UILabel()
-    let singerNameLabel = UILabel()
-    let actionImage = UIButton()
-    
+
+    let songNameLabel     = UILabel()
+    let singerNameLabel   = UILabel()
+    let actionImage       = UIButton()
+
     init(style: UITableViewCellStyle, reuseIdentifier: String?,
          songName: String, singerName: String) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        songNameLabel.textColor = UIColor.whiteColor()
-        songNameLabel.text = songName
-        songNameLabel.font = UIFont.systemFontOfSize(20)
-        singerNameLabel.text = singerName
+        songNameLabel.textColor   = UIColor.whiteColor()
+        songNameLabel.text        = songName
+        songNameLabel.font        = UIFont.systemFontOfSize(20)
+        singerNameLabel.text      = singerName
         singerNameLabel.textColor = UIColor ( red: 0.5608, green: 0.5373, blue: 0.5451, alpha: 1.0 )
-        singerNameLabel.font = UIFont.systemFontOfSize(16)
+        singerNameLabel.font      = UIFont.systemFontOfSize(16)
         
         self.addSubview(songNameLabel)
         songNameLabel.snp_makeConstraints { (make) in

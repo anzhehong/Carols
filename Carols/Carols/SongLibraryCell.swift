@@ -12,12 +12,12 @@ class SongLibraryCell: UITableViewCell {
     
     //TODO: 确定是64吗？
     static let cellHeight = 64
-    let albumWidth = 50
-    
-    var album = UIImageView()
-    let songName = UILabel()
-    let singerName = UILabel()
-    let singButton = UIButton()
+    let albumWidth        = 50
+
+    var album             = UIImageView()
+    let songName          = UILabel()
+    let singerName        = UILabel()
+    let singButton        = UIButton()
     
     init(style: UITableViewCellStyle, reuseIdentifier: String?,
          songName: String, singerName: String, albumPic: UIImage) {
@@ -33,7 +33,6 @@ class SongLibraryCell: UITableViewCell {
     func configureUI() {
         self.addSubview(album)
         album.snp_makeConstraints { (make) in
-//            make.height.width.equalTo(albumWidth)
             make.left.equalTo(self).offset(11)
             make.centerY.equalTo(self)
         }

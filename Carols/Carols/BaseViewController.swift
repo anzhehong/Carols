@@ -14,9 +14,9 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     
     //MARK: - Title
     let titleHeight = 64
-    var userName = "Harold"
-    var superView = UIView()
-    let nameLabel = UILabel()
+    var userName    = "Harold"
+    var superView   = UIView()
+    let nameLabel   = UILabel()
     
     //MARK: - Side Menu
     let menuHeight = 38

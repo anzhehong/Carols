@@ -16,7 +16,7 @@ class LeftSideCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.clearColor()
         
-        let line = UIView()
+        let line             = UIView()
         line.backgroundColor = UIColor.UIColorFromRGB(0x979797)
         self.addSubview(line)
         line.snp_makeConstraints { (make) in

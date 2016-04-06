@@ -13,18 +13,15 @@ class SongHistoryViewController: BaseViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initMenu()
-        
         historyButton.setImage(UIImage(named: "Search Icon"), forState: .Normal)
+        initMenu()
     }
     
-    //MARK: - CAPSPageMenuDelegate
     func initMenu() {
         
-        let vc = SongHistoryViewContainerController()
+        let vc   = SongHistoryViewContainerController()
         vc.title = "Song History"
         controllerArray.append(vc)
-        
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat( titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
         pageMenu!.delegate = self
         self.addChildViewController(pageMenu!)

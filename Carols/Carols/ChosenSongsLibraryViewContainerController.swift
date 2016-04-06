@@ -14,7 +14,10 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initTableView()
+    }
+    
+    func initTableView() {
         tableView = UITableView(frame: self.view.frame)
         tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
         tableView.separatorColor = UIColor.blackColor()
@@ -23,6 +26,15 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
         tableView.delegate = self
     }
     
+    func GetTableView() -> UITableView {
+        let vc = ChosenSongsLibraryViewContainerController()
+        vc.viewDidLoad()
+        return vc.tableView
+    }
+}
+
+//MARK: - UITableViewDataSource, UITableViewDelegate
+extension ChosenSongsLibraryViewContainerController {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -41,11 +53,5 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(ChosenSongCell.cellHeight)
-    }
-    
-    func GetTableView() -> UITableView {
-        let vc = ChosenSongsLibraryViewContainerController()
-        vc.viewDidLoad()
-        return vc.tableView
     }
 }

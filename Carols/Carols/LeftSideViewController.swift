@@ -12,8 +12,7 @@ import SlideMenuControllerSwift
 class LeftSideViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let cellNames: [String] = ["Home", "Ranking List", "Chosen Songs", "Playing", "History", "Logout"]
-    
-    var tableView = UITableView()
+    var tableView           = UITableView()
     
     
     //MARK: - Life Circle
@@ -32,7 +31,7 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
         let superView = self.view
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "loginBack")!)
         
-        let avator = UIImageView()
+        let avator   = UIImageView()
         avator.image = UIImage(named: "avator")
         superView.addSubview(avator)
         avator.snp_makeConstraints { (make) in
@@ -44,10 +43,10 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
         avator.clipsToBounds = true
         
         
-        let nameLabel = UILabel()
+        let nameLabel       = UILabel()
         nameLabel.textColor = UIColor.whiteColor()
-        nameLabel.text = "Harold"
-        nameLabel.font = UIFont.boldSystemFontOfSize(30)
+        nameLabel.text      = "Harold"
+        nameLabel.font      = UIFont.boldSystemFontOfSize(30)
         superView.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { (make) in
             make.top.equalTo(avator.snp_bottom).offset(10)

@@ -14,18 +14,11 @@ class RecommendationViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initMenu()
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: - CAPSPageMenuDelegate
     func initMenu() {
         
-        let vc = RecommendationViewContainerController()
+        let vc   = RecommendationViewContainerController()
         vc.title = "Recommendation"
         controllerArray.append(vc)
         

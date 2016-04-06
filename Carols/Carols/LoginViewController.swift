@@ -12,31 +12,27 @@ import SnapKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
-    let background = UIImageView()
-    let backCover = UIView()
-    let logo = UIImageView()
-    let logoDescription = UILabel()
-    let userIcon = UIImageView()
-    let lockIcon = UIImageView()
-    let userTextField = UITextField()
-    let passwordTextField = UITextField()
-    let loginDescription = UILabel()
-    let signUpButton = UIButton()
-    
-    let loginButton = UIButton()
+    let background            = UIImageView()
+    let backCover             = UIView()
+    let logo                  = UIImageView()
+    let logoDescription       = UILabel()
+    let userIcon              = UIImageView()
+    let lockIcon              = UIImageView()
+    let userTextField         = UITextField()
+    let passwordTextField     = UITextField()
+    let loginDescription      = UILabel()
+    let signUpButton          = UIButton()
+    let loginButton           = UIButton()
     let thirdDescriptionLabel = UILabel()
-    let wechatButton = UIButton()
-    let weboButton = UIButton()
-    
-    var superView = UIView()
+    let wechatButton          = UIButton()
+    let weboButton            = UIButton()
+    var superView             = UIView()
     
     
     //MARK: - ViewController Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         superView = self.view
-        
         initUIComponents()
     }
     
@@ -54,8 +50,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         logo.image = UIImage(named: "Logo-LoginView")
         
-        logoDescription.text = "Carols"
-        logoDescription.font = UIFont.boldSystemFontOfSize(28)
+        logoDescription.text      = "Carols"
+        logoDescription.font      = UIFont.boldSystemFontOfSize(28)
         logoDescription.textColor = UIColor.GlobalRed()
         superView.addSubview(logoDescription)
         logoDescription.snp_makeConstraints { (make) in
@@ -64,8 +60,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         userTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
-        userTextField.textColor = UIColor.GlobalGray()
-        userTextField.delegate = self
+        userTextField.textColor             = UIColor.GlobalGray()
+        userTextField.delegate              = self
         superView.addSubview(userTextField)
         userTextField.snp_makeConstraints { (make) in
             make.top.equalTo(logoDescription.snp_bottom).offset(64)
@@ -92,8 +88,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor.GlobalGray()])
-        passwordTextField.textColor = UIColor.GlobalRed()
-        passwordTextField.delegate = self
+        passwordTextField.textColor             = UIColor.GlobalRed()
+        passwordTextField.delegate              = self
         superView.addSubview(passwordTextField)
         passwordTextField.snp_makeConstraints { (make) in
             make.centerX.width.equalTo(userTextField)
@@ -116,9 +112,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.width.centerX.height.equalTo(redLine1)
         }
         
-        loginDescription.text = "New User?"
+        loginDescription.text      = "New User?"
         loginDescription.textColor = UIColor.GlobalGray()
-        loginDescription.font = UIFont.boldSystemFontOfSize(15)
+        loginDescription.font      = UIFont.boldSystemFontOfSize(15)
         superView.addSubview(loginDescription)
         loginDescription.snp_makeConstraints { (make) in
             make.top.equalTo(passwordTextField.snp_bottom).offset(15)
@@ -149,7 +145,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(loginDescription.snp_bottom).offset(49)
         }
         
-        thirdDescriptionLabel.text = "Login by"
+        thirdDescriptionLabel.text      = "Login by"
         thirdDescriptionLabel.textColor = UIColor.GlobalGray()
         superView.addSubview(thirdDescriptionLabel)
         thirdDescriptionLabel.snp_makeConstraints { (make) in
@@ -157,7 +153,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(loginButton.snp_bottom).offset(44)
         }
         
-        let grayLineLeft = UIView()
+        let grayLineLeft             = UIView()
         grayLineLeft.backgroundColor = UIColor.grayColor()
         superView.addSubview(grayLineLeft)
         grayLineLeft.snp_makeConstraints { (make) in
@@ -167,7 +163,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.centerY.equalTo(thirdDescriptionLabel)
         }
         
-        let grayLineRight = UIView()
+        let grayLineRight             = UIView()
         grayLineRight.backgroundColor = UIColor.grayColor()
         superView.addSubview(grayLineRight)
         grayLineRight.snp_makeConstraints { (make) in

@@ -15,34 +15,23 @@ class SongHistoryViewContainerController: UIViewController, UITableViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         initTableView()
-        // Do any additional setup after loading the view.
     }
 
     func initTableView() {
         superView = self.view
-        
         tableView = UITableView(frame: self.view.frame)
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         superView.addSubview(tableView)
         tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
         tableView.separatorColor = UIColor.blackColor()
 
     }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+}
 
-    //MARK: - UITableViewDatasource
+//MARK: - UITableViewDatasource
+extension SongHistoryViewContainerController {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

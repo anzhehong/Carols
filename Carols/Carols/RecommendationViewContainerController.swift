@@ -15,7 +15,6 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initTableView()
     }
 
@@ -26,18 +25,25 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     
     func initTableView() {
         superView = self.view
-        
         tableView = UITableView(frame: self.view.frame)
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         superView.addSubview(tableView)
         tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
         tableView.separatorColor = UIColor.blackColor()
     }
+
+    class func GetTableView() -> UITableView {
+        let vc = RecommendationViewContainerController()
+        vc.viewDidLoad()
+        return vc.tableView
+    }
     
-    //MARK: - UITableViewDatasource
+}
+
+//MARK: - UITableViewDatasource
+extension RecommendationViewContainerController {
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -58,11 +64,4 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("aaa")
     }
-
-    class func GetTableView() -> UITableView {
-        let vc = RecommendationViewContainerController()
-        vc.viewDidLoad()
-        return vc.tableView
-    }
-    
 }

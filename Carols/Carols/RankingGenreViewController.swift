@@ -12,26 +12,26 @@ class RankingGenreViewController: UIViewController, UITableViewDataSource, UITab
     
     var tableView = UITableView()
     var superView = UIView()
-    
-    var sortType = "All"
+    var sortType  = "All"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        superView = self.view
-        
-        tableView = UITableView(frame: self.view.frame)
+        initMenu()
+    }
+    
+    func initMenu() {
+        superView            = self.view
+        tableView            = UITableView(frame: self.view.frame)
         tableView.dataSource = self
-        tableView.delegate = self
+        tableView.delegate   = self
         superView.addSubview(tableView)
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+}
 
-    //MARK: - UITableViewDatasource
+//MARK: - UITableViewDatasource
+extension RankingGenreViewController {
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

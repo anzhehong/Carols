@@ -20,17 +20,14 @@ class MainViewController: BaseViewController {
     //MARK: - CAPSPageMenuDelegate
     func initMenu() {
         
-        //        self.view.backgroundColor = UIColor.GlobalMenuBlack()
-        
-        let songLibraryVC = SongLibraryViewController()
-        songLibraryVC.title = "Song Library"
+        let songLibraryVC          = SongLibraryViewController()
+        songLibraryVC.title        = "Song Library"
         controllerArray.append(songLibraryVC)
-        let chosenSongsLibraryVC = ChosenSongsLibraryViewContainerController()
+        let chosenSongsLibraryVC   = ChosenSongsLibraryViewContainerController()
         chosenSongsLibraryVC.title = "Chosen Songs"
         controllerArray.append(chosenSongsLibraryVC)
         
-        
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat( titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
+        pageMenu           = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat( titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
         pageMenu!.delegate = self
         self.addChildViewController(pageMenu!)
         self.view.addSubview(pageMenu!.view)
