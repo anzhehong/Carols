@@ -34,6 +34,7 @@
 		62A2A0761CAE213E00B2D4DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62A2A0741CAE213E00B2D4DC /* LaunchScreen.storyboard */; };
 		62A2A0811CAE213F00B2D4DC /* CarolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A2A0801CAE213F00B2D4DC /* CarolsTests.swift */; };
 		62A2A08C1CAE213F00B2D4DC /* CarolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A2A08B1CAE213F00B2D4DC /* CarolsUITests.swift */; };
+		62EB89C21CB4E20B002EF07F /* PlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */; };
 		62FBE5361CAE22CA0059AD66 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */; };
 		F26E3FCC09A0C8FBE52E1F2E /* Pods_Carols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C68B8BF5F9B6A07ED10FF290 /* Pods_Carols.framework */; };
 /* End PBXBuildFile section */
@@ -89,6 +90,7 @@
 		62A2A0871CAE213F00B2D4DC /* CarolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A2A08B1CAE213F00B2D4DC /* CarolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolsUITests.swift; sourceTree = "<group>"; };
 		62A2A08D1CAE213F00B2D4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingViewController.swift; sourceTree = "<group>"; };
 		62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7179656382A29027B25697E9 /* Pods-Carols.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.release.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.release.xcconfig"; sourceTree = "<group>"; };
 		7C0B0EE4A25643C739A4F4DB /* Pods-Carols.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.debug.xcconfig"; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				625EC15F1CB41B5D009BA175 /* RankingViewContainerController.swift */,
 				625EC15D1CB41B47009BA175 /* RankingViewController.swift */,
 				625EC1611CB4233E009BA175 /* RankingGenreViewController.swift */,
+				62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 				625EC1641CB423BF009BA175 /* RankingCell.swift in Sources */,
 				62FBE5361CAE22CA0059AD66 /* LoginViewController.swift in Sources */,
 				625EC1561CB4123B009BA175 /* RecommendationViewController.swift in Sources */,
+				62EB89C21CB4E20B002EF07F /* PlayingViewController.swift in Sources */,
 				625EC14E1CB3F291009BA175 /* LeftSideCell.swift in Sources */,
 				62A2A06E1CAE213E00B2D4DC /* MainViewController.swift in Sources */,
 				623C81E71CAE432C00A6A3D5 /* AAColor.swift in Sources */,
