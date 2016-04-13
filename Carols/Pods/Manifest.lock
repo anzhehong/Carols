@@ -1,16 +1,25 @@
 PODS:
+  - CocoaAsyncSocket (7.4.3):
+    - CocoaAsyncSocket/All (= 7.4.3)
+  - CocoaAsyncSocket/All (7.4.3):
+    - CocoaAsyncSocket/GCD
+    - CocoaAsyncSocket/RunLoop
+  - CocoaAsyncSocket/GCD (7.4.3)
+  - CocoaAsyncSocket/RunLoop (7.4.3)
   - PageMenu (1.2.9)
   - SlideMenuControllerSwift (2.1.0)
   - SnapKit (0.15.0)
   - SwiftyBeaver (0.4.2)
 
 DEPENDENCIES:
+  - CocoaAsyncSocket
   - PageMenu
   - SlideMenuControllerSwift
   - SnapKit (~> 0.15.0)
   - SwiftyBeaver
 
 SPEC CHECKSUMS:
+  CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
   SlideMenuControllerSwift: 0ed532750dc8574eefda189d0f25805bc967ab7a
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87

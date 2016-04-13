@@ -9,6 +9,7 @@ pod 'SnapKit', '~> 0.15.0'
 pod 'SwiftyBeaver'
 pod 'PageMenu'
 pod 'SlideMenuControllerSwift'
+pod 'CocoaAsyncSocket'
 end
 
 target 'CarolsTests' do

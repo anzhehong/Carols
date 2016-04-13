@@ -84,12 +84,14 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-Carols/CocoaAsyncSocket.framework"
   install_framework "Pods-Carols/PageMenu.framework"
   install_framework "Pods-Carols/SlideMenuControllerSwift.framework"
   install_framework "Pods-Carols/SnapKit.framework"
   install_framework "Pods-Carols/SwiftyBeaver.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-Carols/CocoaAsyncSocket.framework"
   install_framework "Pods-Carols/PageMenu.framework"
   install_framework "Pods-Carols/SlideMenuControllerSwift.framework"
   install_framework "Pods-Carols/SnapKit.framework"
