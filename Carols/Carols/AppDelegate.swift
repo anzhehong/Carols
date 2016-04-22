@@ -10,15 +10,18 @@ import UIKit
 import SlideMenuControllerSwift
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-//        let loginViewController = LoginViewController()
-//        window?.rootViewController = loginViewController
+        //MARK: 第三方登录
+        configQQWeChat()
+        
+        let loginViewController = LoginViewController()
+        window?.rootViewController = loginViewController
         
 //        let mainViewController = MainViewController()
 //        window?.rootViewController = mainViewController
@@ -28,14 +31,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let leftViewController = LeftSideViewController()
         let slideMenuController = SlideMenuController(mainViewController: mainViewController, leftMenuViewController: leftViewController)
         slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
-        self.window?.rootViewController = slideMenuController
+//        self.window?.rootViewController = slideMenuController
         self.window?.makeKeyAndVisible()
-        
         
         //set statusbar hidden
         application.statusBarHidden = true
         
         return true
+    }
+    
+    func configQQWeChat() {
+        WXApi.registerApp(ThirdPartyLoginModel.WECHATAPPID)
+        ShareSDK.registerApp(ThirdPartyLoginModel.SHARESDKKEY, activePlatforms: [SSDKPlatformType.TypeQQ.rawValue], onImport: { (platform) in
+            switch platform {
+            case SSDKPlatformType.TypeQQ:
+                ShareSDKConnector.connectQQ(QQApiInterface.classForCoder(), tencentOAuthClass: TencentOAuth.classForCoder())
+            default:
+                break
+            }
+        }) { (platform, appInfo) in
+            switch platform {
+            case SSDKPlatformType.TypeQQ:
+                appInfo.SSDKSetupQQByAppId(ThirdPartyLoginModel.QQAPPID, appKey: ThirdPartyLoginModel.QQAPPKEY, authType: SSDKAuthTypeBoth)
+            default:
+                break
+            }
+        }
+    }
+    
+    func onResp(resp: BaseResp!) {
+//        let code = (resp as! SendAuthResp).code
+//        let state = (resp as! SendAuthResp).state
+    }
+
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        return handleURL(url)
+    }
+    
+    func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        return handleURL(url)
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        return handleURL(url)
+    }
+    
+    func handleURL(url: NSURL) ->Bool {
+        let str = url.absoluteString
+        if str.hasPrefix("wx") {
+            return WXApi.handleOpenURL(url, delegate: self)
+        }else {
+            return TencentOAuth.HandleOpenURL(url)
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -11,6 +11,10 @@ The original TCP version (AsyncSocket) was created by Dustin Voss in January 200
 Updated and maintained by Deusty LLC and the Apple development community.
 
 
+## MOBFoundation
+
+Copyright © 2012-2015 mob
+
 ## PageMenu
 
 Copyright (c) 2012 The Board of Trustees of The University of Alabama
@@ -42,6 +46,10 @@ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 OF THE POSSIBILITY OF SUCH DAMAGE.
 
+
+## ShareSDK3
+
+Copyright © 2012-2015 mob
 
 ## SlideMenuControllerSwift
 

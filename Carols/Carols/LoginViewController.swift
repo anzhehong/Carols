@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, WXApiDelegate, TencentSessionDelegate {
     
     
     let background            = UIImageView()
@@ -27,6 +27,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     let wechatButton          = UIButton()
     let weboButton            = UIButton()
     var superView             = UIView()
+    
+    var tenchentOAuth : TencentOAuth!
+    var permissions: NSArray!
     
     
     //MARK: - ViewController Life Circle
@@ -174,6 +177,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         superView.addSubview(wechatButton)
         wechatButton.setBackgroundImage(UIImage(named: "wechat"), forState: .Normal)
+        wechatButton.addTarget(self, action: #selector(LoginViewController.wechatLogin), forControlEvents: .TouchUpInside)
         wechatButton.snp_makeConstraints { (make) in
             make.height.equalTo(44)
             make.width.equalTo(55)
@@ -183,6 +187,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         superView.addSubview(weboButton)
         weboButton.setBackgroundImage(UIImage(named: "weibo"), forState: .Normal)
+        weboButton.addTarget(self, action: #selector(LoginViewController.qqLogin), forControlEvents: .TouchUpInside)
         weboButton.snp_makeConstraints { (make) in
             make.height.width.top.equalTo(wechatButton)
             make.left.equalTo(superView.snp_centerX).offset(8)
@@ -193,6 +198,41 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func signButtonClicked()  {
         let vc = SingUpViewController()
         self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    func wechatLogin() {
+        let req = SendAuthReq()
+        req.scope = "snsapi_userinfo"
+        req.state = "WECHATMOBILE_\(AANumber.getUUIDStr())"
+        WXApi.sendAuthReq(req, viewController: self, delegate: self)
+    }
+    
+    func qqLogin() {
+        tenchentOAuth = TencentOAuth(appId: "1105278705", andDelegate: self)
+        permissions = NSArray(array: ["get_user_info", "get_simple_userinfo", "add_t"])
+        tenchentOAuth.authorize(permissions as [AnyObject], localAppId: "1105278705", inSafari: false)
+    }
+    
+    //MARK: QQ 回调函数
+    func tencentDidLogin() {
+        if ((tenchentOAuth.accessToken != nil)) {
+            tenchentOAuth.getUserInfo()
+        }
+    }
+    
+    func getUserInfoResponse(response: APIResponse!) {
+        if ( 0 == response.retCode && 0 == response.detailRetCode) {
+            AALog.debug(response.jsonResponse)
+//            AAAlertViewController.showAlert("登录成功", message: "用户名为： \n\((response.jsonResponse as! anyObject).)")
+        }
+    }
+    
+    func tencentDidNotLogin(cancelled: Bool) {
+        AAAlertViewController.showAlert("用户已取消", message: "网络出错，请重试")
+    }
+    
+    func tencentDidNotNetWork() {
+        AAAlertViewController.showAlert("出错啦", message: "网络出错，请重试")
     }
     
     //MARK: - UITextFieldDelegate

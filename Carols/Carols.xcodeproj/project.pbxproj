@@ -28,6 +28,9 @@
 		625EC1601CB41B5D009BA175 /* RankingViewContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EC15F1CB41B5D009BA175 /* RankingViewContainerController.swift */; };
 		625EC1621CB4233E009BA175 /* RankingGenreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EC1611CB4233E009BA175 /* RankingGenreViewController.swift */; };
 		625EC1641CB423BF009BA175 /* RankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625EC1631CB423BF009BA175 /* RankingCell.swift */; };
+		629611B31CC9EDA200724A84 /* AANumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629611B21CC9EDA200724A84 /* AANumber.swift */; };
+		629611B51CC9EE1500724A84 /* AAAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629611B41CC9EE1500724A84 /* AAAlertViewController.swift */; };
+		629611B81CCA020400724A84 /* ThirdPartyLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629611B71CCA020400724A84 /* ThirdPartyLoginModel.swift */; };
 		62A2A06C1CAE213E00B2D4DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A2A06B1CAE213E00B2D4DC /* AppDelegate.swift */; };
 		62A2A06E1CAE213E00B2D4DC /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A2A06D1CAE213E00B2D4DC /* MainViewController.swift */; };
 		62A2A0711CAE213E00B2D4DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62A2A06F1CAE213E00B2D4DC /* Main.storyboard */; };
@@ -79,6 +82,9 @@
 		625EC15F1CB41B5D009BA175 /* RankingViewContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewContainerController.swift; sourceTree = "<group>"; };
 		625EC1611CB4233E009BA175 /* RankingGenreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingGenreViewController.swift; sourceTree = "<group>"; };
 		625EC1631CB423BF009BA175 /* RankingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingCell.swift; sourceTree = "<group>"; };
+		629611B21CC9EDA200724A84 /* AANumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AANumber.swift; sourceTree = "<group>"; };
+		629611B41CC9EE1500724A84 /* AAAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAAlertViewController.swift; sourceTree = "<group>"; };
+		629611B71CCA020400724A84 /* ThirdPartyLoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdPartyLoginModel.swift; sourceTree = "<group>"; };
 		62A2A0681CAE213E00B2D4DC /* Carols.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Carols.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A2A06B1CAE213E00B2D4DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		62A2A06D1CAE213E00B2D4DC /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +98,7 @@
 		62A2A0871CAE213F00B2D4DC /* CarolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A2A08B1CAE213F00B2D4DC /* CarolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolsUITests.swift; sourceTree = "<group>"; };
 		62A2A08D1CAE213F00B2D4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		62A3124E1CC8E26900071672 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
 		62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingViewController.swift; sourceTree = "<group>"; };
 		62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7179656382A29027B25697E9 /* Pods-Carols.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.release.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.release.xcconfig"; sourceTree = "<group>"; };
@@ -137,6 +144,8 @@
 		623C81E51CAE42F700A6A3D5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				629611B41CC9EE1500724A84 /* AAAlertViewController.swift */,
+				629611B21CC9EDA200724A84 /* AANumber.swift */,
 				623C81E61CAE432C00A6A3D5 /* AAColor.swift */,
 				623C81E81CAE438F00A6A3D5 /* AALog.swift */,
 				6224AD0E1CBC9E8C00DC1BF9 /* AARegular.swift */,
@@ -154,6 +163,14 @@
 				625EC1631CB423BF009BA175 /* RankingCell.swift */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		629611B61CCA01E400724A84 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				629611B71CCA020400724A84 /* ThirdPartyLoginModel.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		62A2A05F1CAE213E00B2D4DC = {
@@ -181,10 +198,12 @@
 		62A2A06A1CAE213E00B2D4DC /* Carols */ = {
 			isa = PBXGroup;
 			children = (
+				629611B61CCA01E400724A84 /* Model */,
 				625EC14C1CB3F261009BA175 /* Cell */,
 				623C81E51CAE42F700A6A3D5 /* Utils */,
 				62FBE5341CAE22BD0059AD66 /* ViewControllers */,
 				62A2A06B1CAE213E00B2D4DC /* AppDelegate.swift */,
+				62A3124E1CC8E26900071672 /* BridgeHeader.h */,
 				62A2A06F1CAE213E00B2D4DC /* Main.storyboard */,
 				62A2A0721CAE213E00B2D4DC /* Assets.xcassets */,
 				62A2A0741CAE213E00B2D4DC /* LaunchScreen.storyboard */,
@@ -432,6 +451,7 @@
 				625EC15C1CB41632009BA175 /* ChosenSongsLibraryViewController.swift in Sources */,
 				625EC1641CB423BF009BA175 /* RankingCell.swift in Sources */,
 				62FBE5361CAE22CA0059AD66 /* LoginViewController.swift in Sources */,
+				629611B51CC9EE1500724A84 /* AAAlertViewController.swift in Sources */,
 				625EC1561CB4123B009BA175 /* RecommendationViewController.swift in Sources */,
 				62EB89C21CB4E20B002EF07F /* PlayingViewController.swift in Sources */,
 				625EC14E1CB3F291009BA175 /* LeftSideCell.swift in Sources */,
@@ -444,6 +464,8 @@
 				6224AD0F1CBC9E8C00DC1BF9 /* AARegular.swift in Sources */,
 				625EC15A1CB41523009BA175 /* HistoryCell.swift in Sources */,
 				625EC1521CB3F303009BA175 /* ChosenSongCell.swift in Sources */,
+				629611B31CC9EDA200724A84 /* AANumber.swift in Sources */,
+				629611B81CCA020400724A84 /* ThirdPartyLoginModel.swift in Sources */,
 				625EC15E1CB41B47009BA175 /* RankingViewController.swift in Sources */,
 				623C81EB1CAE4F8E00A6A3D5 /* SingUpViewController.swift in Sources */,
 				625EC1541CB40A81009BA175 /* RecommendationViewContainerController.swift in Sources */,
@@ -593,8 +615,49 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Carols/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"WeChatSDK\"",
+					"-l\"WeiboSDK\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-l\"z.1.2.5\"",
+					"-framework",
+					"\"CocoaAsyncSocket\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"JavaScriptCore\"",
+					"-framework",
+					"\"MOBFoundation\"",
+					"-framework",
+					"\"PageMenu\"",
+					"-framework",
+					"\"ShareSDK\"",
+					"-framework",
+					"\"ShareSDKConnector\"",
+					"-framework",
+					"\"ShareSDKExtension\"",
+					"-framework",
+					"\"ShareSDKUI\"",
+					"-framework",
+					"\"SlideMenuControllerSwift\"",
+					"-framework",
+					"\"SnapKit\"",
+					"-framework",
+					"\"SwiftyBeaver\"",
+					"-framework",
+					"\"TencentOpenAPI\"",
+					"-framework",
+					"\"UIKit\"",
+					"-fobjc-arc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fowafolo.Carols;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/fowafolo/Documents/Programming/Carols/Carols/Carols/BridgeHeader.h;
 			};
 			name = Debug;
 		};
@@ -605,8 +668,49 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Carols/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"WeChatSDK\"",
+					"-l\"WeiboSDK\"",
+					"-l\"icucore\"",
+					"-l\"sqlite3\"",
+					"-l\"stdc++\"",
+					"-l\"z\"",
+					"-l\"z.1.2.5\"",
+					"-framework",
+					"\"CocoaAsyncSocket\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"JavaScriptCore\"",
+					"-framework",
+					"\"MOBFoundation\"",
+					"-framework",
+					"\"PageMenu\"",
+					"-framework",
+					"\"ShareSDK\"",
+					"-framework",
+					"\"ShareSDKConnector\"",
+					"-framework",
+					"\"ShareSDKExtension\"",
+					"-framework",
+					"\"ShareSDKUI\"",
+					"-framework",
+					"\"SlideMenuControllerSwift\"",
+					"-framework",
+					"\"SnapKit\"",
+					"-framework",
+					"\"SwiftyBeaver\"",
+					"-framework",
+					"\"TencentOpenAPI\"",
+					"-framework",
+					"\"UIKit\"",
+					"-fobjc-arc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fowafolo.Carols;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/fowafolo/Documents/Programming/Carols/Carols/Carols/BridgeHeader.h;
 			};
 			name = Release;
 		};
