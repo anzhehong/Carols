@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (3.3.1)
   - CocoaAsyncSocket (7.4.3):
     - CocoaAsyncSocket/All (= 7.4.3)
   - CocoaAsyncSocket/All (7.4.3):
@@ -18,8 +19,10 @@ PODS:
   - SlideMenuControllerSwift (2.1.0)
   - SnapKit (0.15.0)
   - SwiftyBeaver (0.4.2)
+  - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
+  - Alamofire (~> 3.3)
   - CocoaAsyncSocket
   - MOBFoundation
   - PageMenu
@@ -31,8 +34,19 @@ DEPENDENCIES:
   - SlideMenuControllerSwift
   - SnapKit (~> 0.15.0)
   - SwiftyBeaver
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+
+EXTERNAL SOURCES:
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  SwiftyJSON:
+    :commit: 2a5b70f06001316d4fb54501edc70b4084705da0
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
   MOBFoundation: 79efc94db961fe5a08cf32de69166f6a29a3b2b5
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
@@ -40,5 +54,6 @@ SPEC CHECKSUMS:
   SlideMenuControllerSwift: 0ed532750dc8574eefda189d0f25805bc967ab7a
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
   SwiftyBeaver: 3eced9aabe4f10b975453cc1baaa2d523a5eaeae
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
 COCOAPODS: 0.39.0

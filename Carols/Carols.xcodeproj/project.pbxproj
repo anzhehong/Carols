@@ -153,6 +153,23 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		6259C5251CCB4436006E934F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				625EC14C1CB3F261009BA175 /* Cell */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		6259C5261CCB4478006E934F /* LoginAndRegister */ = {
+			isa = PBXGroup;
+			children = (
+				62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */,
+				623C81EA1CAE4F8E00A6A3D5 /* SingUpViewController.swift */,
+			);
+			name = LoginAndRegister;
+			sourceTree = "<group>";
+		};
 		625EC14C1CB3F261009BA175 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,8 +215,8 @@
 		62A2A06A1CAE213E00B2D4DC /* Carols */ = {
 			isa = PBXGroup;
 			children = (
+				6259C5251CCB4436006E934F /* View */,
 				629611B61CCA01E400724A84 /* Model */,
-				625EC14C1CB3F261009BA175 /* Cell */,
 				623C81E51CAE42F700A6A3D5 /* Utils */,
 				62FBE5341CAE22BD0059AD66 /* ViewControllers */,
 				62A2A06B1CAE213E00B2D4DC /* AppDelegate.swift */,
@@ -233,8 +250,7 @@
 		62FBE5341CAE22BD0059AD66 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */,
-				623C81EA1CAE4F8E00A6A3D5 /* SingUpViewController.swift */,
+				6259C5261CCB4478006E934F /* LoginAndRegister */,
 				625EC14A1CB27333009BA175 /* BaseViewController.swift */,
 				6256E12B1CAF7F15003BC7E3 /* LeftSideViewController.swift */,
 				62A2A06D1CAE213E00B2D4DC /* MainViewController.swift */,

@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate, WXApiDelegate, TencentSessionDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     let background            = UIImageView()
@@ -186,7 +186,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, WXApiDelegate,
         }
         
         superView.addSubview(weboButton)
-        weboButton.setBackgroundImage(UIImage(named: "weibo"), forState: .Normal)
+        weboButton.setBackgroundImage(UIImage(named: "qq"), forState: .Normal)
         weboButton.addTarget(self, action: #selector(LoginViewController.qqLogin), forControlEvents: .TouchUpInside)
         weboButton.snp_makeConstraints { (make) in
             make.height.width.top.equalTo(wechatButton)
@@ -198,41 +198,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, WXApiDelegate,
     func signButtonClicked()  {
         let vc = SingUpViewController()
         self.presentViewController(vc, animated: true, completion: nil)
-    }
-    
-    func wechatLogin() {
-        let req = SendAuthReq()
-        req.scope = "snsapi_userinfo"
-        req.state = "WECHATMOBILE_\(AANumber.getUUIDStr())"
-        WXApi.sendAuthReq(req, viewController: self, delegate: self)
-    }
-    
-    func qqLogin() {
-        tenchentOAuth = TencentOAuth(appId: "1105278705", andDelegate: self)
-        permissions = NSArray(array: ["get_user_info", "get_simple_userinfo", "add_t"])
-        tenchentOAuth.authorize(permissions as [AnyObject], localAppId: "1105278705", inSafari: false)
-    }
-    
-    //MARK: QQ 回调函数
-    func tencentDidLogin() {
-        if ((tenchentOAuth.accessToken != nil)) {
-            tenchentOAuth.getUserInfo()
-        }
-    }
-    
-    func getUserInfoResponse(response: APIResponse!) {
-        if ( 0 == response.retCode && 0 == response.detailRetCode) {
-            AALog.debug(response.jsonResponse)
-//            AAAlertViewController.showAlert("登录成功", message: "用户名为： \n\((response.jsonResponse as! anyObject).)")
-        }
-    }
-    
-    func tencentDidNotLogin(cancelled: Bool) {
-        AAAlertViewController.showAlert("用户已取消", message: "网络出错，请重试")
-    }
-    
-    func tencentDidNotNetWork() {
-        AAAlertViewController.showAlert("出错啦", message: "网络出错，请重试")
     }
     
     //MARK: - UITextFieldDelegate
@@ -250,4 +215,55 @@ class LoginViewController: UIViewController, UITextFieldDelegate, WXApiDelegate,
         passwordTextField.resignFirstResponder()
     }
     
+}
+
+extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
+    func wechatLogin() {
+        if WXApi.isWXAppInstalled() {
+            let req = SendAuthReq()
+            req.scope = "snsapi_userinfo"
+            req.state = "123"
+            WXApi.sendAuthReq(req, viewController: self, delegate: self)
+        }else {
+            AAAlertViewController.showAlert("失败", message: "本地没有安装微信")
+        }
+    }
+    
+    func onResp(resp: BaseResp!) {
+        let code = (resp as! SendAuthResp).code
+        let state = (resp as! SendAuthResp).state
+        AALog.info(code)
+    }
+    
+    func qqLogin() {
+        if QQApiInterface.isQQInstalled() {
+            tenchentOAuth = TencentOAuth(appId: ThirdPartyLoginModel.QQAPPID, andDelegate: self)
+            permissions = NSArray(array: ["get_user_info", "get_simple_userinfo", "add_t"])
+            tenchentOAuth.authorize(permissions as [AnyObject], localAppId: ThirdPartyLoginModel.QQAPPID, inSafari: false)
+        }else {
+            AAAlertViewController.showAlert("失败", message: "本地没有安装QQ")
+        }
+    }
+    
+    //MARK: QQ 回调函数
+    func tencentDidLogin() {
+        if ((tenchentOAuth.accessToken != nil)) {
+            tenchentOAuth.getUserInfo()
+        }
+    }
+    
+    func getUserInfoResponse(response: APIResponse!) {
+        if ( 0 == response.retCode && 0 == response.detailRetCode) {
+            AALog.debug(response.jsonResponse)
+            //            AAAlertViewController.showAlert("登录成功", message: "用户名为： \n\((response.jsonResponse as! anyObject).)")
+        }
+    }
+    
+    func tencentDidNotLogin(cancelled: Bool) {
+        AAAlertViewController.showAlert("用户已取消", message: "网络出错，请重试")
+    }
+    
+    func tencentDidNotNetWork() {
+        AAAlertViewController.showAlert("出错啦", message: "网络出错，请重试")
+    }
 }

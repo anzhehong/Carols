@@ -58,11 +58,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
             }
         }
     }
-    
-    func onResp(resp: BaseResp!) {
-//        let code = (resp as! SendAuthResp).code
-//        let state = (resp as! SendAuthResp).state
-    }
 
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
         return handleURL(url)
@@ -79,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     func handleURL(url: NSURL) ->Bool {
         let str = url.absoluteString
         if str.hasPrefix("wx") {
-            return WXApi.handleOpenURL(url, delegate: self)
+            return WXApi.handleOpenURL(url, delegate: LoginViewController())
         }else {
             return TencentOAuth.HandleOpenURL(url)
         }
