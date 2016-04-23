@@ -231,8 +231,11 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     
     func onResp(resp: BaseResp!) {
         let code = (resp as! SendAuthResp).code
-        let state = (resp as! SendAuthResp).state
+//        let state = (resp as! SendAuthResp).state
         AALog.info(code)
+        LoginRequest.getWDUserInfoByCode(code) { (result, error) in
+            
+        }
     }
     
     func qqLogin() {

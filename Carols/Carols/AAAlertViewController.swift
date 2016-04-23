@@ -25,11 +25,11 @@ class AAAlertViewController: UIViewController {
     }
     
     class func getAlert(title: String, message: String)-> UIAlertController {
-        let rootWindow = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController
+//        let rootWindow = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController
         let vc = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let action = UIAlertAction(title: "好的", style: .Cancel) { (action) in
-            rootWindow?.dismissViewControllerAnimated(true, completion: nil)
-        }
+//        let action = UIAlertAction(title: "好的", style: .Cancel) { (action) in
+//            rootWindow?.dismissViewControllerAnimated(true, completion: nil)
+//        }
 //        vc.addAction(action)
         return vc
     }
