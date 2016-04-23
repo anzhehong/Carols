@@ -24,6 +24,7 @@ PODS:
   - ShareSDK3/ShareSDKUI (3.2.5)
   - SlideMenuControllerSwift (2.1.0)
   - SnapKit (0.15.0)
+  - SVProgressHUD (2.0.3)
   - SwiftyBeaver (0.4.2)
   - SwiftyJSON (2.3.2)
 
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - ShareSDK3/ShareSDKUI
   - SlideMenuControllerSwift
   - SnapKit (~> 0.15.0)
+  - SVProgressHUD
   - SwiftyBeaver
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
@@ -63,6 +65,7 @@ SPEC CHECKSUMS:
   ShareSDK3: ccdd8ec971044703e7722e19c2f3b38fb03775e2
   SlideMenuControllerSwift: 0ed532750dc8574eefda189d0f25805bc967ab7a
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyBeaver: 3eced9aabe4f10b975453cc1baaa2d523a5eaeae
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
