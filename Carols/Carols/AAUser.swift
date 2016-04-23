@@ -58,4 +58,16 @@ class AAUser: NSObject {
             return temp
         }
     }
+    
+//    class func saveUser() {
+//        if let user = _currentUser {
+//            
+//        }else {
+//            
+//        }
+//    }
+//    
+//    class func readUser() -> AAUser {
+//        
+//    }
 }

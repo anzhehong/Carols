@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import SlideMenuControllerSwift
+import SwiftyJSON
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -32,6 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var tenchentOAuth : TencentOAuth!
     var permissions: NSArray!
     
+    var toLoginUser = AAUser()
     
     //MARK: - ViewController Life Circle
     override func viewDidLoad() {
@@ -232,18 +234,12 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     
     func onResp(resp: BaseResp!) {
         let code = (resp as! SendAuthResp).code
-//        let state = (resp as! SendAuthResp).state
         AALog.info(code)
         LoginRequest.getWDUserInfoByCode(code) { (result, error) in
             if (error != nil) {
                 AAAlertViewController.showAlert("出错啦", message: error!.localizedDescription)
             }else {
-                let screenWidth = UIScreen.mainScreen().bounds.width
-                let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
-                slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
-//                self.presentViewController(slideMenuController, animated: true, completion: nil)
-                let rootWindow = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController
-                rootWindow?.presentViewController(slideMenuController, animated: true, completion: nil)
+                self.pushVC()
             }
         }
     }
@@ -261,15 +257,33 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     //MARK: QQ 回调函数
     func tencentDidLogin() {
         if ((tenchentOAuth.accessToken != nil)) {
+            toLoginUser.openId = tenchentOAuth.openId
             tenchentOAuth.getUserInfo()
         }
     }
     
     func getUserInfoResponse(response: APIResponse!) {
         if ( 0 == response.retCode && 0 == response.detailRetCode) {
-            AALog.debug(response.jsonResponse)
-            //            AAAlertViewController.showAlert("登录成功", message: "用户名为： \n\((response.jsonResponse as! anyObject).)")
+            let jsonResponse = response.jsonResponse
+            toLoginUser.sex       = jsonResponse["gender"] as? Int
+            toLoginUser.avatorUrl = jsonResponse["figureurl_qq_2"] as! String
+            toLoginUser.nickName  = jsonResponse["nickname"] as! String
+            toLoginUser.province  = jsonResponse["province"] as? String
+            toLoginUser.city      = jsonResponse["city"] as? String
+            
+            AAUser._currentUser = toLoginUser
+            pushVC()
+        }else {
+            AAAlertViewController.showAlert("失败", message: response.errorMsg)
         }
+    }
+    
+    func pushVC() {
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+        slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+        let rootWindow = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController
+        rootWindow?.presentViewController(slideMenuController, animated: true, completion: nil)
     }
     
     func tencentDidNotLogin(cancelled: Bool) {
