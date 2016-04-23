@@ -8,6 +8,7 @@
 
 import UIKit
 import SlideMenuControllerSwift
+import MagicalRecord
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
@@ -16,8 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        //MARK: 第三方登录
+        
         configQQWeChat()
         
         let loginViewController = LoginViewController()
@@ -26,11 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 //        let mainViewController = MainViewController()
 //        window?.rootViewController = mainViewController
 
-        let screenWidth = UIScreen.mainScreen().bounds.width
-        let mainViewController = MainViewController()
-        let leftViewController = LeftSideViewController()
-        let slideMenuController = SlideMenuController(mainViewController: mainViewController, leftMenuViewController: leftViewController)
-        slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+//        let screenWidth = UIScreen.mainScreen().bounds.width
+//        let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+//        slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
 //        self.window?.rootViewController = slideMenuController
         self.window?.makeKeyAndVisible()
         
@@ -40,6 +38,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         return true
     }
     
+    //MARK: - 数据库
+    func configDB() {
+        MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed("MyDatabase.sqlite")
+        MagicalRecord.setLoggingLevel(MagicalRecordLoggingLevel.Off)
+    }
+    
+    //MARK: - 第三方登录
     func configQQWeChat() {
         WXApi.registerApp(ThirdPartyLoginModel.WECHATAPPID)
         ShareSDK.registerApp(ThirdPartyLoginModel.SHARESDKKEY, activePlatforms: [SSDKPlatformType.TypeQQ.rawValue], onImport: { (platform) in

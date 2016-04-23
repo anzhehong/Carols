@@ -26,8 +26,9 @@ class LoginRequest {
                         handler(nil, error)
                     }else {
                         let result = JSON(data: response.data!)
-                        let model = ThirdPartyLoginModel(_openId: result["openid"].string, _nickName: result["nickname"].string, _sex: result["sex"].int, _language: result["language"].string, _city: result["city"].string, _province: result["province"].string, _country: result["country"].string, _avatorUrl: result["headimgurl"].string)
-                        handler(model, nil)
+                        let user = AAUser(_openId: result["openid"].string, _nickName: result["nickname"].string, _sex: result["sex"].int, _language: result["language"].string, _city: result["city"].string, _province: result["province"].string, _country: result["country"].string, _avatorUrl: result["headimgurl"].string)
+                        AAUser._currentUser = user
+                        handler(user, nil)
                     }
                 }
 

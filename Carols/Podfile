@@ -12,6 +12,8 @@ pod 'SlideMenuControllerSwift'
 pod 'CocoaAsyncSocket'
 pod 'Alamofire', '~> 3.3'
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+pod 'MagicalRecord'
+pod 'SDWebImage', '~>3.7'
 
 #第三方登录
 # 主模块(必须)

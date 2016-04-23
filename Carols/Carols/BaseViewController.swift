@@ -14,7 +14,7 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     
     //MARK: - Title
     let titleHeight = 64
-    var userName    = "Harold"
+    var userName    = AAUser.currentUser().nickName
     var superView   = UIView()
     let nameLabel   = UILabel()
     

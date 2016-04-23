@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import SlideMenuControllerSwift
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -234,7 +235,16 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
 //        let state = (resp as! SendAuthResp).state
         AALog.info(code)
         LoginRequest.getWDUserInfoByCode(code) { (result, error) in
-            
+            if (error != nil) {
+                AAAlertViewController.showAlert("出错啦", message: error!.localizedDescription)
+            }else {
+                let screenWidth = UIScreen.mainScreen().bounds.width
+                let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+                slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+//                self.presentViewController(slideMenuController, animated: true, completion: nil)
+                let rootWindow = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController
+                rootWindow?.presentViewController(slideMenuController, animated: true, completion: nil)
+            }
         }
     }
     
