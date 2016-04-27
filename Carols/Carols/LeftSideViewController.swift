@@ -8,57 +8,87 @@
 
 import UIKit
 import SlideMenuControllerSwift
+import SDWebImage
 
 class LeftSideViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    let cellNames: [String] = ["Home", "Ranking List", "Chosen Songs", "Playing", "History", "Logout"]
+    var tableView           = UITableView()
+    
+    
+    //MARK: - Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor ( red: 0.3059, green: 0.1843, blue: 0.2118, alpha: 1.0 )
-        
+        configureUI()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        tableView.rowHeight = (tableView.frame.size.height) / CGFloat(cellNames.count)
+    }
+    
+    //MARK: - UI
+    func configureUI() {
         let superView = self.view
-        let screenHeight = UIScreen.mainScreen().bounds.height
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "loginBack")!)
+        
+        let avator   = UIImageView()
+        avator.sd_setImageWithURL(NSURL(string: AAUser.currentUser().avatorUrl), placeholderImage: UIImage(named: "avator"))
+        superView.addSubview(avator)
+        avator.snp_makeConstraints { (make) in
+            make.top.equalTo(superView).offset(69)
+            make.height.width.equalTo(95)
+            make.centerX.equalTo(superView.snp_centerX)
+        }
+        avator.layer.cornerRadius = 95 / 2 // width /2
+        avator.clipsToBounds = true
         
         
-        let tableView = UITableView()
-        tableView.backgroundColor = UIColor ( red: 0.2392, green: 0.1333, blue: 0.1608, alpha: 1.0 )
+        let nameLabel       = UILabel()
+        nameLabel.textColor = UIColor.whiteColor()
+        nameLabel.text      = AAUser.currentUser().nickName
+        nameLabel.font      = UIFont.boldSystemFontOfSize(30)
+        superView.addSubview(nameLabel)
+        nameLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(avator.snp_bottom).offset(10)
+            make.centerX.equalTo(avator)
+        }
+        
+        let logoutButton = UIButton()
+        superView.addSubview(logoutButton)
+        logoutButton.setTitle("Logout", forState: .Normal)
+        logoutButton.snp_makeConstraints { (make) in
+            make.right.equalTo(superView).offset(-61)
+            make.bottom.equalTo(superView).offset(-50)
+            
+        }
+        
+        let logoutImage = UIImageView(image: UIImage(named: "Logout Icon"))
+        superView.addSubview(logoutImage)
+        logoutImage.snp_makeConstraints { (make) in
+            make.centerY.equalTo(logoutButton)
+            make.right.equalTo(logoutButton.snp_left).offset(-7)
+            make.height.equalTo(16)
+            make.width.equalTo(18)
+        }
+        
+        tableView = UITableView()
+        tableView.backgroundColor = UIColor.clearColor()
         superView.addSubview(tableView)
         tableView.snp_makeConstraints { (make) in
             make.width.centerX.equalTo(superView)
-            make.top.equalTo(superView).offset(200)
-            make.bottom.equalTo(superView).offset(-50)
+            make.top.equalTo(nameLabel.snp_bottom).offset(60)
+            make.bottom.equalTo(logoutButton.snp_top).offset(-64)
         }
         tableView.separatorStyle = .None
         tableView.scrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = (screenHeight - 250) / CGFloat(cellNames.count)
-        
-        let avator = UIImageView()
-        avator.image = UIImage(named: "avator")
-        superView.addSubview(avator)
-        avator.snp_makeConstraints { (make) in
-            make.height.width.equalTo(120)
-            make.left.equalTo(superView).offset(35)
-            make.top.equalTo(superView).offset(35)
-        }
-        avator.layer.cornerRadius = 60 // width /2
-        avator.clipsToBounds = true
-        
-        let nameLabel = UILabel()
-        nameLabel.textColor = UIColor.GlobalRed()
-        nameLabel.text = "Harold"
-        nameLabel.font = UIFont(name: "HelveticaNeue", size: 25)
-        superView.addSubview(nameLabel)
-        nameLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(avator.snp_right).offset(15)
-            make.centerY.equalTo(avator)
-        }
-
     }
-    
-    //MARK: - UITableView DataSource
-    let cellNames: [String] = ["Home", "Ranking List", "Chosen Songs", "Playing", "History", "Logout"]
+}
+
+//MARK: - UITableView DataSource & Delegate
+extension LeftSideViewController {
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -83,16 +113,20 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if indexPath.row == 0 {
             slideMenuController.mainViewController = MainViewController()
-        }else if indexPath.row == 2 {
-//            let vc = MainViewController()
-//            slideMenuController.mainViewController = vc
+        } else if indexPath.row == 1 {
+            slideMenuController.mainViewController = RankingViewController()
         }
+        else if indexPath.row == 2 {
+            slideMenuController.mainViewController = ChosenSongsLibraryViewController()
+        }
+        else if indexPath.row == 3 {
+            slideMenuController.mainViewController = RecommendationViewController()
+        }
+            
         else if indexPath.row == 4 {
             slideMenuController.mainViewController = SongHistoryViewController()
         }
         
         self.presentViewController(slideMenuController, animated: false, completion: nil)
     }
-    
-    
 }

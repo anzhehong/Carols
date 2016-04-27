@@ -14,19 +14,32 @@ class LeftSideCell: UITableViewCell {
     
     init(style: UITableViewCellStyle, reuseIdentifier: String?, label: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor ( red: 0.3098, green: 0.1882, blue: 0.2157, alpha: 1.0 )
+        self.backgroundColor = UIColor.clearColor()
+        
+        let line             = UIView()
+        line.backgroundColor = UIColor.UIColorFromRGB(0x979797)
+        self.addSubview(line)
+        line.snp_makeConstraints { (make) in
+            make.bottom.equalTo(self).offset(-3)
+            make.height.equalTo(0.5)
+            make.centerX.equalTo(self)
+            make.left.equalTo(self).offset(50)
+        }
+        
         classLabel.text = label
-        classLabel.font = UIFont(name: "HelveticaNeue", size: 25)
+        classLabel.font = UIFont(name: "HelveticaNeue", size: 20)
         self.addSubview(classLabel)
         classLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(self).offset(35)
-            make.centerY.equalTo(self)
+            make.centerX.equalTo(line)
+            make.bottom.equalTo(line.snp_top).offset(-12)
         }
+        
+        self.selectionStyle = .None
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
         if selected {
-            classLabel.textColor = UIColor.GlobalRed()
+            classLabel.textColor = UIColor.UIColorFromRGB(0xFC2E55)
         }else {
             classLabel.textColor = UIColor.whiteColor()
         }

@@ -13,17 +13,12 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     let album = UIImageView()
     
     //MARK: - Three Buttons
-    let startButton = UIButton()
-    let groupButton = UIButton()
-    let nameButton = UIButton()
-    
-    var superView = UIView()
-    
-    let containerView = UIView()
-    
+    let startButton             = UIButton()
+    let groupButton             = UIButton()
+    let nameButton              = UIButton()
+    var superView               = UIView()
+    let containerView           = UIView()
     let recommendationContainer = UIView()
-    
-    let tableView = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,20 +150,21 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
             make.centerY.equalTo(recommendationContainer)
         }
         
+        let tableView = RecommendationViewContainerController.GetTableView()
+        superView.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
-        superView.addSubview(tableView)
         tableView.snp_makeConstraints { (make) in
             make.left.right.bottom.equalTo(superView)
             make.top.equalTo(recommendationContainer.snp_bottom)
             make.bottom.equalTo(superView)
         }
-        tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
-        tableView.separatorColor = UIColor.blackColor()
         
     }
-    
-    //MARK: - UITableViewDatasource 
+}
+
+extension SongLibraryViewController {
+    //MARK: - UITableViewDatasource & Delegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -185,6 +181,4 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(SongLibraryCell.cellHeight)
     }
-    
 }
-

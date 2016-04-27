@@ -8,35 +8,37 @@
 
 import UIKit
 import SnapKit
+import SlideMenuControllerSwift
+import SwiftyJSON
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
-    let background = UIImageView()
-    let backCover = UIView()
-    let logo = UIImageView()
-    let logoDescription = UILabel()
-    let userIcon = UIImageView()
-    let lockIcon = UIImageView()
-    let userTextField = UITextField()
-    let passwordTextField = UITextField()
-    let loginDescription = UILabel()
-    let signUpButton = UIButton()
-    
-    let loginButton = UIButton()
+    let background            = UIImageView()
+    let backCover             = UIView()
+    let logo                  = UIImageView()
+    let logoDescription       = UILabel()
+    let userIcon              = UIImageView()
+    let lockIcon              = UIImageView()
+    let userTextField         = UITextField()
+    let passwordTextField     = UITextField()
+    let loginDescription      = UILabel()
+    let signUpButton          = UIButton()
+    let loginButton           = UIButton()
     let thirdDescriptionLabel = UILabel()
-    let wechatButton = UIButton()
-    let weboButton = UIButton()
+    let wechatButton          = UIButton()
+    let weboButton            = UIButton()
+    var superView             = UIView()
     
-    var superView = UIView()
+    var tenchentOAuth : TencentOAuth!
+    var permissions: NSArray!
     
+    var toLoginUser = AAUser()
     
     //MARK: - ViewController Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         superView = self.view
-        
         initUIComponents()
     }
     
@@ -54,8 +56,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         logo.image = UIImage(named: "Logo-LoginView")
         
-        logoDescription.text = "Carols"
-        logoDescription.font = UIFont.boldSystemFontOfSize(28)
+        logoDescription.text      = "Carols"
+        logoDescription.font      = UIFont.boldSystemFontOfSize(28)
         logoDescription.textColor = UIColor.GlobalRed()
         superView.addSubview(logoDescription)
         logoDescription.snp_makeConstraints { (make) in
@@ -64,8 +66,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         userTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
-        userTextField.textColor = UIColor.GlobalGray()
-        userTextField.delegate = self
+        userTextField.textColor             = UIColor.GlobalGray()
+        userTextField.delegate              = self
         superView.addSubview(userTextField)
         userTextField.snp_makeConstraints { (make) in
             make.top.equalTo(logoDescription.snp_bottom).offset(64)
@@ -92,8 +94,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor.GlobalGray()])
-        passwordTextField.textColor = UIColor.GlobalRed()
-        passwordTextField.delegate = self
+        passwordTextField.textColor             = UIColor.GlobalRed()
+        passwordTextField.delegate              = self
         superView.addSubview(passwordTextField)
         passwordTextField.snp_makeConstraints { (make) in
             make.centerX.width.equalTo(userTextField)
@@ -116,9 +118,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.width.centerX.height.equalTo(redLine1)
         }
         
-        loginDescription.text = "New User?"
+        loginDescription.text      = "New User?"
         loginDescription.textColor = UIColor.GlobalGray()
-        loginDescription.font = UIFont.boldSystemFontOfSize(15)
+        loginDescription.font      = UIFont.boldSystemFontOfSize(15)
         superView.addSubview(loginDescription)
         loginDescription.snp_makeConstraints { (make) in
             make.top.equalTo(passwordTextField.snp_bottom).offset(15)
@@ -149,7 +151,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(loginDescription.snp_bottom).offset(49)
         }
         
-        thirdDescriptionLabel.text = "Login by"
+        thirdDescriptionLabel.text      = "Login by"
         thirdDescriptionLabel.textColor = UIColor.GlobalGray()
         superView.addSubview(thirdDescriptionLabel)
         thirdDescriptionLabel.snp_makeConstraints { (make) in
@@ -157,7 +159,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(loginButton.snp_bottom).offset(44)
         }
         
-        let grayLineLeft = UIView()
+        let grayLineLeft             = UIView()
         grayLineLeft.backgroundColor = UIColor.grayColor()
         superView.addSubview(grayLineLeft)
         grayLineLeft.snp_makeConstraints { (make) in
@@ -167,7 +169,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.centerY.equalTo(thirdDescriptionLabel)
         }
         
-        let grayLineRight = UIView()
+        let grayLineRight             = UIView()
         grayLineRight.backgroundColor = UIColor.grayColor()
         superView.addSubview(grayLineRight)
         grayLineRight.snp_makeConstraints { (make) in
@@ -178,6 +180,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         superView.addSubview(wechatButton)
         wechatButton.setBackgroundImage(UIImage(named: "wechat"), forState: .Normal)
+        wechatButton.addTarget(self, action: #selector(LoginViewController.wechatLogin), forControlEvents: .TouchUpInside)
         wechatButton.snp_makeConstraints { (make) in
             make.height.equalTo(44)
             make.width.equalTo(55)
@@ -186,7 +189,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         superView.addSubview(weboButton)
-        weboButton.setBackgroundImage(UIImage(named: "weibo"), forState: .Normal)
+        weboButton.setBackgroundImage(UIImage(named: "qq"), forState: .Normal)
+        weboButton.addTarget(self, action: #selector(LoginViewController.qqLogin), forControlEvents: .TouchUpInside)
         weboButton.snp_makeConstraints { (make) in
             make.height.width.top.equalTo(wechatButton)
             make.left.equalTo(superView.snp_centerX).offset(8)
@@ -214,4 +218,79 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.resignFirstResponder()
     }
     
+}
+
+extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
+    func wechatLogin() {
+        if WXApi.isWXAppInstalled() {
+            let req = SendAuthReq()
+            req.scope = "snsapi_userinfo"
+            req.state = "123"
+            WXApi.sendAuthReq(req, viewController: self, delegate: self)
+        }else {
+            AAAlertViewController.showAlert("失败", message: "本地没有安装微信")
+        }
+    }
+    
+    func onResp(resp: BaseResp!) {
+        let code = (resp as! SendAuthResp).code
+        AALog.info(code)
+        LoginRequest.getWDUserInfoByCode(code) { (result, error) in
+            if (error != nil) {
+                AAAlertViewController.showAlert("出错啦", message: error!.localizedDescription)
+            }else {
+                self.pushVC()
+            }
+        }
+    }
+    
+    func qqLogin() {
+        if QQApiInterface.isQQInstalled() {
+            tenchentOAuth = TencentOAuth(appId: ThirdPartyLoginModel.QQAPPID, andDelegate: self)
+            permissions = NSArray(array: ["get_user_info", "get_simple_userinfo", "add_t"])
+            tenchentOAuth.authorize(permissions as [AnyObject], localAppId: ThirdPartyLoginModel.QQAPPID, inSafari: false)
+        }else {
+            AAAlertViewController.showAlert("失败", message: "本地没有安装QQ")
+        }
+    }
+    
+    //MARK: QQ 回调函数
+    func tencentDidLogin() {
+        if ((tenchentOAuth.accessToken != nil)) {
+            toLoginUser.openId = tenchentOAuth.openId
+            tenchentOAuth.getUserInfo()
+        }
+    }
+    
+    func getUserInfoResponse(response: APIResponse!) {
+        if ( 0 == response.retCode && 0 == response.detailRetCode) {
+            let jsonResponse = response.jsonResponse
+            toLoginUser.sex       = jsonResponse["gender"] as? Int
+            toLoginUser.avatorUrl = jsonResponse["figureurl_qq_2"] as! String
+            toLoginUser.nickName  = jsonResponse["nickname"] as! String
+            toLoginUser.province  = jsonResponse["province"] as? String
+            toLoginUser.city      = jsonResponse["city"] as? String
+            
+            AAUser._currentUser = toLoginUser
+            pushVC()
+        }else {
+            AAAlertViewController.showAlert("失败", message: response.errorMsg)
+        }
+    }
+    
+    func pushVC() {
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+        slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+        let rootWindow = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController
+        rootWindow?.presentViewController(slideMenuController, animated: true, completion: nil)
+    }
+    
+    func tencentDidNotLogin(cancelled: Bool) {
+        AAAlertViewController.showAlert("用户已取消", message: "网络出错，请重试")
+    }
+    
+    func tencentDidNotNetWork() {
+        AAAlertViewController.showAlert("出错啦", message: "网络出错，请重试")
+    }
 }

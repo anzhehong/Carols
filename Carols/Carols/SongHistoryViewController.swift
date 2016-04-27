@@ -7,37 +7,21 @@
 //
 
 import UIKit
-import SnapKit
 import PageMenu
 
 class SongHistoryViewController: BaseViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        historyButton.setImage(UIImage(named: "Search Icon"), forState: .Normal)
         initMenu()
     }
     
-    //MARK: - CAPSPageMenuDelegate
     func initMenu() {
         
-        let chosenSongsLibraryVC = ChosenSongsLibraryViewController()
-        chosenSongsLibraryVC.title = "Chosen Songs"
-        controllerArray.append(chosenSongsLibraryVC)
-        
-        let parameters: [CAPSPageMenuOption] = [
-            .MenuHeight(CGFloat(menuHeight)),
-            .MenuItemSeparatorWidth(0),
-            .UseMenuLikeSegmentedControl(true),
-            .MenuItemSeparatorPercentageHeight(0.1),
-            .SelectionIndicatorColor(UIColor.GlobalRed()),
-            .ScrollMenuBackgroundColor(UIColor.GlobalMenuBlack()),
-            .ViewBackgroundColor(UIColor.GlobalMenuBlack()),
-            .SelectedMenuItemLabelColor(UIColor.whiteColor()),
-            .UnselectedMenuItemLabelColor(UIColor.whiteColor()),
-            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 14.5)!),
-            .BottomMenuHairlineColor(UIColor.GlobalMenuBlack()),
-            ]
-        
+        let vc   = SongHistoryViewContainerController()
+        vc.title = "Song History"
+        controllerArray.append(vc)
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat( titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
         pageMenu!.delegate = self
         self.addChildViewController(pageMenu!)

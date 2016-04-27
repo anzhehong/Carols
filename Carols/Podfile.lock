@@ -1,19 +1,82 @@
 PODS:
+  - Alamofire (3.3.1)
+  - CocoaAsyncSocket (7.4.3):
+    - CocoaAsyncSocket/All (= 7.4.3)
+  - CocoaAsyncSocket/All (7.4.3):
+    - CocoaAsyncSocket/GCD
+    - CocoaAsyncSocket/RunLoop
+  - CocoaAsyncSocket/GCD (7.4.3)
+  - CocoaAsyncSocket/RunLoop (7.4.3)
+  - EZAudio (1.1.5):
+    - EZAudio/Full (= 1.1.5)
+  - EZAudio/Core (1.1.5)
+  - EZAudio/Full (1.1.5):
+    - EZAudio/Core
+    - TPCircularBuffer (= 1.1)
+  - MagicalRecord (2.3.2):
+    - MagicalRecord/Core (= 2.3.2)
+  - MagicalRecord/Core (2.3.2)
+  - MOBFoundation (1.5.1)
   - PageMenu (1.2.9)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+  - ShareSDK3 (3.2.5):
+    - ShareSDK3/ShareSDK (= 3.2.5)
+  - ShareSDK3/ShareSDK (3.2.5)
+  - ShareSDK3/ShareSDKPlatforms/QQ (3.2.5)
+  - ShareSDK3/ShareSDKPlatforms/SinaWeibo (3.2.5)
+  - ShareSDK3/ShareSDKPlatforms/WeChat (3.2.5)
+  - ShareSDK3/ShareSDKUI (3.2.5)
   - SlideMenuControllerSwift (2.1.0)
   - SnapKit (0.15.0)
+  - SVProgressHUD (2.0.3)
   - SwiftyBeaver (0.4.2)
+  - SwiftyJSON (2.3.2)
+  - TPCircularBuffer (1.1)
 
 DEPENDENCIES:
+  - Alamofire (~> 3.3)
+  - CocoaAsyncSocket
+  - EZAudio (~> 1.1.4)
+  - MagicalRecord
+  - MOBFoundation
   - PageMenu
+  - SDWebImage (~> 3.7)
+  - ShareSDK3
+  - ShareSDK3/ShareSDKPlatforms/QQ
+  - ShareSDK3/ShareSDKPlatforms/SinaWeibo
+  - ShareSDK3/ShareSDKPlatforms/WeChat
+  - ShareSDK3/ShareSDKUI
   - SlideMenuControllerSwift
   - SnapKit (~> 0.15.0)
+  - SVProgressHUD
   - SwiftyBeaver
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+
+EXTERNAL SOURCES:
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+CHECKOUT OPTIONS:
+  SwiftyJSON:
+    :commit: 2a5b70f06001316d4fb54501edc70b4084705da0
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
+  EZAudio: 3b1cb4b6d7ebca68f0c2478576d75940aad4aa99
+  MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  MOBFoundation: 79efc94db961fe5a08cf32de69166f6a29a3b2b5
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  ShareSDK3: ccdd8ec971044703e7722e19c2f3b38fb03775e2
   SlideMenuControllerSwift: 0ed532750dc8574eefda189d0f25805bc967ab7a
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyBeaver: 3eced9aabe4f10b975453cc1baaa2d523a5eaeae
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TPCircularBuffer: 4960a919e667280f7f38963d771f45871b64fe62
 
 COCOAPODS: 0.39.0
