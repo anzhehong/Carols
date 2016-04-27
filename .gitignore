@@ -2,10 +2,14 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+
+# Custom ignore something with intellij
+/BackEnd/SingingSong/target
+/BackEnd/SingingSong/out
+
 ## Build generated
 build/
 DerivedData
-
 ## Various settings
 *.pbxuser
 !default.pbxuser
@@ -43,8 +47,9 @@ playground.xcworkspace
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-# Pods/
-
+Carols/Pods
+Carols/Podfile.lock 
+Carols/Carols.xcworkspace 
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
