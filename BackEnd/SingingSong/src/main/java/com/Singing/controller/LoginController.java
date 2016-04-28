@@ -1,5 +1,6 @@
 package com.Singing.controller;
 
+import com.Singing.entity.User;
 import com.Singing.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import java.util.Map;
  * Created by Harold_LIU on 4/26/16.
  */
 @Controller
-@RequestMapping("/Login")
+@RequestMapping("/LogIn")
 public class LoginController {
 
     @Autowired
@@ -21,12 +22,42 @@ public class LoginController {
 
     @RequestMapping("/SignIn")
     @ResponseBody
-    public Map<String, Object> Login(String username,String password)
+    public Map<String, Object> Login(String phonenumber,String password)
     {
         Map<String ,Object> result = new HashMap<String, Object>();
-        result.put("Status",loginService.login(username,password));
+
+        User theUser = loginService.login(phonenumber,password);
+        if (theUser== null)
+        {
+            result.put("status", 101);
+            result.put("user", null);
+        }
+        else
+        {
+            result.put("status",100);
+            result.put("user",theUser);
+        }
         return result;
     }
+
+    @RequestMapping("/SignInWeChat")
+    @ResponseBody
+    public Map<String, Object> LoginWithWeChat(String openId,String username,String avatorURL,int gender)
+    {
+        Map<String ,Object> result = new HashMap<String, Object>();
+        result.put("Status",loginService.loginWithWechat(openId,username,avatorURL,gender));
+        return result;
+    }
+
+    @RequestMapping("/SignInWeibo")
+    @ResponseBody
+    public Map<String, Object> LoginWithWeibo(String username)
+    {
+        Map<String ,Object> result = new HashMap<String, Object>();
+        result.put("Status",loginService.loginWithWeibo(username));
+        return result;
+    }
+
 
     @RequestMapping("/SignUp")
     @ResponseBody

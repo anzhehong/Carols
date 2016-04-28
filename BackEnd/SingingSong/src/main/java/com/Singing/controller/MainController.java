@@ -1,6 +1,5 @@
 package com.Singing.controller;
 
-import com.Singing.service.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +17,6 @@ import java.util.Map;
 @RequestMapping("")
 public class MainController {
 
-    @Autowired
-    private MusicService musicService;
 
     @RequestMapping("")
     public String homePage()
@@ -27,15 +24,4 @@ public class MainController {
         return "home";
     }
 
-    @RequestMapping("/getAllMusics")
-    @ResponseBody
-    public Map<String, Object> showContractInServiceByElderId()
-    {
-        Map<String ,Object> result = new HashMap<String, Object>();
-
-        result.put("error",false);
-        result.put("musics",musicService.getAllMusics());
-
-        return result;
-    }
 }

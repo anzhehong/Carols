@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class User {
 
     @Id
-    private int id;
+    private int  id;
 
     private String nickName;
     private int gender;
@@ -22,13 +22,19 @@ public class User {
     private int loginWay;
     private String password;
     private String phoneNumber;
+    private String openId;
 
-    public User(String Username, String Password, String PhoneNumber)
+    public User (String _username,int _gender,String _URL,int _loginWay,String _password,String _phoneNumber,String _openId)
     {
-        nickName = Username;
-        password = Password;
-        phoneNumber = PhoneNumber;
+        nickName = _username;
+        gender = _gender;
+        avatorUrl = _URL;
+        loginWay = _loginWay;
+        password = _password;
+        phoneNumber = _phoneNumber;
+        openId = _openId;
     }
+
 
 
     public int getId() {
@@ -75,5 +81,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }
