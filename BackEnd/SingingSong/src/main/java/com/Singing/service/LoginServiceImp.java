@@ -38,23 +38,21 @@ public class LoginServiceImp implements LoginService {
     }
 
     @Override
-    public int loginWithWeibo(String username) {
-
-
-        return 0;
+    public User loginWithQQ(String openId, String username, String avatorURL, int gender) {
+        if(loginDAO.queryByOpenId(openId)==null)
+            loginDAO.insert(new User(username,gender,avatorURL,2,"","",openId));
+        return loginDAO.queryByOpenId(openId);
     }
-
 
     @Override
-    public int signUp(String username, String password, String phoneNumber) {
-        if (username.equals(loginDAO.queryById(username)))
-            return 101;
+    public User signUp(String username, String password, String phoneNumber) {
+        if (phoneNumber.equals(loginDAO.queryByPhonenumber(phoneNumber)))
+            return null;
         else {
-          //  loginDAO.insert(new User());
-            return 100;
+            User newUser = new User(username,0,"http://cl.ly/3f1h1C102v3n",0,password,phoneNumber,null);
+            loginDAO.insert(newUser);
+            return newUser;
         }
     }
-
-
 }
 

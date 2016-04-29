@@ -24,6 +24,8 @@ public class User {
     private String phoneNumber;
     private String openId;
 
+    public User(){}
+
     public User (String _username,int _gender,String _URL,int _loginWay,String _password,String _phoneNumber,String _openId)
     {
         nickName = _username;
