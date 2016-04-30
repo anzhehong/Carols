@@ -63,7 +63,7 @@ public class LoginController {
     public Map<String, Object> LoginWithQQ(String openId,String username,String avatorURL,int gender)
     {
         Map<String ,Object> result = new HashMap<String, Object>();
-        User theUser = loginService.loginWithWechat(openId,username,avatorURL,gender);
+        User theUser = loginService.loginWithQQ(openId,username,avatorURL,gender);
         if (theUser == null)
         {
             result.put("status",101);

@@ -3,8 +3,6 @@ package com.Singing.DAO;
 import com.Singing.entity.User;
 import org.springframework.stereotype.Repository;
 
-import javax.management.Query;
-
 /**
  * Created by Harold_LIU on 4/27/16.
  */

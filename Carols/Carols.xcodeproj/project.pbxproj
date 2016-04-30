@@ -101,7 +101,6 @@
 		62A2A0871CAE213F00B2D4DC /* CarolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A2A08B1CAE213F00B2D4DC /* CarolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolsUITests.swift; sourceTree = "<group>"; };
 		62A2A08D1CAE213F00B2D4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		62A3124E1CC8E26900071672 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
 		62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingViewController.swift; sourceTree = "<group>"; };
 		62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		62FFC2F31CCB51270073EBD3 /* AAHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAHandler.swift; sourceTree = "<group>"; };
@@ -110,6 +109,7 @@
 		7179656382A29027B25697E9 /* Pods-Carols.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.release.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.release.xcconfig"; sourceTree = "<group>"; };
 		7C0B0EE4A25643C739A4F4DB /* Pods-Carols.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.debug.xcconfig"; sourceTree = "<group>"; };
 		C68B8BF5F9B6A07ED10FF290 /* Pods_Carols.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Carols.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7D5E2A01CD4C91000A03B90 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,7 +229,7 @@
 				623C81E51CAE42F700A6A3D5 /* Utils */,
 				62FBE5341CAE22BD0059AD66 /* ViewControllers */,
 				62A2A06B1CAE213E00B2D4DC /* AppDelegate.swift */,
-				62A3124E1CC8E26900071672 /* BridgeHeader.h */,
+				E7D5E2A01CD4C91000A03B90 /* BridgeHeader.h */,
 				62A2A06F1CAE213E00B2D4DC /* Main.storyboard */,
 				62A2A0721CAE213E00B2D4DC /* Assets.xcassets */,
 				62A2A0741CAE213E00B2D4DC /* LaunchScreen.storyboard */,
@@ -693,7 +693,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fowafolo.Carols;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/fowafolo/Documents/Programming/Carols/Carols/Carols/BridgeHeader.h;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/Harold_LIU/Desktop/myCode/Carols/Carols/Carols/BridgeHeader.h;
 			};
 			name = Debug;
 		};
@@ -746,7 +746,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fowafolo.Carols;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/fowafolo/Documents/Programming/Carols/Carols/Carols/BridgeHeader.h;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/Harold_LIU/Desktop/myCode/Carols/Carols/Carols/BridgeHeader.h;
 			};
 			name = Release;
 		};
