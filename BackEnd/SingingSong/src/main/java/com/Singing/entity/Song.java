@@ -8,8 +8,8 @@ public class Song {
     private String artistName;
     private String album;
     private String pictureURL;
-    private Byte trackSteam;
-    private Byte lyrics;
+    private String trackURL;
+    private String lyrics;
 
     public String getSongName() {
         return songName;
@@ -43,19 +43,19 @@ public class Song {
         this.pictureURL = pictureURL;
     }
 
-    public Byte getTrackSteam() {
-        return trackSteam;
+    public String  getTrackSteam() {
+        return trackURL;
     }
 
-    public void setTrackSteam(Byte trackSteam) {
-        this.trackSteam = trackSteam;
+    public void setTrackSteam(String  trackSteam) {
+        this.trackURL = trackSteam;
     }
 
-    public Byte getLyrics() {
+    public String getLyrics() {
         return lyrics;
     }
 
-    public void setLyrics(Byte lyrics) {
+    public void setLyrics(String lyrics) {
         this.lyrics = lyrics;
     }
 

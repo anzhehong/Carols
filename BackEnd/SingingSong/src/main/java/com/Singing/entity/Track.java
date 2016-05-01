@@ -16,12 +16,12 @@ public class Track {
 
     private String track_id;
     private String track_name;
-    private double track_hotness;
+    private float track_hotness;
     private String year;
     private String artist_id;
     private String album_id;
     private String original_url;
-    private String instral_url;
+    private String instra_url;
 
     public int getKeyid() {
         return keyid;
@@ -51,7 +51,7 @@ public class Track {
         return track_hotness;
     }
 
-    public void setTrack_hotness(double track_hotness) {
+    public void setTrack_hotness(float track_hotness) {
         this.track_hotness = track_hotness;
     }
 
@@ -88,11 +88,11 @@ public class Track {
     }
 
     public String getInstral_url() {
-        return instral_url;
+        return instra_url;
     }
 
     public void setInstral_url(String instral_url) {
-        this.instral_url = instral_url;
+        this.instra_url = instral_url;
     }
 
 

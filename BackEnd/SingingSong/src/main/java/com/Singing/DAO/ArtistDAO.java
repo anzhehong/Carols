@@ -10,6 +10,5 @@ import java.util.List;
  */
 public interface ArtistDAO extends GeneralDAO<Artist>{
     public List<Artist> queryByArtistName(String artist_id);
-    public List<Artist> queryByGroup(String album_id);
-    public List<Artist> queryByName(String track_name);
+    public List<Artist> queryByArtistId(String ArtistId);
 }
