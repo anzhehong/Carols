@@ -57,7 +57,7 @@ def song_idf(song_count,song_name):
 	df = song_count[song_name]
 	return math.log(1129318,df)
 
-def recommand_song(user_id,buser_song,buser_play,user_song,song_count):
+def recommend_song(user_id,buser_song,buser_play,user_song,song_count):
 	# find similar users
         target = user_song[user_id]
 	# similar[user v] -> similarity value
@@ -80,7 +80,7 @@ def recommand_song(user_id,buser_song,buser_play,user_song,song_count):
 			similar.pop(item)
 
 
-        # recommand songs according to similar users
+        # recommend songs according to similar users
         similar_artist = similar.keys()
         alternative_song = dict
         for sim in similar_artist:
