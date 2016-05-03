@@ -8,66 +8,67 @@
 
 import Foundation
 import SDWebImage
+import Alamofire
+import CoreData
+import SwiftyJSON
 
 class AAUser: NSObject {
     
     static let userDB = "UserDatabase.sqlite"
-    static var _currentUser: AAUser? = nil
     
-    var openId: String?
-    var nickName: String!
-    var sex: Int?
-    var language: String?
-    var city: String?
-    var province: String?
-    var country: String?
-    var avatorUrl: String!
-    
-    init(_openId: String?, _nickName: String?,
-         _sex: Int?, _language: String?,
-         _city: String?, _province: String?,
-         _country: String?, _avatorUrl: String?) {
-        openId = _openId
-        if let name = _nickName {
-            nickName = name
-        }else {
-            nickName = "Not Set"
-        }
-        sex = _sex
-        language = _language
-        city = _city
-        province = _province
-        country = _country
-        if let url = _avatorUrl {
-            avatorUrl = url
-        }else {
-            avatorUrl = ""
-        }
+    class func setUser(user: JSON) {
+        let nickName = user["nickName"]
+        let gender = user["gender"]
+        let avaotrUrl = user["avatorUrl"]
+        let phoneNum = user["phoneNumber"]
+        let newUser = User.createNewUser()
+        
+        newUser.nickName = nickName.string
+        newUser.avatorUrl = avaotrUrl.string
+        newUser.phoneNum = phoneNum.string
+        newUser.sex = NSNumber(integer: gender.intValue)
+        User.updateUser(newUser)
     }
     
-    override init() {
-        super.init()
-    }
+
+    static let baseUrl = "http://115.28.74.242:8080/Carols/"
     
-    class func currentUser() -> AAUser {
-        if let user = _currentUser {
-            return user
-        }else {
-            let temp = AAUser()
-            temp.nickName = "not set"
-            return temp
+    class func register(nickname: String, phoneNum: String,
+                        pass: String, completion: AAErrorHandler) {
+        let url = "\(baseUrl)LogIn/SignUp?username=\(nickname)&password=\(pass)&phoneNumber=\(phoneNum)"
+    
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON , headers: nil).responseJSON { (response) in
+            if let error = response.result.error {
+                completion(error)
+            }else {
+                let json = JSON(data: response.data!)
+                let user = json["user"]
+                setUser(user)
+                completion(nil)
+            }
         }
     }
     
-//    class func saveUser() {
-//        if let user = _currentUser {
-//            
-//        }else {
-//            
-//        }
-//    }
-//    
-//    class func readUser() -> AAUser {
-//        
-//    }
+    class func qqLogin(tologinUser: User, completion: AAErrorHandler) {
+        let url = "\(baseUrl)LogIn/SignInQQ?openId=\(tologinUser.openId!)&username=\(tologinUser.nickName!)&avatorURL=\(tologinUser.avatorUrl!)&gender=\(tologinUser.sex!.integerValue)"
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON , headers: nil).responseJSON { (response) in
+            if let error = response.result.error {
+                completion(error)
+            }else {
+                let json = JSON(data: response.data!)
+                let user = json["user"]
+                print("user:\(user)")
+                setUser(user)
+                completion(nil)
+            }
+        }
+    }
+    
+    class func normalLogin() {
+        
+    }
+    
+    class func wechatLogin() {
+        
+    }
 }

@@ -33,7 +33,7 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "loginBack")!)
         
         let avator   = UIImageView()
-        avator.sd_setImageWithURL(NSURL(string: AAUser.currentUser().avatorUrl), placeholderImage: UIImage(named: "avator"))
+        avator.sd_setImageWithURL(NSURL(string: User.currentUser().avatorUrl!), placeholderImage: UIImage(named: "avator"))
         superView.addSubview(avator)
         avator.snp_makeConstraints { (make) in
             make.top.equalTo(superView).offset(69)
@@ -46,7 +46,7 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let nameLabel       = UILabel()
         nameLabel.textColor = UIColor.whiteColor()
-        nameLabel.text      = AAUser.currentUser().nickName
+        nameLabel.text      = User.currentUser().nickName!
         nameLabel.font      = UIFont.boldSystemFontOfSize(30)
         superView.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { (make) in

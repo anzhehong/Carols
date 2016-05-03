@@ -9,3 +9,5 @@
 typealias AAAnyErrorHandler = ((AnyObject?, NSError?) -> Void)
 typealias AAArrayErrorHandler = (([AnyObject]?, NSError?) -> Void)
 typealias AAUserHandler = ((AAUser?, NSError?) -> Void)
+typealias AAUserDataHandler = ((User?, NSError?) -> Void)
+typealias AAErrorHandler = ((NSError?)-> Void)

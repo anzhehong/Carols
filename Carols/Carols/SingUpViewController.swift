@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SlideMenuControllerSwift
 
 class SingUpViewController: UIViewController, UITextFieldDelegate {
 
@@ -105,6 +106,7 @@ class SingUpViewController: UIViewController, UITextFieldDelegate {
         }
         
         arrowButton.setImage(UIImage(named: "arrow"), forState: .Normal)
+        arrowButton.addTarget(self, action: #selector(SingUpViewController.doRegister), forControlEvents: .TouchUpInside)
         superView.addSubview(arrowButton)
         arrowButton.snp_makeConstraints { (make) in
             make.width.height.equalTo(46)
@@ -129,5 +131,28 @@ class SingUpViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.resignFirstResponder()
     }
 
-    
+    func doRegister() {
+        if let username = usernameTextField.text {
+            if let password = passwordTextField.text {
+                if let phone = phoneNumTextField.text {
+                    AAUser.register(username, phoneNum: phone, pass: password) { (error) in
+                        if error != nil {
+                            AAAlertViewController.showAlert("错误", message: error!.localizedDescription)
+                        }else {
+                            let screenWidth = UIScreen.mainScreen().bounds.width
+                            let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+                            slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+                            self.presentViewController(slideMenuController, animated: true, completion: nil)
+                        }
+                    }
+                }else {
+                    AAAlertViewController.showAlert("错误", message: "电话不能为空")
+                }
+            }else {
+                AAAlertViewController.showAlert("错误", message: "密码不能为空")
+            }
+        }else {
+            AAAlertViewController.showAlert("错误", message: "用户名不能为空")
+        }
+    }
 }
