@@ -19,6 +19,10 @@ public abstract class GeneralDAOImp<T> implements GeneralDAO<T>{
     @Autowired
     protected SessionFactory sessionFactory;
 
+    public GeneralDAOImp() {
+
+    }
+
 
     public void insert(T t){
         sessionFactory.getCurrentSession().save(t);

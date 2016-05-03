@@ -11,5 +11,5 @@ public interface MainService {
     public List<Song> queryByArtist(String star);
     public List<Song> queryByAlbum(String album);
     public List<Song> queryByName(String name);
-
+    public List<Song> queryByRecommend();
 }

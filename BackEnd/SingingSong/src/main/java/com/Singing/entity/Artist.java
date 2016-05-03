@@ -16,6 +16,7 @@ public class Artist {
     private String artist_id;
     private String artist_name;
     private String artist_image;
+    private float artist_hotness;
     private String similar_artist1;
     private String similar_artist2;
     private String similar_artist3;
@@ -52,6 +53,14 @@ public class Artist {
 
     public void setArtist_image(String artist_image) {
         this.artist_image = artist_image;
+    }
+
+    public float getArtist_hotness() {
+        return artist_hotness;
+    }
+
+    public void setArtist_hotness(float artist_hotness) {
+        this.artist_hotness = artist_hotness;
     }
 
     public String getSimilar_artist1() {

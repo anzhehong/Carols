@@ -2,6 +2,7 @@ package com.Singing.controller;
 
 import com.Singing.entity.Song;
 import com.Singing.service.MainService;
+import com.Singing.service.RankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,24 +13,21 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by fowafolo
- * Date: 16/1/3
+ * Created by Harold_LIU on 5/3/16.
  */
-
 @Controller
-@RequestMapping("/Main")
-public class MainController {
+@RequestMapping("/Rank")
+public class RankListController {
 
     @Autowired
-    private MainService mainService;
+    private RankService rankService;
 
-    @RequestMapping("/ByStars")
+    @RequestMapping("/All")
     @ResponseBody
-    public Map<String, Object> requireByStars(String artistName)
+    public Map<String, Object> requireAllRank()
     {
         Map<String ,Object> result = new HashMap<String, Object>();
-
-        List<Song>songs = mainService.queryByArtist(artistName);
+        List<Song> songs = rankService.queryAllSongs();
         result.put("songs",songs);
         if (songs.size() == 0 )
             result.put("status",201);
@@ -38,12 +36,12 @@ public class MainController {
         return result;
     }
 
-    @RequestMapping("/ByGroup")
+    @RequestMapping("/pop")
     @ResponseBody
-    public Map<String, Object> requireByGroup(String GroupName)
+    public Map<String, Object> requirePopRank()
     {
         Map<String ,Object> result = new HashMap<String, Object>();
-        List<Song>songs = mainService.queryByAlbum(GroupName);
+        List<Song> songs = rankService.queryPopSongs();
         result.put("songs",songs);
         if (songs.size() == 0 )
             result.put("status",201);
@@ -52,12 +50,12 @@ public class MainController {
         return result;
     }
 
-    @RequestMapping("/ByName")
+    @RequestMapping("/jazz")
     @ResponseBody
-    public Map<String, Object> requireByName(String SongName)
+    public Map<String, Object> requireJazzRank()
     {
         Map<String ,Object> result = new HashMap<String, Object>();
-        List<Song>songs = mainService.queryByName(SongName);
+        List<Song> songs = rankService.queryJazzSongs();
         result.put("songs",songs);
         if (songs.size() == 0 )
             result.put("status",201);
@@ -66,19 +64,21 @@ public class MainController {
         return result;
     }
 
-    @RequestMapping("/ByRecommend")
+    @RequestMapping("/r&b")
     @ResponseBody
-    public Map<String, Object> requireByRecommend()
+    public Map<String, Object> requireRBRank()
     {
         Map<String ,Object> result = new HashMap<String, Object>();
-
+        List<Song> songs = rankService.queryRBSongs();
+        result.put("songs",songs);
+        if (songs.size() == 0 )
+            result.put("status",201);
+        else
+            result.put("status",200);
         return result;
     }
 
-    @RequestMapping("")
-    public String homePage()
-    {
-        return "Hello";
-    }
+
+
 
 }
