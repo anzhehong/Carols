@@ -32,8 +32,14 @@ class LoginRequest {
                         oldUser.nickName = result["nickname"].string
                         oldUser.sex = result["sex"].int
                         oldUser.openId = result["openid"].string
-                        User.updateUser(oldUser)
-                        handler(nil)
+
+                        AAUser.wechatLogin(oldUser, completion: { (error) in
+                            if error == nil {
+                                handler(nil)
+                            }else {
+                                handler(error)
+                            }
+                        })
                     }
                 }
             }

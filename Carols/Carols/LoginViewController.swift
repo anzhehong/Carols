@@ -144,6 +144,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.setTitle("Login", forState: .Normal)
         loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         loginButton.layer.cornerRadius = 10
+        loginButton.addTarget(self, action: #selector(LoginViewController.loginButtonClicked), forControlEvents: .TouchUpInside)
         loginButton.snp_makeConstraints { (make) in
             make.centerX.equalTo(superView)
             make.height.equalTo(35)
@@ -285,6 +286,24 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
             })
         }else {
             AAAlertViewController.showAlert("失败", message: response.errorMsg)
+        }
+    }
+    
+    func loginButtonClicked() {
+        if let phone = userTextField.text {
+            if let pass = passwordTextField.text {
+                AAUser.normalLogin(phone, pass: pass, completion: { (error) in
+                    if error == nil {
+                        self.pushVC()
+                    }else {
+                        AAAlertViewController.showAlert("错误", message: error!.localizedDescription)
+                    }
+                })
+            }else{
+                AAAlertViewController.showAlert("错误", message: "用户名不能为空")
+            }
+        }else {
+            AAAlertViewController.showAlert("错误", message: "密码不能为空")
         }
     }
     

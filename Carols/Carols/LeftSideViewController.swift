@@ -56,6 +56,7 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let logoutButton = UIButton()
         superView.addSubview(logoutButton)
+        logoutButton.addTarget(self, action: #selector(LeftSideViewController.logout), forControlEvents: .TouchUpInside)
         logoutButton.setTitle("Logout", forState: .Normal)
         logoutButton.snp_makeConstraints { (make) in
             make.right.equalTo(superView).offset(-61)
@@ -84,6 +85,16 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.scrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
+    }
+    
+    func logout() {
+        AAUser.logout { (error) in
+            if error == nil {
+                AppDelegate.sharedAppDelegate().window?.rootViewController = LoginViewController()
+            }else {
+                AAAlertViewController.getAlert("错误", message: error!.localizedDescription)
+            }
+        }
     }
 }
 
@@ -125,6 +136,8 @@ extension LeftSideViewController {
             
         else if indexPath.row == 4 {
             slideMenuController.mainViewController = SongHistoryViewController()
+        }else if indexPath.row == 5 {
+            logout()
         }
         
         self.presentViewController(slideMenuController, animated: false, completion: nil)
