@@ -224,6 +224,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     func wechatLogin() {
         if WXApi.isWXAppInstalled() {
+            AppDelegate.rootViewController = self
             let req = SendAuthReq()
             req.scope = "snsapi_userinfo"
             req.state = "123"
@@ -240,7 +241,10 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
             if (error != nil) {
                 AAAlertViewController.showAlert("出错啦", message: error!.localizedDescription)
             }else {
-                self.pushVC()
+                let screenWidth = UIScreen.mainScreen().bounds.width
+                let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+                slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+                AppDelegate.rootViewController!.presentViewController(slideMenuController, animated: true, completion: nil)
             }
         }
     }
@@ -260,6 +264,7 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
         if ((tenchentOAuth.accessToken != nil)) {
             toLoginUser.openId = tenchentOAuth.openId
             tenchentOAuth.getUserInfo()
+            AppDelegate.rootViewController = self
         }
     }
     
@@ -294,6 +299,7 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
             if let pass = passwordTextField.text {
                 AAUser.normalLogin(phone, pass: pass, completion: { (error) in
                     if error == nil {
+                        AppDelegate.rootViewController = self
                         self.pushVC()
                     }else {
                         AAAlertViewController.showAlert("错误", message: error!.localizedDescription)
@@ -312,7 +318,9 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
         let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
         slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
         let rootVC = AppDelegate.sharedAppDelegate().window?.rootViewController
-        rootVC?.presentViewController(slideMenuController, animated: true, completion: nil)
+//        rootVC?.presentViewController(slideMenuController, animated: true, completion: nil)
+//        self.presentViewController(slideMenuController, animated: true, completion: nil)
+        AppDelegate.rootViewController!.presentViewController(slideMenuController, animated: true, completion: nil)
     }
     
     func tencentDidNotLogin(cancelled: Bool) {

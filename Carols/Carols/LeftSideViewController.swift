@@ -90,7 +90,8 @@ class LeftSideViewController: UIViewController, UITableViewDataSource, UITableVi
     func logout() {
         AAUser.logout { (error) in
             if error == nil {
-                AppDelegate.sharedAppDelegate().window?.rootViewController = LoginViewController()
+//                AppDelegate.sharedAppDelegate().window?.rootViewController?.presentViewController(LoginViewController(), animated: true, completion: nil)
+                self.presentViewController(LoginViewController(), animated: true, completion: nil)
             }else {
                 AAAlertViewController.getAlert("错误", message: error!.localizedDescription)
             }

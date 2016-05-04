@@ -38,9 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
             let screenWidth = UIScreen.mainScreen().bounds.width
             let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
             slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+            AppDelegate.rootViewController = slideMenuController
             window?.rootViewController = slideMenuController
         }else {
             let loginViewController = LoginViewController()
+            AppDelegate.rootViewController = loginViewController
             window?.rootViewController = loginViewController
         }
         
