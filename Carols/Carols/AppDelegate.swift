@@ -15,14 +15,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 
     var window: UIWindow?
 
+    static var rootViewController: UIViewController?
+    
+    static var _delegate: AppDelegate?
+    
+    class func sharedAppDelegate() -> AppDelegate {
+        if _delegate != nil {
+            return _delegate!
+        }else {
+            return (UIApplication.sharedApplication().delegate as? AppDelegate)!
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed("\(AAUser.userDB)")
+        MagicalRecord.setLoggingLevel(MagicalRecordLoggingLevel.Off)
         
         configQQWeChat()
         
         let loginViewController = LoginViewController()
         window?.rootViewController = loginViewController
-        
+        AppDelegate.rootViewController = loginViewController
 //        let mainViewController = MainViewController()
 //        window?.rootViewController = mainViewController
 
@@ -107,6 +121,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    func application(application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: String) -> Bool {
+        return extensionPointIdentifier != "com.apple.keyboard-service"
+    }
+    
 }
 

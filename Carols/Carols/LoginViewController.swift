@@ -33,7 +33,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var tenchentOAuth : TencentOAuth!
     var permissions: NSArray!
     
-    var toLoginUser = AAUser()
+    var toLoginUser = User.currentUser()
     
     //MARK: - ViewController Life Circle
     override func viewDidLoad() {
@@ -235,7 +235,7 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     func onResp(resp: BaseResp!) {
         let code = (resp as! SendAuthResp).code
         AALog.info(code)
-        LoginRequest.getWDUserInfoByCode(code) { (result, error) in
+        LoginRequest.getWDUserInfoByCode(code) { (error) in
             if (error != nil) {
                 AAAlertViewController.showAlert("出错啦", message: error!.localizedDescription)
             }else {
@@ -265,14 +265,24 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     func getUserInfoResponse(response: APIResponse!) {
         if ( 0 == response.retCode && 0 == response.detailRetCode) {
             let jsonResponse = response.jsonResponse
-            toLoginUser.sex       = jsonResponse["gender"] as? Int
-            toLoginUser.avatorUrl = jsonResponse["figureurl_qq_2"] as! String
-            toLoginUser.nickName  = jsonResponse["nickname"] as! String
-            toLoginUser.province  = jsonResponse["province"] as? String
-            toLoginUser.city      = jsonResponse["city"] as? String
-            
-            AAUser._currentUser = toLoginUser
-            pushVC()
+            var gender: Int {
+                let string = jsonResponse["gender"] as! String
+                if string == "男" {
+                    return 1
+                }else {
+                    return 0
+                }
+            }
+            toLoginUser.sex       = gender
+            toLoginUser.avatorUrl = jsonResponse["figureurl_qq_2"] as? String
+            toLoginUser.nickName  = jsonResponse["nickname"] as? String
+            AAUser.qqLogin(toLoginUser, completion: { (error) in
+                if error == nil {
+                    self.pushVC()
+                }else {
+                    AAAlertViewController.showAlert("错误", message: error!.localizedDescription)
+                }
+            })
         }else {
             AAAlertViewController.showAlert("失败", message: response.errorMsg)
         }
@@ -282,8 +292,8 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
         let screenWidth = UIScreen.mainScreen().bounds.width
         let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
         slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
-        let rootWindow = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController
-        rootWindow?.presentViewController(slideMenuController, animated: true, completion: nil)
+        let rootVC = AppDelegate.sharedAppDelegate().window?.rootViewController
+        rootVC?.presentViewController(slideMenuController, animated: true, completion: nil)
     }
     
     func tencentDidNotLogin(cancelled: Bool) {
