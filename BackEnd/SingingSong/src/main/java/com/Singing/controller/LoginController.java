@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,18 +23,9 @@ public class LoginController {
     @ResponseBody
     public Map<String, Object> Login(String phonenumber,String password)
     {
-        Map<String ,Object> result = new HashMap<String, Object>();
         User theUser = loginService.login(phonenumber,password);
-        if (theUser== null)
-        {
-            result.put("status", 101);
-            result.put("user", null);
-        }
-        else
-        {
-            result.put("status",100);
-            result.put("user",theUser);
-        }
+        Map<String ,Object> result;
+        result = loginService.getLoginResult(theUser);
         return result;
     }
 
@@ -43,18 +33,9 @@ public class LoginController {
     @ResponseBody
     public Map<String, Object> LoginWithWeChat(String openId,String username,String avatorURL,int gender)
     {
-        Map<String ,Object> result = new HashMap<String, Object>();
         User theUser = loginService.loginWithWechat(openId,username,avatorURL,gender);
-        if (theUser == null)
-        {
-            result.put("status",101);
-            result.put("user",null);
-        }
-        else
-        {
-            result.put("status",100);
-            result.put("user",theUser);
-        }
+        Map<String ,Object> result;
+        result = loginService.getLoginResult(theUser);
         return result;
     }
 
@@ -62,18 +43,9 @@ public class LoginController {
     @ResponseBody
     public Map<String, Object> LoginWithQQ(String openId,String username,String avatorURL,int gender)
     {
-        Map<String ,Object> result = new HashMap<String, Object>();
         User theUser = loginService.loginWithQQ(openId,username,avatorURL,gender);
-        if (theUser == null)
-        {
-            result.put("status",101);
-            result.put("user",null);
-        }
-        else
-        {
-            result.put("status",100);
-            result.put("user",theUser);
-        }
+        Map<String ,Object> result;
+        result = loginService.getLoginResult(theUser);
         return result;
     }
 
@@ -81,19 +53,9 @@ public class LoginController {
     @ResponseBody
     public Map<String, Object> SignUp(String username,String password,String phoneNumber)
     {
-        Map<String ,Object> result = new HashMap<String, Object>();
         User theUser = loginService.signUp(username,password,phoneNumber);
-        if (theUser== null)
-        {
-            result.put("status", 101);
-            result.put("user", null);
-        }
-        else
-        {
-            result.put("status",100);
-            result.put("user",theUser);
-        }
+        Map<String ,Object> result;
+        result = loginService.getLoginResult(theUser);
         return result;
     }
-
 }

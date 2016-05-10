@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Harold_LIU on 4/26/16.
  */
@@ -42,6 +45,22 @@ public class LoginServiceImp implements LoginService {
         if(loginDAO.queryByOpenId(openId)==null)
             loginDAO.insert(new User(username,gender,avatorURL,2,"","",openId));
         return loginDAO.queryByOpenId(openId);
+    }
+
+    @Override
+    public Map<String, Object> getLoginResult(User theUser) {
+        Map<String ,Object> result = new HashMap<String, Object>();
+        if (theUser== null)
+        {
+            result.put("status", 101);
+            result.put("user", null);
+        }
+        else
+        {
+            result.put("status",100);
+            result.put("user",theUser);
+        }
+        return result;
     }
 
     @Override

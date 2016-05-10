@@ -15,7 +15,7 @@ public class History {
     private int history_id;
     private String user_id;
     private String track_id;
-    private String plays;
+    private int plays;
 
     public int getHistory_id() {
         return history_id;
@@ -41,11 +41,11 @@ public class History {
         this.track_id = track_id;
     }
 
-    public String getPlays() {
+    public int getPlays() {
         return plays;
     }
 
-    public void setPlays(String plays) {
+    public void setPlays(int plays) {
         this.plays = plays;
     }
 }
