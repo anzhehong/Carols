@@ -103,15 +103,15 @@ public class MainController {
     public Map<String, Object> querySongsHandler(List<RankTable> songs) {
         Map<String ,Object> result = new HashMap<String, Object>();
         if (songs != null) {
-            if (songs.size() == 0 ) {
-                result.put("status",201);
-                AAError aaError = new AAError("No songs related");
-                result.put("error", aaError);
+            if (songs.size() != 0 ) {
+                result.put("status",200);
+                result.put("songs",songs);
                 return result;
             }
         }
-        result.put("status",200);
-        result.put("songs",songs);
+        result.put("status",201);
+        AAError aaError = new AAError("No songs related");
+        result.put("error", aaError);
         return result;
     }
 
