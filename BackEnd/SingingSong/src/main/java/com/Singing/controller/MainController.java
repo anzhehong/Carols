@@ -1,6 +1,7 @@
 package com.Singing.controller;
 
-import com.Singing.entity.Song;
+import com.Singing.entity.AAError;
+import com.Singing.entity.RankTable;
 import com.Singing.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,55 +24,94 @@ public class MainController {
     @Autowired
     private MainService mainService;
 
-    @RequestMapping("/ByStars")
-    @ResponseBody
-    public Map<String, Object> requireByStars(String artistName)
-    {
-        Map<String ,Object> result = new HashMap<String, Object>();
+//    @RequestMapping("/ByStars")
+//    @ResponseBody
+//    public Map<String, Object> requireByStars(String artistName)
+//    {
+//        Map<String ,Object> result = new HashMap<String, Object>();
+//
+//        List<Song>songs = mainService.queryByArtist(artistName);
+//        result.put("songs",songs);
+//        if (songs.size() == 0 )
+//            result.put("status",201);
+//        else
+//            result.put("status",200);
+//        return result;
+//    }
+//
+//    @RequestMapping("/ByGroup")
+//    @ResponseBody
+//    public Map<String, Object> requireByGroup(String GroupName)
+//    {
+//        Map<String ,Object> result = new HashMap<String, Object>();
+//        List<Song>songs = mainService.queryByAlbum(GroupName);
+//        result.put("songs",songs);
+//        if (songs.size() == 0 )
+//            result.put("status",201);
+//        else
+//            result.put("status",200);
+//        return result;
+//    }
+//
+//    @RequestMapping("/ByName")
+//    @ResponseBody
+//    public Map<String, Object> requireByName(String SongName)
+//    {
+//        Map<String ,Object> result = new HashMap<String, Object>();
+//        List<Song>songs = mainService.queryByName(SongName);
+//        result.put("songs",songs);
+//        if (songs.size() == 0 )
+//            result.put("status",201);
+//        else
+//            result.put("status",200);
+//        return result;
+//    }
+//
+//    @RequestMapping("/ByRecommend")
+//    @ResponseBody
+//    public Map<String, Object> requireByRecommend()
+//    {
+//        Map<String ,Object> result = new HashMap<String, Object>();
+//
+//        return result;
+//    }
 
-        List<Song>songs = mainService.queryByArtist(artistName);
-        result.put("songs",songs);
-        if (songs.size() == 0 )
-            result.put("status",201);
-        else
-            result.put("status",200);
-        return result;
+    @RequestMapping("/SongsByStarName")
+    @ResponseBody
+    public Map<String, Object> songsByStarName(String artistName)
+    {
+        List<RankTable>songs = mainService.getSongsByArtistName(artistName);
+        return querySongsHandler(songs);
     }
 
-    @RequestMapping("/ByGroup")
+    @RequestMapping("/SongsBySongName")
     @ResponseBody
-    public Map<String, Object> requireByGroup(String GroupName)
+    public Map<String, Object> songsBySongName(String name)
     {
-        Map<String ,Object> result = new HashMap<String, Object>();
-        List<Song>songs = mainService.queryByAlbum(GroupName);
-        result.put("songs",songs);
-        if (songs.size() == 0 )
-            result.put("status",201);
-        else
-            result.put("status",200);
-        return result;
+        List<RankTable>songs = mainService.getSongsByTrackName(name);
+        return querySongsHandler(songs);
     }
 
-    @RequestMapping("/ByName")
+    @RequestMapping("/SongsByTagName")
     @ResponseBody
-    public Map<String, Object> requireByName(String SongName)
+    public Map<String, Object> songsByTagName(String name)
     {
-        Map<String ,Object> result = new HashMap<String, Object>();
-        List<Song>songs = mainService.queryByName(SongName);
-        result.put("songs",songs);
-        if (songs.size() == 0 )
-            result.put("status",201);
-        else
-            result.put("status",200);
-        return result;
+        List<RankTable>songs = mainService.getSongsByTagName(name);
+        return querySongsHandler(songs);
     }
 
-    @RequestMapping("/ByRecommend")
-    @ResponseBody
-    public Map<String, Object> requireByRecommend()
-    {
+    public Map<String, Object> querySongsHandler(List<RankTable> songs) {
         Map<String ,Object> result = new HashMap<String, Object>();
-
+        if (songs != null) {
+            if (songs.size() == 0 ) {
+                result.put("status",201);
+                AAError aaError = new AAError("No songs related");
+                result.put("error", aaError);
+                return result;
+            }
+        }
+        result.put("status",200);
+        result.put("songs",songs);
         return result;
     }
 
