@@ -307,25 +307,30 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     }
     
     func loginButtonClicked() {
-        if let phone = userTextField.text {
-            if let pass = passwordTextField.text {
-                AppDelegate.rootViewController = self
-                self.pushVC()
-//                
+        AppDelegate.rootViewController = self
+        self.pushVC()
+//        if let phone = userTextField.text {
+//            
+//            if let pass = passwordTextField.text {
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    SVProgressHUD.show()
+//                    SVProgressHUD.showWithStatus("Loading")
+//                    SVProgressHUD.setDefaultMaskType(.Gradient)
+//                })
 //                AAUser.normalLogin(phone, pass: pass, completion: { (error) in
 //                    if error == nil {
 //                        AppDelegate.rootViewController = self
 //                        self.pushVC()
 //                    }else {
-//                        AAAlertViewController.showAlert("错误", message: error!.localizedDescription)
+//                        self.errorHandle(error!.localizedDescription)
 //                    }
 //                })
-            }else{
-                errorHandle("用户名不能为空")
-            }
-        }else {
-            errorHandle("密码不能为空")
-        }
+//            }else{
+//                errorHandle("用户名不能为空")
+//            }
+//        }else {
+//            errorHandle("密码不能为空")
+//        }
     }
     
     func errorHandle(message: String) {
