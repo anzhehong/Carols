@@ -16,6 +16,9 @@ pod 'MagicalRecord'
 pod 'SDWebImage', '~>3.7'
 pod 'SVProgressHUD'
 pod 'EZAudio', '~> 1.1.4' 
+pod 'DOUAudioStreamer'
+pod 'Mantle'
+pod 'NAKPlaybackIndicatorView'
 
 #第三方登录
 # 主模块(必须)
