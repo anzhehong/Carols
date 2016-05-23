@@ -11,6 +11,7 @@ import SDWebImage
 import Alamofire
 import CoreData
 import SwiftyJSON
+import MagicalRecord
 
 class AAUser: NSObject {
     
@@ -21,7 +22,7 @@ class AAUser: NSObject {
         let gender = user["gender"]
         let avaotrUrl = user["avatorUrl"]
         let phoneNum = user["phoneNumber"]
-        let newUser = User.createNewUser()
+        let newUser = User.currentUser()
         
         newUser.nickName = nickName.string
         newUser.avatorUrl = avaotrUrl.string
@@ -57,18 +58,58 @@ class AAUser: NSObject {
             }else {
                 let json = JSON(data: response.data!)
                 let user = json["user"]
-                print("user:\(user)")
                 setUser(user)
                 completion(nil)
             }
         }
     }
     
-    class func normalLogin() {
-        
+    class func normalLogin(phone: String, pass: String, completion: AAErrorHandler) {
+        let url = "\(baseUrl)/LogIn/SignIn?phonenumber=\(phone)&password=\(pass)"
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON , headers: nil).responseJSON { (response) in
+            if let error = response.result.error {
+                completion(error)
+            }else {
+                //TODO: 服务器给Error
+                let json = JSON(data: response.data!)
+                let user = json["user"]
+                setUser(user)
+                completion(nil)
+            }
+        }
     }
     
-    class func wechatLogin() {
-        
+    class func wechatLogin(tologinUser: User, completion: AAErrorHandler) {
+        let url = "\(baseUrl)LogIn/SignInWeChat?openId=\(tologinUser.openId!)&username=\(tologinUser.nickName!)&avatorURL=\(tologinUser.avatorUrl!)&gender=\(tologinUser.sex!.integerValue)"
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON , headers: nil).responseJSON { (response) in
+            if let error = response.result.error {
+                completion(error)
+            }else {
+                let json = JSON(data: response.data!)
+                let user = json["user"]
+                setUser(user)
+                completion(nil)
+            }
+        }
+    }
+    
+    class func deleteUser(completion: AAErrorHandler) {
+        let user = User.MR_findFirst()
+        MagicalRecord.saveWithBlockAndWait { (localContext) in
+            let temp = user?.MR_inContext(localContext)
+            temp?.MR_deleteEntity()
+            User._current = nil
+            completion(nil)
+        }
+    }
+    
+    class func logout(completion: AAErrorHandler) {
+        deleteUser { (error) in
+            if error == nil {
+                completion(nil)
+            }else {
+                completion(error)
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import SlideMenuControllerSwift
 import SwiftyJSON
+import SVProgressHUD
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -144,6 +145,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.setTitle("Login", forState: .Normal)
         loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         loginButton.layer.cornerRadius = 10
+        loginButton.addTarget(self, action: #selector(LoginViewController.loginButtonClicked), forControlEvents: .TouchUpInside)
         loginButton.snp_makeConstraints { (make) in
             make.centerX.equalTo(superView)
             make.height.equalTo(35)
@@ -222,13 +224,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
 extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     func wechatLogin() {
+        dispatch_async(dispatch_get_main_queue(), {
+            SVProgressHUD.show()
+            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.setDefaultMaskType(.Gradient)
+        })
         if WXApi.isWXAppInstalled() {
+            AppDelegate.rootViewController = self
             let req = SendAuthReq()
             req.scope = "snsapi_userinfo"
             req.state = "123"
             WXApi.sendAuthReq(req, viewController: self, delegate: self)
         }else {
-            AAAlertViewController.showAlert("失败", message: "本地没有安装微信")
+            errorHandle("本地没有安装微信")
         }
     }
     
@@ -237,20 +245,29 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
         AALog.info(code)
         LoginRequest.getWDUserInfoByCode(code) { (error) in
             if (error != nil) {
-                AAAlertViewController.showAlert("出错啦", message: error!.localizedDescription)
+                self.errorHandle(error!.localizedDescription)
             }else {
-                self.pushVC()
+                SVProgressHUD.dismiss()
+                let screenWidth = UIScreen.mainScreen().bounds.width
+                let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+                slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+                AppDelegate.rootViewController!.presentViewController(slideMenuController, animated: true, completion: nil)
             }
         }
     }
     
     func qqLogin() {
+        dispatch_async(dispatch_get_main_queue(), {
+            SVProgressHUD.show()
+            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.setDefaultMaskType(.Gradient)
+        })
         if QQApiInterface.isQQInstalled() {
             tenchentOAuth = TencentOAuth(appId: ThirdPartyLoginModel.QQAPPID, andDelegate: self)
             permissions = NSArray(array: ["get_user_info", "get_simple_userinfo", "add_t"])
             tenchentOAuth.authorize(permissions as [AnyObject], localAppId: ThirdPartyLoginModel.QQAPPID, inSafari: false)
         }else {
-            AAAlertViewController.showAlert("失败", message: "本地没有安装QQ")
+            errorHandle("本地没有安装QQ")
         }
     }
     
@@ -259,6 +276,7 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
         if ((tenchentOAuth.accessToken != nil)) {
             toLoginUser.openId = tenchentOAuth.openId
             tenchentOAuth.getUserInfo()
+            AppDelegate.rootViewController = self
         }
     }
     
@@ -280,20 +298,52 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
                 if error == nil {
                     self.pushVC()
                 }else {
-                    AAAlertViewController.showAlert("错误", message: error!.localizedDescription)
+                    self.errorHandle(error!.localizedDescription)
                 }
             })
         }else {
-            AAAlertViewController.showAlert("失败", message: response.errorMsg)
+            errorHandle(response.errorMsg)
         }
     }
     
+    func loginButtonClicked() {
+        if let phone = userTextField.text {
+            if let pass = passwordTextField.text {
+                dispatch_async(dispatch_get_main_queue(), {
+                    SVProgressHUD.show()
+                    SVProgressHUD.showWithStatus("Loading")
+                    SVProgressHUD.setDefaultMaskType(.Gradient)
+                })
+                AAUser.normalLogin(phone, pass: pass, completion: { (error) in
+                    if error == nil {
+                        AppDelegate.rootViewController = self
+                        self.pushVC()
+                    }else {
+                        self.errorHandle(error!.localizedDescription)
+                    }
+                })
+            }else{
+                errorHandle("用户名不能为空")
+            }
+        }else {
+            errorHandle("密码不能为空")
+        }
+    }
+    
+    func errorHandle(message: String) {
+        SVProgressHUD.dismiss()
+        AAAlertViewController.showAlert("错误", message: message)
+    }
+    
     func pushVC() {
+        SVProgressHUD.dismiss()
         let screenWidth = UIScreen.mainScreen().bounds.width
         let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
         slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
         let rootVC = AppDelegate.sharedAppDelegate().window?.rootViewController
-        rootVC?.presentViewController(slideMenuController, animated: true, completion: nil)
+        //        rootVC?.presentViewController(slideMenuController, animated: true, completion: nil)
+        //        self.presentViewController(slideMenuController, animated: true, completion: nil)
+        AppDelegate.rootViewController!.presentViewController(slideMenuController, animated: true, completion: nil)
     }
     
     func tencentDidNotLogin(cancelled: Bool) {

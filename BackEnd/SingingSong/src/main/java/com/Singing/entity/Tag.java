@@ -9,10 +9,15 @@ import javax.persistence.Table;
  */
 @Table
 @Entity
+
+
+@Entity
+@Table
 public class Tag {
 
     @Id
     private int tag_id;
+
     private String tag_name;
     private float tag_hotness;
     private String track_id;

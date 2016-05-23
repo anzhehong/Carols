@@ -34,16 +34,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         
         configQQWeChat()
         
-        let loginViewController = LoginViewController()
-        window?.rootViewController = loginViewController
-        AppDelegate.rootViewController = loginViewController
-//        let mainViewController = MainViewController()
-//        window?.rootViewController = mainViewController
-
-//        let screenWidth = UIScreen.mainScreen().bounds.width
-//        let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
-//        slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
-//        self.window?.rootViewController = slideMenuController
+        if let _ = User.loggedUser() {
+            let screenWidth = UIScreen.mainScreen().bounds.width
+            let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+            slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+            AppDelegate.rootViewController = slideMenuController
+            window?.rootViewController = slideMenuController
+        }else {
+            let loginViewController = LoginViewController()
+            AppDelegate.rootViewController = loginViewController
+            window?.rootViewController = loginViewController
+        }
+        
         self.window?.makeKeyAndVisible()
         
         //set statusbar hidden

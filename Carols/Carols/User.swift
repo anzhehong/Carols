@@ -34,6 +34,18 @@ class User: NSManagedObject {
         }
     }
     
+    class func loggedUser() -> User? {
+        if _current != nil {
+            return _current!
+        }
+        if let user = User.MR_findFirst() {
+            print("count: \(User.MR_findAll()?.count)")
+            return user
+        }else {
+            return nil
+        }
+    }
+    
     class func updateUser(updatedUser: User) -> User{
         if var user = User.MR_findFirst() {
             user = updatedUser
@@ -41,7 +53,7 @@ class User: NSManagedObject {
             NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
             return user
         }else {
-            var newUser = createNewUser()
+            var newUser = currentUser()
             newUser = updatedUser
             _current = updatedUser
             NSManagedObjectContext.MR_defaultContext().MR_saveToPersistentStoreAndWait()
