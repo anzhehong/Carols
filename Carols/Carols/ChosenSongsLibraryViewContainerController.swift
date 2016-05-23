@@ -31,6 +31,8 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
         vc.viewDidLoad()
         return vc.tableView
     }
+    
+    
 }
 
 //MARK: - UITableViewDataSource, UITableViewDelegate
@@ -54,4 +56,13 @@ extension ChosenSongsLibraryViewContainerController {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return CGFloat(ChosenSongCell.cellHeight)
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("Test From Liu: \(indexPath.row)")
+        let vc =  (UIStoryboard(name: "PlayView", bundle: nil).instantiateViewControllerWithIdentifier("musicVC")) as! PlayViewController
+        vc.setVCData("music_list", type: ".json",chooseIndex:0)
+        let nav = UINavigationController(rootViewController: vc)
+        presentViewController(nav, animated: true, completion: nil)
+    }
+
 }

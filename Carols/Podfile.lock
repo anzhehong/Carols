@@ -7,6 +7,7 @@ PODS:
     - CocoaAsyncSocket/RunLoop
   - CocoaAsyncSocket/GCD (7.4.3)
   - CocoaAsyncSocket/RunLoop (7.4.3)
+  - DOUAudioStreamer (0.2.15)
   - EZAudio (1.1.5):
     - EZAudio/Full (= 1.1.5)
   - EZAudio/Core (1.1.5)
@@ -16,7 +17,11 @@ PODS:
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
+  - Mantle (2.0.7):
+    - Mantle/extobjc (= 2.0.7)
+  - Mantle/extobjc (2.0.7)
   - MOBFoundation (1.5.1)
+  - NAKPlaybackIndicatorView (0.0.3)
   - PageMenu (1.2.9)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
@@ -38,9 +43,12 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.3)
   - CocoaAsyncSocket
+  - DOUAudioStreamer
   - EZAudio (~> 1.1.4)
   - MagicalRecord
+  - Mantle
   - MOBFoundation
+  - NAKPlaybackIndicatorView
   - PageMenu
   - SDWebImage (~> 3.7)
   - ShareSDK3
@@ -66,9 +74,12 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
+  DOUAudioStreamer: 14f217bab01b52171fc2bd7d96e1f8fdd50fce68
   EZAudio: 3b1cb4b6d7ebca68f0c2478576d75940aad4aa99
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MOBFoundation: 79efc94db961fe5a08cf32de69166f6a29a3b2b5
+  NAKPlaybackIndicatorView: 794dd97576fe074bb1844c19ebcbf7509384a47f
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   ShareSDK3: ccdd8ec971044703e7722e19c2f3b38fb03775e2

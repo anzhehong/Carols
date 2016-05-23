@@ -129,3 +129,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
 }
 
+public extension UIView {
+    
+    func startTransitionAnimation () {
+        let transition = CATransition()
+        transition.duration = 1.0
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        transition.type = kCATransitionFade
+        layer.addAnimation(transition, forKey: nil)
+    }
+    
+    func heartAnimation()  {
+        var options = UIViewAnimationOptions()
+        options.insert(UIViewAnimationOptions.CurveEaseInOut)
+        options.insert(UIViewAnimationOptions.AllowAnimatedContent)
+        options.insert(UIViewAnimationOptions.BeginFromCurrentState)
+        
+        UIView.animateWithDuration(0.15, delay: 0, options: options, animations: {
+            self.layer.setValue(0.80, forKey: "transform.scale")
+            })
+        { (finished) in
+            UIView.animateWithDuration(0.15, delay: 0, options: options, animations: {
+                self.layer.setValue(1, forKey: "transform.scale")
+                }, completion: nil)
+        }
+    }
+}
+
+
