@@ -875,7 +875,7 @@
 					"\"UIKit\"",
 					"-fobjc-arc",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fowafolo.Carolss;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fowafolo.Carols;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = Carols/BridgeHeader.h;
 			};
@@ -928,7 +928,7 @@
 					"\"UIKit\"",
 					"-fobjc-arc",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fowafolo.Carolss;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fowafolo.Carols;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = Carols/BridgeHeader.h;
 			};

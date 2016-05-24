@@ -432,6 +432,7 @@ class PlayViewController: UIViewController {
         stream.taudioFileURL = fileURL
         streamer = nil
         streamer = DOUAudioStreamer(audioFile: stream)
+        //FIXME: 线程？还是什么问题？
 //        streamer?.play()
     }
     
