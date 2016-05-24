@@ -5,7 +5,6 @@ import org.python.core.PyObject;
 import org.python.core.PyString;
 import org.python.util.PythonInterpreter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,12 +19,16 @@ public class RecommendUtil {
         switch (originUserId) {
             case 1 :
                 newUserId = "b80344d063b5ccb3212f76538f3d9e43d87dca9e";
+                break;
             case 65 :
                 newUserId = "85c1f87fea955d09b4bec2e36aee110927aedf9a";
+                break;
             case 66 :
                 newUserId = "bd4c6e843f00bd476847fb75c47b4fb430a06856";
+                break;
             default:
                 newUserId = "8937134734f869debcab8f23d77465b4caaa85df";
+                break;
         }
         PythonInterpreter interpreter = new PythonInterpreter();
 
@@ -35,24 +38,5 @@ public class RecommendUtil {
 
         List<String> trackIdList = (List<String>) object.__tojava__(List.class);
         return trackIdList;
-    }
-
-    static public List<String> getRecommendByUserId(int originUserId) {
-        List<String> ids = getTrackIds(originUserId);
-        List<String> result = new ArrayList<String>();
-
-//        if (ids != null) {
-//            if (ids.size() != 0) {
-//                result.add(ids.get(0));
-//            }
-//        }
-
-        for (String item: ids) {
-            result.add(item);
-        }
-
-        System.out.println(result);
-
-        return result;
     }
 }

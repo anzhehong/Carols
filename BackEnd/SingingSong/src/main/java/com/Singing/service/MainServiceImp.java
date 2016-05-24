@@ -87,4 +87,9 @@ public class MainServiceImp implements MainService {
     public List<Recommendation> getSongsByTrackId(String id) {
         return recommendationDAO.getByTrackId(id);
     }
+
+    @Override
+    public List<Recommendation> getSongsByTrackIds(List<String> ids) {
+        return recommendationDAO.getByIds(ids);
+    }
 }

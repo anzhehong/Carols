@@ -12,4 +12,7 @@ import java.util.List;
 public interface RecommendationDAO extends GeneralDAO<Recommendation> {
 
     public List<Recommendation> getByTrackId(String id);
+    public Recommendation getByTrackOneId(String id);
+
+    public List<Recommendation> getByIds(List<String> ids);
 }

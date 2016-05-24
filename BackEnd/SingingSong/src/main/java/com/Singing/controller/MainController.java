@@ -122,30 +122,24 @@ public class MainController {
     public Map<String, Object> getRecommendByUserId(int userId) {
         Map<String ,Object> result = new HashMap<String, Object>();
         List<String> trackIds = RecommendUtil.getTrackIds(userId);
-        List<Recommendation> tables = new ArrayList<Recommendation>();
-        for (String item: trackIds) {
-            System.out.println(item);
-            List<Recommendation> temp = mainService.getSongsByTrackId(item);
-            if (temp != null) {
-                tables.addAll(temp);
-            }
+        List<RankTable> songs = transforFromRecommendation(mainService.getSongsByTrackIds(trackIds));
+        return querySongsHandler(songs);
+    }
+
+    private List<RankTable> transforFromRecommendation(List<Recommendation> list) {
+        List<RankTable> result = new ArrayList<>();
+        for (int i = 0 ; i < list.size(); i++ ) {
+            Recommendation recommendation = list.get(i);
+            RankTable rankTable = new RankTable(
+                    recommendation.getTrack_id(),
+                    recommendation.getTrack_name(),
+                    recommendation.getArtist_name(),
+                    recommendation.getAlbum_image(),
+                    recommendation.getOriginal_url(),
+                    recommendation.getInstra_url(),
+                    recommendation.getLyrics());
+            result.add(rankTable);
         }
-
-//
-//        System.out.println(tables.size());
-//        result.put("songs", tables);
-
-        if (tables != null ) {
-            if (tables.size()  != 0 ) {
-                result.put("status",200);
-                result.put("songs",tables);
-                return result;
-            }
-        }
-        result.put("status",201);
-        AAError aaError = new AAError("No songs related");
-        result.put("error", aaError);
-
         return result;
     }
 

@@ -20,4 +20,6 @@ public interface MainService {
     public List<RankTable> getSongsByTagName(String tag);
 
     public List<Recommendation> getSongsByTrackId(String id);
+    public List<Recommendation> getSongsByTrackIds(List<String> ids);
+
 }
