@@ -16,4 +16,7 @@ public interface TrackDAO extends GeneralDAO<Track>{
     public List<Track> queryByYear(String year);
     public List<Track> queryByTrackId(String track_id);
 
+    public List<Song> querySongsByArtistName(String artist_name);
+    public List<Song> querySongsByAlbum(String albumName);
+    public List<Song> querySongsBySongName(String name);
 }

@@ -1,7 +1,5 @@
 package com.Singing.entity;
 
-import java.util.List;
-
 /**
  * Created by Harold_LIU on 4/30/16.
  */
@@ -12,7 +10,6 @@ public class Song {
     private String pictureURL;
     private String trackURL;
     private String lyrics;
-    private List<String> tags;
 
     public String getSongName() {
         return songName;
@@ -60,21 +57,6 @@ public class Song {
 
     public void setLyrics(String lyrics) {
         this.lyrics = lyrics;
-    }
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
-    public String getTrackURL() {
-        return trackURL;
-    }
-
-    public void setTrackURL(String trackURL) {
-        this.trackURL = trackURL;
     }
 
 

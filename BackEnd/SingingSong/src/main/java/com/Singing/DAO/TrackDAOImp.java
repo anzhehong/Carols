@@ -20,6 +20,40 @@ public class TrackDAOImp extends GeneralDAOImp<Track> implements TrackDAO{
     }
 
     @Override
+    public List<Song> querySongsByArtistName(String artist_name) {
+        Session sessionHb = super.sessionFactory.getCurrentSession();
+        String sql = "SELECT Track.track_name,Artist.artist_name,Album.album_name,Album.album_image,Track.original_url FROM carols.Track, carols.Artist,carols.Album where Artist.artist_name LIKE :m and Artist.artist_id = Track.artist_id and Track.album_id = Album.album_id";
+        SQLQuery query = sessionHb.createSQLQuery(sql);
+        query.setParameter("m", "%"+artist_name+"%");
+        query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+        List<Song> songs = query.list();
+        return songs;
+    }
+
+    @Override
+    public List<Song> querySongsByAlbum(String albumName) {
+        Session sessionHb = super.sessionFactory.getCurrentSession();
+        String sql = "SELECT Track.track_name,Artist.artist_name,Album.album_name,Album.album_image,Track.original_url FROM carols.Track, carols.Artist,carols.Album where Album.album_name LIKE :m and Artist.artist_id = Track.artist_id and Track.album_id = Album.album_id";
+        SQLQuery query = sessionHb.createSQLQuery(sql);
+        query.setParameter("m", "%"+albumName+"%");
+        query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+        List<Song> songs = query.list();
+        return songs;
+    }
+
+    @Override
+    public List<Song> querySongsBySongName(String name) {
+        Session sessionHb = super.sessionFactory.getCurrentSession();
+        String sql = "SELECT Track.track_name,Artist.artist_name,Album.album_name,Album.album_image,Track.original_url FROM carols.Track, carols.Artist,carols.Album where Track.track_name LIKE :m and Artist.artist_id = Track.artist_id and Track.album_id = Album.album_id";
+        SQLQuery query = sessionHb.createSQLQuery(sql);
+        query.setParameter("m", "%"+name+"%");
+        query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+        List<Song> songs = query.list();
+        return songs;
+    }
+
+
+    @Override
     public List<Track> queryByStar(String artist_id) {
         String hql = "from Track where artist_id = :m";
         Query query = super.sessionFactory.getCurrentSession().createQuery(hql);

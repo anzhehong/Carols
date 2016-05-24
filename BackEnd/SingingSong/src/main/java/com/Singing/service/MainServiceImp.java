@@ -1,11 +1,8 @@
 package com.Singing.service;
 
-import com.Singing.DAO.ArtistDAO;
-import com.Singing.DAO.IntegratedDAO;
-import com.Singing.DAO.TrackDAO;
-import com.Singing.entity.Artist;
-import com.Singing.entity.Song;
-import com.Singing.entity.Track;
+import com.Singing.DAO.*;
+import com.Singing.controller.RecommendUtil;
+import com.Singing.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,29 +17,109 @@ import java.util.List;
 @Service
 public class MainServiceImp implements MainService {
 
+
     @Autowired
-    private IntegratedDAO integratedDAO;
+    private ArtistDAO artistDAO;
+    @Autowired
+    private TrackDAO trackDAO;
+    @Autowired
+    private RankTableDAO rankTableDAO;
+    @Autowired
+    private TagDAO tagDAO;
+    @Autowired
+    private RecommendationDAO recommendationDAO;
+    @Autowired
+    private HistoryDAO historyDAO;
+
 
     @Override
     public List<Song> queryByArtist(String star) {
-        List<Song>songs = integratedDAO.querySongsByArtistName(star);
+        List<Song>songs = trackDAO.querySongsByArtistName(star);
         return songs;
     }
 
+
     @Override
     public List<Song> queryByAlbum(String album) {
-        List<Song>songs = integratedDAO.querySongsByAlbum(album);
+        List<Song>songs = trackDAO.querySongsByAlbum(album);
         return songs;
     }
 
     @Override
     public List<Song> queryByName(String name) {
-        List<Song>songs = integratedDAO.querySongsBySongName(name);
+        List<Song>songs = trackDAO.querySongsBySongName(name);
         return songs;
     }
 
     @Override
-    public List<Song> queryByRecommend() {
-        return null;
+    public List<RankTable> getSongsByTrackName(String name) {
+        return rankTableDAO.getSongsByTrackName(name);
+    }
+
+    @Override
+    public List<RankTable> getSongsByArtistName(String name) {
+        return rankTableDAO.getSongsByArtistName(name);
+    }
+
+    @Override
+    public List<RankTable> getSongsByTagName(String tag) {
+        List<Tag> tags = tagDAO.getTagsByName(tag);
+        if (tags.size() == 0) {
+            return null;
+        }else {
+            List<RankTable> results = new ArrayList<RankTable>();
+            List<String> strings = new ArrayList<>();
+            for (Tag thisTag: tags) {
+                strings.add(thisTag.getTrack_id());
+            }
+            List<RankTable> tables = rankTableDAO.getSongsByTrackIds(strings);
+
+            if ( tables.size() == 0 ) {
+                return null;
+            }else {
+                return tables;
+            }
+        }
+    }
+
+    @Override
+    public List<RankTable> getSongsByTrackIdCollection(List<String> ids) {
+        return rankTableDAO.getSongsByTrackIds(ids);
+    }
+
+    @Override
+    public List<Recommendation> getSongsByTrackId(String id) {
+        return recommendationDAO.getByTrackId(id);
+    }
+
+    @Override
+    public List<Recommendation> getSongsByTrackIds(List<String> ids) {
+        return recommendationDAO.getByIds(ids);
+    }
+
+    @Override
+    public boolean recordUserHistory(int userId, String trackId) {
+        List<History> histories = historyDAO.getHistoriesByUserId(RecommendUtil.transforToStrUserId(userId));
+        for (int i = 0; i< histories.size(); i ++) {
+            if (histories.get(i).getTrack_id().equals(trackId)) {
+                History history = historyDAO.queryByIntId(histories.get(i).getHistory_id());
+                history.setPlays(history.getPlays() + 1);
+                historyDAO.update(history);
+                return true;
+            }
+        }
+
+        History newHistory = new History();
+        newHistory.setUser_id(RecommendUtil.transforToStrUserId(userId));
+        newHistory.setTrack_id(trackId);
+        newHistory.setPlays(1);
+        historyDAO.insert(newHistory);
+        return true;
+    }
+
+    @Override
+    public List<History> getHistory(int userId) {
+        String id = RecommendUtil.transforToStrUserId(userId);
+        return historyDAO.getHistoriesByUserId(id);
     }
 }

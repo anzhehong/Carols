@@ -1,14 +1,15 @@
 package com.Singing.DAO;
 
-import com.Singing.entity.Artist;
 import com.Singing.entity.History;
-import com.Singing.entity.Song;
 
 import java.util.List;
 
 /**
- * Created by Harold_LIU on 4/30/16.
+ * Created by fowafolo
+ * Date: 16/5/24
+ * Time: 13:26
  */
-public interface HistoryDAO extends GeneralDAO<History>{
-   public List<Song> queryHistory(String userId);
+public interface HistoryDAO extends GeneralDAO<History> {
+
+    public List<History> getHistoriesByUserId(String userId);
 }
