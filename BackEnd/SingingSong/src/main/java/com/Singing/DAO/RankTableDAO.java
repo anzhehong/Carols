@@ -14,4 +14,6 @@ public interface RankTableDAO extends GeneralDAO<RankTable> {
     public List<RankTable> getSongsByTrackName(String name);
     public List<RankTable> getSongsByArtistName(String name);
     public List<RankTable> getSongByTrackId(String trackId);
+
+    public List<RankTable> getSongsByTrackIds(List<String> ids);
 }

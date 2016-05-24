@@ -1,6 +1,7 @@
 package com.Singing.controller;
 
 import com.Singing.entity.AAError;
+import com.Singing.entity.History;
 import com.Singing.entity.RankTable;
 import com.Singing.entity.Recommendation;
 import com.Singing.service.MainService;
@@ -145,12 +146,42 @@ public class MainController {
 
     @RequestMapping("recordHistory")
     @ResponseBody
-    public Map<String, Object> getRecommendByUserId(int userId, String trackId) {
+    public Map<String, Object> recordByUserIdAndTrackId(int userId, String trackId) {
         Map<String ,Object> result = new HashMap<String, Object>();
 
         boolean flag = mainService.recordUserHistory(userId, trackId);
+        if (flag == true) {
+            result.put("status", 200);
+            result.put("message", "Done");
+            return result;
+        }
         result.put("status",202);
         AAError aaError = new AAError("Record User History Error.");
+        result.put("error", aaError);
+        return result;
+    }
+
+    @RequestMapping("getHistory")
+    @ResponseBody
+    public Map<String, Object> getHistoryByUserIdAndTrackId(int userId) {
+        Map<String ,Object> result = new HashMap<String, Object>();
+
+        List<History> list = mainService.getHistory(userId);
+        if (list!=null ){
+            if (list.size()!=0) {
+                List<String> trackIds = new ArrayList<>();
+                for (int i = 0 ; i < list.size() ; i ++ ) {
+                    trackIds.add(list.get(i).getTrack_id());
+                }
+
+                if (trackIds.size() > 0 ) {
+                    List<RankTable> songs = transforFromRecommendation(mainService.getSongsByTrackIds(trackIds));
+                    return querySongsHandler(songs);
+                }
+            }
+        }
+        result.put("status",203);
+        AAError aaError = new AAError("Cannot get this record now.");
         result.put("error", aaError);
         return result;
     }

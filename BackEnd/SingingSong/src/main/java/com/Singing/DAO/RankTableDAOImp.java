@@ -1,6 +1,7 @@
 package com.Singing.DAO;
 
 import com.Singing.entity.RankTable;
+import com.Singing.entity.Recommendation;
 import com.Singing.entity.Tag;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 import org.hibernate.Query;
@@ -51,6 +52,20 @@ public class RankTableDAOImp extends GeneralDAOImp<RankTable> implements RankTab
         String hql = "from RankTable where track_id = :m";
         Query query = super.sessionFactory.getCurrentSession().createQuery(hql);
         query.setString("m", trackId);
+        List<RankTable> list = query.list();
+        if (list.size() == 0) {
+            return null;
+        }else {
+            return list;
+        }
+    }
+
+    @Override
+    public List<RankTable> getSongsByTrackIds(List<String> ids) {
+        String hql = "from RankTable where track_id in (:ids)";
+        Query query = super.sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameterList("ids", ids);
+//        System.out.println(ids);
         List<RankTable> list = query.list();
         if (list.size() == 0) {
             return null;

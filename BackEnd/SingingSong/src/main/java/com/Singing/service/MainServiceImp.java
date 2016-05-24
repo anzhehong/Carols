@@ -84,6 +84,11 @@ public class MainServiceImp implements MainService {
     }
 
     @Override
+    public List<RankTable> getSongsByTrackIdCollection(List<String> ids) {
+        return rankTableDAO.getSongsByTrackIds(ids);
+    }
+
+    @Override
     public List<Recommendation> getSongsByTrackId(String id) {
         return recommendationDAO.getByTrackId(id);
     }
@@ -111,5 +116,11 @@ public class MainServiceImp implements MainService {
         newHistory.setPlays(1);
         historyDAO.insert(newHistory);
         return true;
+    }
+
+    @Override
+    public List<History> getHistory(int userId) {
+        String id = RecommendUtil.transforToStrUserId(userId);
+        return historyDAO.getHistoriesByUserId(id);
     }
 }

@@ -38,6 +38,9 @@ public class RankTable {
         this.lyrics = lyrics;
     }
 
+    public RankTable() {
+    }
+
     public int getRank() {
         return Rank;
     }
