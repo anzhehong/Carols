@@ -122,7 +122,12 @@ public class MainController {
     @ResponseBody
     public Map<String, Object> getRecommendByUserId(int userId) {
         Map<String ,Object> result = new HashMap<String, Object>();
-        List<String> trackIds = RecommendUtil.getTrackIds(userId);
+
+
+
+        String pythonPath = System.getProperty("web.root") + "WEB-INF";
+        System.out.println(pythonPath);
+        List<String> trackIds = RecommendUtil.getTrackIds(userId, pythonPath);
         List<RankTable> songs = transforFromRecommendation(mainService.getSongsByTrackIds(trackIds));
         return querySongsHandler(songs);
     }

@@ -14,11 +14,11 @@ import java.util.List;
  */
 public class RecommendUtil {
 
-    static public List<String> getTrackIds(int originUserId) {
+    static public List<String> getTrackIds(int originUserId, String pythonfilePath) {
         String newUserId = RecommendUtil.transforToStrUserId(originUserId);
         PythonInterpreter interpreter = new PythonInterpreter();
 
-        interpreter.execfile("/Users/fowafolo/Desktop/recommend_file.py");
+        interpreter.execfile(pythonfilePath + "/recommend_file.py");
         PyFunction func = interpreter.get("read_in_memory", PyFunction.class);
         PyObject object = func.__call__(new PyString(newUserId));
 
