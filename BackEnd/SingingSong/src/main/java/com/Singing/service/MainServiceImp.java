@@ -1,10 +1,8 @@
 package com.Singing.service;
 
 import com.Singing.DAO.*;
-import com.Singing.entity.RankTable;
-import com.Singing.entity.Recommendation;
-import com.Singing.entity.Song;
-import com.Singing.entity.Tag;
+import com.Singing.controller.RecommendUtil;
+import com.Singing.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +28,8 @@ public class MainServiceImp implements MainService {
     private TagDAO tagDAO;
     @Autowired
     private RecommendationDAO recommendationDAO;
+    @Autowired
+    private HistoryDAO historyDAO;
 
 
     @Override
@@ -91,5 +91,25 @@ public class MainServiceImp implements MainService {
     @Override
     public List<Recommendation> getSongsByTrackIds(List<String> ids) {
         return recommendationDAO.getByIds(ids);
+    }
+
+    @Override
+    public boolean recordUserHistory(int userId, String trackId) {
+        List<History> histories = historyDAO.getHistoriesByUserId(RecommendUtil.transforToStrUserId(userId));
+        for (int i = 0; i< histories.size(); i ++) {
+            if (histories.get(i).getTrack_id().equals(trackId)) {
+                History history = historyDAO.queryByIntId(histories.get(i).getHistory_id());
+                history.setPlays(history.getPlays() + 1);
+                historyDAO.update(history);
+                return true;
+            }
+        }
+
+        History newHistory = new History();
+        newHistory.setUser_id(RecommendUtil.transforToStrUserId(userId));
+        newHistory.setTrack_id(trackId);
+        newHistory.setPlays(1);
+        historyDAO.insert(newHistory);
+        return true;
     }
 }

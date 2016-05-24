@@ -143,6 +143,18 @@ public class MainController {
         return result;
     }
 
+    @RequestMapping("recordHistory")
+    @ResponseBody
+    public Map<String, Object> getRecommendByUserId(int userId, String trackId) {
+        Map<String ,Object> result = new HashMap<String, Object>();
+
+        boolean flag = mainService.recordUserHistory(userId, trackId);
+        result.put("status",202);
+        AAError aaError = new AAError("Record User History Error.");
+        result.put("error", aaError);
+        return result;
+    }
+
     @RequestMapping("")
     public String homePage()
     {

@@ -15,6 +15,18 @@ import java.util.List;
 public class RecommendUtil {
 
     static public List<String> getTrackIds(int originUserId) {
+        String newUserId = RecommendUtil.transforToStrUserId(originUserId);
+        PythonInterpreter interpreter = new PythonInterpreter();
+
+        interpreter.execfile("/Users/fowafolo/Desktop/recommend_file.py");
+        PyFunction func = interpreter.get("read_in_memory", PyFunction.class);
+        PyObject object = func.__call__(new PyString(newUserId));
+
+        List<String> trackIdList = (List<String>) object.__tojava__(List.class);
+        return trackIdList;
+    }
+
+    static public String transforToStrUserId(int originUserId) {
         String newUserId = "";
         switch (originUserId) {
             case 1 :
@@ -30,13 +42,6 @@ public class RecommendUtil {
                 newUserId = "8937134734f869debcab8f23d77465b4caaa85df";
                 break;
         }
-        PythonInterpreter interpreter = new PythonInterpreter();
-
-        interpreter.execfile("/Users/fowafolo/Desktop/recommend_file.py");
-        PyFunction func = interpreter.get("read_in_memory", PyFunction.class);
-        PyObject object = func.__call__(new PyString(newUserId));
-
-        List<String> trackIdList = (List<String>) object.__tojava__(List.class);
-        return trackIdList;
+        return newUserId;
     }
 }

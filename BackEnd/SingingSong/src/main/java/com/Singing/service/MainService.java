@@ -22,4 +22,6 @@ public interface MainService {
     public List<Recommendation> getSongsByTrackId(String id);
     public List<Recommendation> getSongsByTrackIds(List<String> ids);
 
+    public boolean recordUserHistory(int userId, String trackId);
+
 }
