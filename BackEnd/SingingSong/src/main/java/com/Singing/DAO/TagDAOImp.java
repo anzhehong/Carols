@@ -21,7 +21,7 @@ public class TagDAOImp extends GeneralDAOImp<Tag> implements TagDAO {
 
     @Override
     public List<Tag> getTagsByName(String name) {
-        String hql = "from Tag where tag_name = :m";
+        String hql = "from Tag where tag_name like :m";
         Query query = super.sessionFactory.getCurrentSession().createQuery(hql);
         query.setString("m", name);
         List<Tag> list = query.list();

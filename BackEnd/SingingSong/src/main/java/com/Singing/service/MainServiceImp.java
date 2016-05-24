@@ -68,17 +68,16 @@ public class MainServiceImp implements MainService {
             return null;
         }else {
             List<RankTable> results = new ArrayList<RankTable>();
+            List<String> strings = new ArrayList<>();
             for (Tag thisTag: tags) {
-                String trackId = thisTag.getTrack_id();
-                List<RankTable> tables = rankTableDAO.getSongByTrackId(trackId);
-                if (tables != null)
-                    if (tables.size() != 0 )
-                        results.addAll(tables);
+                strings.add(thisTag.getTrack_id());
             }
-            if ( results.size() == 0 ) {
+            List<RankTable> tables = rankTableDAO.getSongsByTrackIds(strings);
+
+            if ( tables.size() == 0 ) {
                 return null;
             }else {
-                return results;
+                return tables;
             }
         }
     }
