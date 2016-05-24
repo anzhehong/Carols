@@ -11,6 +11,7 @@ import DOUAudioStreamer
 import SDWebImage
 import MediaPlayer
 
+
 enum PlayMode {
     case SingleSong
     case Loop
@@ -96,6 +97,10 @@ class PlayViewController: UIViewController {
         originArray = [].mutableCopy() as! NSMutableArray
         randomArray = NSMutableArray.init(capacity: 0)
         addPanRecognizer()
+        
+        
+        //MARK: 录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音
+        configureRecord()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -552,5 +557,154 @@ class PlayViewController: UIViewController {
         dontReloadMusic = true
         specialIndex = chooseIndex
     }
+    
+    //MARK: - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+    // - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+    // - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+    // - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+    @IBOutlet weak var recordButton: UIButton!
+    var player: EZAudioPlayer!
+    var microphone: EZMicrophone!
+    var recorder: EZRecorder!
+    var isRecording = false
 }
 
+extension PlayViewController {
+    
+    @IBAction func recordButtonClicked(sender: UIButton) {
+        self.player.pause()
+        if isRecording {
+            self.microphone.stopFetchingAudio()
+            if (self.recorder != nil) {
+                self.recorder.closeAudioFile()
+            }
+            self.isRecording = false
+            let audioFile = EZAudioFile(URL: testFilePathURL())
+            self.player.playAudioFile(audioFile)
+        }else {
+            self.microphone.startFetchingAudio()
+            self.recorder = EZRecorder(URL: testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(),
+                                       fileType: .M4A, delegate: self)
+            self.isRecording = true
+        }
+    }
+    
+    func configureRecord() {
+        let session = AVAudioSession.sharedInstance()
+        var error : NSError?
+        
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+        } catch let specialError as NSError {
+            print("Dim background error \(specialError)")
+            error = specialError
+        }
+        
+        if error != nil {
+            print("Error setting up audio session category:\(error!.localizedDescription)")
+        }
+        
+        do {
+            try session.setActive(true)
+        } catch let specialError as NSError {
+            print("Dim background error \(specialError)")
+            error = specialError
+        }
+        
+        if error != nil {
+            print("Error setting up audio session active:\(error!.localizedDescription)")
+        }
+        
+        self.microphone = EZMicrophone(delegate: self)
+        self.player = EZAudioPlayer(delegate: self)
+        
+        do {
+            try session.overrideOutputAudioPort(.Speaker)
+        }catch let specialError as NSError {
+            print("Error overriding output to the speaker \(specialError.localizedDescription)")
+            error = specialError
+        }
+        
+        self.setupNotifications()
+        print("File written to application sandbox's documents directory: \(error?.localizedDescription)")
+        
+        self.microphone.startFetchingAudio()
+    }
+    
+    func setupNotifications() {
+        
+    }
+    
+    func testFilePathURL() -> NSURL {
+        if let dir = applicationDocumentsDirectory() {
+            return NSURL.fileURLWithPath("\(dir)/test.m4a")
+        }else {
+            return NSURL.fileURLWithPath("\(applicationDocumentsDirectory())/test.m4a")
+        }
+        
+    }
+    
+    func applicationDocumentsDirectory() -> String? {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        if paths.count > 0 {
+            return paths[0]
+        }else {
+            return nil
+        }
+    }
+    
+}
+
+extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicrophoneDelegate {
+    func recorderDidClose(recorder: EZRecorder!) {
+        recorder.delegate = nil
+    }
+    
+    func recorderUpdatedCurrentTime(recorder: EZRecorder!) {
+        //TODO:改变时间
+        print("\(recorder.formattedCurrentTime)")
+    }
+    
+    func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
+        //TODO: 
+//        __weak typeof (self) weakSelf = self;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [weakSelf.playingAudioPlot updateBuffer:buffer[0]
+//                withBufferSize:bufferSize];
+//            });
+    }
+    
+    func audioPlayer(audioPlayer: EZAudioPlayer!, updatedPosition framePosition: Int64, inAudioFile audioFile: EZAudioFile!) {
+        //TODO: 
+//        __weak typeof (self) weakSelf = self;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            weakSelf.currentTimeLabel.text = [audioPlayer formattedCurrentTime];
+//            });
+    }
+    
+    func microphone(microphone: EZMicrophone!, changedPlayingState isPlaying: Bool) {
+        print(isPlaying)
+    }
+    
+    func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+        //TODO: 
+//        __weak typeof (self) weakSelf = self;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            //
+//            // All the audio plot needs is the buffer data (float*) and the size.
+//            // Internally the audio plot will handle all the drawing related code,
+//            // history management, and freeing its own resources. Hence, one badass
+//            // line of code gets you a pretty plot :)
+//            //
+//            [weakSelf.recordingAudioPlot updateBuffer:buffer[0]
+//                withBufferSize:bufferSize];
+//            });
+    }
+    
+    func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+        if self.isRecording {
+            self.recorder.appendDataFromBufferList(bufferList,
+                                                   withBufferSize: bufferSize)
+        }
+    }
+}

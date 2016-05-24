@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HmQ-op-XGW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HmQ-op-XGW">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,7 +11,7 @@
         <!--Play View Controller-->
         <scene sceneID="p9r-fY-ReC">
             <objects>
-                <viewController storyboardIdentifier="musicVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HmQ-op-XGW" customClass="PlayViewController" customModule="LXDMusicPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="musicVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HmQ-op-XGW" customClass="PlayViewController" customModule="Carols" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FJm-A1-cLD"/>
                         <viewControllerLayoutGuide type="bottom" id="j6d-I8-OcY"/>
@@ -129,7 +129,7 @@
                                             <action selector="Play" destination="HmQ-op-XGW" eventType="touchUpInside" id="gmX-c6-7vq"/>
                                         </connections>
                                     </button>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-Fy-zLs" customClass="MusicSlider" customModule="LXDMusicPlayer" customModuleProvider="target">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-Fy-zLs" customClass="MusicSlider" customModule="Carols" customModuleProvider="target">
                                         <rect key="frame" x="53" y="8" width="453" height="31"/>
                                         <color key="tintColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="maximumTrackTintColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
@@ -163,6 +163,13 @@
                                             <action selector="preSong" destination="HmQ-op-XGW" eventType="touchUpInside" id="zgh-lX-58I"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm5-Yt-FV8">
+                                        <rect key="frame" x="480" y="66" width="45" height="30"/>
+                                        <state key="normal" title="record"/>
+                                        <connections>
+                                            <action selector="recordButtonClicked:" destination="HmQ-op-XGW" eventType="touchUpInside" id="TuK-Af-AMY"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -172,11 +179,13 @@
                                     <constraint firstItem="o0P-Sx-dxh" firstAttribute="leading" secondItem="cbY-Fy-zLs" secondAttribute="trailing" constant="8" symbolic="YES" id="7ak-Mz-dOK"/>
                                     <constraint firstAttribute="trailing" secondItem="PzC-3L-wgc" secondAttribute="trailing" id="7xW-6y-rvx"/>
                                     <constraint firstItem="cbY-Fy-zLs" firstAttribute="centerX" secondItem="LMy-WO-Ybg" secondAttribute="centerX" id="8Ca-Xj-AjB"/>
+                                    <constraint firstItem="Nm5-Yt-FV8" firstAttribute="centerY" secondItem="PzC-3L-wgc" secondAttribute="centerY" id="8fk-9N-ouG"/>
                                     <constraint firstItem="II5-Yd-S5A" firstAttribute="centerY" secondItem="a4o-nc-Zwh" secondAttribute="centerY" id="9dp-qn-pHW"/>
                                     <constraint firstItem="a4o-nc-Zwh" firstAttribute="leading" secondItem="3MY-dy-t5k" secondAttribute="trailing" constant="40" id="AdK-f5-mfA"/>
                                     <constraint firstItem="cbY-Fy-zLs" firstAttribute="leading" secondItem="u5p-O5-vyQ" secondAttribute="trailing" constant="8" symbolic="YES" id="Ati-xf-ybX"/>
                                     <constraint firstItem="a4o-nc-Zwh" firstAttribute="centerX" secondItem="LMy-WO-Ybg" secondAttribute="centerX" id="IiI-RX-EvF"/>
                                     <constraint firstItem="u5p-O5-vyQ" firstAttribute="leading" secondItem="II5-Yd-S5A" secondAttribute="leading" id="Mhi-ms-ujC"/>
+                                    <constraint firstItem="PzC-3L-wgc" firstAttribute="leading" secondItem="Nm5-Yt-FV8" secondAttribute="trailing" constant="10" id="Mlb-wl-lV3"/>
                                     <constraint firstItem="ooW-3b-Y3I" firstAttribute="leading" secondItem="a4o-nc-Zwh" secondAttribute="trailing" constant="40" id="Pee-na-ruF"/>
                                     <constraint firstItem="PzC-3L-wgc" firstAttribute="centerY" secondItem="a4o-nc-Zwh" secondAttribute="centerY" id="Rcv-52-hK2"/>
                                     <constraint firstItem="u5p-O5-vyQ" firstAttribute="centerY" secondItem="cbY-Fy-zLs" secondAttribute="centerY" id="Tql-ql-hh1"/>
@@ -229,6 +238,7 @@
                         <outlet property="SongsImage" destination="Vr5-PK-gCb" id="q6X-3N-ecU"/>
                         <outlet property="StartTime" destination="u5p-O5-vyQ" id="0k4-CQ-BE1"/>
                         <outlet property="menu" destination="Miu-Qx-t2s" id="eiN-of-Jhl"/>
+                        <outlet property="recordButton" destination="Nm5-Yt-FV8" id="bAC-Em-tmZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVf-0j-fRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
