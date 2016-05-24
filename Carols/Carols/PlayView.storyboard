@@ -11,7 +11,7 @@
         <!--Play View Controller-->
         <scene sceneID="p9r-fY-ReC">
             <objects>
-                <viewController storyboardIdentifier="musicVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HmQ-op-XGW" customClass="PlayViewController" customModule="LXDMusicPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="musicVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HmQ-op-XGW" customClass="PlayViewController" customModule="Carols" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FJm-A1-cLD"/>
                         <viewControllerLayoutGuide type="bottom" id="j6d-I8-OcY"/>
@@ -44,14 +44,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Miu-Qx-t2s">
-                                <rect key="frame" x="28" y="40" width="25" height="22"/>
+                                <rect key="frame" x="27.5" y="40" width="25" height="22"/>
                                 <state key="normal" image="menu"/>
                                 <connections>
                                     <action selector="ShowList" destination="HmQ-op-XGW" eventType="touchUpInside" id="CRM-c6-BUz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSo-eB-Xp2">
-                                <rect key="frame" x="28" y="439" width="23" height="22"/>
+                                <rect key="frame" x="27.5" y="439" width="23" height="22"/>
                                 <state key="normal" image="empty_heart"/>
                                 <connections>
                                     <action selector="Like:" destination="HmQ-op-XGW" eventType="touchUpInside" id="EOU-i9-1U7"/>
@@ -73,6 +73,9 @@
                                             <constraint firstAttribute="width" secondItem="Vr5-PK-gCb" secondAttribute="height" multiplier="1:1" id="ToU-0f-zP6"/>
                                         </constraints>
                                     </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W1z-D5-lxF">
+                                        <rect key="frame" x="0.0" y="0.0" width="496" height="369"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -80,14 +83,18 @@
                                     <constraint firstItem="Vr5-PK-gCb" firstAttribute="top" secondItem="bew-u6-Fg9" secondAttribute="top" constant="32" id="40B-Ct-sMR"/>
                                     <constraint firstItem="Vr5-PK-gCb" firstAttribute="leading" secondItem="bew-u6-Fg9" secondAttribute="leading" constant="20" symbolic="YES" id="5RM-fc-DnI"/>
                                     <constraint firstAttribute="trailing" secondItem="Vr5-PK-gCb" secondAttribute="trailing" constant="94" id="5ve-lT-xj1"/>
+                                    <constraint firstAttribute="trailing" secondItem="W1z-D5-lxF" secondAttribute="trailing" id="PHJ-th-AMf"/>
                                     <constraint firstAttribute="trailing" secondItem="Vr5-PK-gCb" secondAttribute="trailing" constant="20" symbolic="YES" id="TJI-Rw-igi"/>
                                     <constraint firstItem="Vr5-PK-gCb" firstAttribute="centerY" secondItem="bew-u6-Fg9" secondAttribute="centerY" id="Xex-fO-HlB"/>
                                     <constraint firstAttribute="trailing" secondItem="Vr5-PK-gCb" secondAttribute="trailing" constant="156" id="Xhs-dB-tFl"/>
+                                    <constraint firstItem="W1z-D5-lxF" firstAttribute="leading" secondItem="bew-u6-Fg9" secondAttribute="leading" id="cJ6-1y-bJP"/>
                                     <constraint firstItem="Vr5-PK-gCb" firstAttribute="centerX" secondItem="bew-u6-Fg9" secondAttribute="centerX" id="f3Y-3T-JB8"/>
                                     <constraint firstItem="Vr5-PK-gCb" firstAttribute="centerY" secondItem="bew-u6-Fg9" secondAttribute="centerY" id="hvh-CS-4Kh"/>
                                     <constraint firstItem="Vr5-PK-gCb" firstAttribute="top" secondItem="bew-u6-Fg9" secondAttribute="top" constant="37" id="l5q-9s-hdg"/>
                                     <constraint firstItem="Vr5-PK-gCb" firstAttribute="centerY" secondItem="bew-u6-Fg9" secondAttribute="centerY" id="pt2-KL-k56"/>
                                     <constraint firstAttribute="bottom" secondItem="Vr5-PK-gCb" secondAttribute="bottom" constant="36" id="uVu-Zr-uTj"/>
+                                    <constraint firstAttribute="bottom" secondItem="W1z-D5-lxF" secondAttribute="bottom" id="xtO-sY-Ele"/>
+                                    <constraint firstItem="W1z-D5-lxF" firstAttribute="top" secondItem="bew-u6-Fg9" secondAttribute="top" id="y7R-LC-Zxn"/>
                                     <constraint firstItem="Vr5-PK-gCb" firstAttribute="leading" secondItem="bew-u6-Fg9" secondAttribute="leading" constant="32" id="z6Z-sK-DY1"/>
                                 </constraints>
                                 <variation key="default">
@@ -129,7 +136,7 @@
                                             <action selector="Play" destination="HmQ-op-XGW" eventType="touchUpInside" id="gmX-c6-7vq"/>
                                         </connections>
                                     </button>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-Fy-zLs" customClass="MusicSlider" customModule="LXDMusicPlayer" customModuleProvider="target">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cbY-Fy-zLs" customClass="MusicSlider" customModule="Carols" customModuleProvider="target">
                                         <rect key="frame" x="53" y="8" width="453" height="31"/>
                                         <color key="tintColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="maximumTrackTintColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
@@ -223,6 +230,7 @@
                         <outlet property="BackgroundImage" destination="uJU-8k-4ZS" id="lw1-4e-Eil"/>
                         <outlet property="EndTime" destination="o0P-Sx-dxh" id="GlD-dl-iqc"/>
                         <outlet property="HeartLike" destination="NSo-eB-Xp2" id="ad2-GX-iId"/>
+                        <outlet property="LyricView" destination="W1z-D5-lxF" id="eGc-BZ-3J9"/>
                         <outlet property="ModelButton" destination="II5-Yd-S5A" id="h5t-RW-0qQ"/>
                         <outlet property="MusicTimeSlider" destination="cbY-Fy-zLs" id="EsM-QQ-N0w"/>
                         <outlet property="PlayButton" destination="a4o-nc-Zwh" id="Rdr-93-bzi"/>

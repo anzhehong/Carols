@@ -28,7 +28,7 @@ protocol PlaySongDelegate {
     func PlayMusicWithCurrentIndex(idnex:Int)
 }
 
-class PlayViewController: UIViewController {
+class PlayViewController: UIViewController{
 
     //MARK:- Let PlayView be Signton
     class var sharedInstance: PlayViewController {
@@ -52,6 +52,8 @@ class PlayViewController: UIViewController {
     @IBOutlet weak var MusicTimeSlider: MusicSlider!
     @IBOutlet weak var ModelButton: UIButton!
     @IBOutlet weak var PlayButton: UIButton!
+    
+    @IBOutlet weak var LyricView: UIView!
 //MARK:- Params
     var streamer :DOUAudioStreamer?
     var dontReloadMusic:Bool = false
@@ -204,7 +206,7 @@ class PlayViewController: UIViewController {
         BackgroundImage.sd_setImageWithURL(url)
         SongsImage.sd_setImageWithURL(url, placeholderImage: UIImage(named: "music_placeholder"))
         if !visualEffictView.isDescendantOfView(Background) {
-            let blurEffect = UIBlurEffect(style: .Light)
+            let blurEffect = UIBlurEffect(style: .Dark)
             visualEffictView = UIVisualEffectView(effect: blurEffect)
             visualEffictView.frame = view.bounds
             visualEffictView.frame.size.width += 20
@@ -247,6 +249,9 @@ class PlayViewController: UIViewController {
             updateUI()
         }
     }
+//MARK:- Gesture
+    
+
 //MARK:- Action
     @IBAction func ShowList() {
        dontReloadMusic = true
