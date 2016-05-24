@@ -2,12 +2,14 @@ package com.Singing.controller;
 
 import com.Singing.entity.AAError;
 import com.Singing.entity.RankTable;
+import com.Singing.entity.Recommendation;
 import com.Singing.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,10 +117,42 @@ public class MainController {
         return result;
     }
 
+    @RequestMapping("getRecommendByUserId")
+    @ResponseBody
+    public Map<String, Object> getRecommendByUserId(int userId) {
+        Map<String ,Object> result = new HashMap<String, Object>();
+        List<String> trackIds = RecommendUtil.getTrackIds(userId);
+        List<Recommendation> tables = new ArrayList<Recommendation>();
+        for (String item: trackIds) {
+            System.out.println(item);
+            List<Recommendation> temp = mainService.getSongsByTrackId(item);
+            if (temp != null) {
+                tables.addAll(temp);
+            }
+        }
+
+//
+//        System.out.println(tables.size());
+//        result.put("songs", tables);
+
+        if (tables != null ) {
+            if (tables.size()  != 0 ) {
+                result.put("status",200);
+                result.put("songs",tables);
+                return result;
+            }
+        }
+        result.put("status",201);
+        AAError aaError = new AAError("No songs related");
+        result.put("error", aaError);
+
+        return result;
+    }
+
     @RequestMapping("")
     public String homePage()
     {
+
         return "Hallo";
     }
-
 }

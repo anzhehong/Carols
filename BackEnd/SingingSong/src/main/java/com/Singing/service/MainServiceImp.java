@@ -1,10 +1,8 @@
 package com.Singing.service;
 
-import com.Singing.DAO.ArtistDAO;
-import com.Singing.DAO.RankTableDAO;
-import com.Singing.DAO.TagDAO;
-import com.Singing.DAO.TrackDAO;
+import com.Singing.DAO.*;
 import com.Singing.entity.RankTable;
+import com.Singing.entity.Recommendation;
 import com.Singing.entity.Song;
 import com.Singing.entity.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +28,9 @@ public class MainServiceImp implements MainService {
     private RankTableDAO rankTableDAO;
     @Autowired
     private TagDAO tagDAO;
+    @Autowired
+    private RecommendationDAO recommendationDAO;
+
 
     @Override
     public List<Song> queryByArtist(String star) {
@@ -80,5 +81,10 @@ public class MainServiceImp implements MainService {
                 return results;
             }
         }
+    }
+
+    @Override
+    public List<Recommendation> getSongsByTrackId(String id) {
+        return recommendationDAO.getByTrackId(id);
     }
 }

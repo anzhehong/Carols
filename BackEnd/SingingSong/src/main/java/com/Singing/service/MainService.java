@@ -1,6 +1,7 @@
 package com.Singing.service;
 
 import com.Singing.entity.RankTable;
+import com.Singing.entity.Recommendation;
 import com.Singing.entity.Song;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface MainService {
     public List<RankTable> getSongsByTrackName(String name);
     public List<RankTable> getSongsByArtistName(String name);
     public List<RankTable> getSongsByTagName(String tag);
+
+    public List<Recommendation> getSongsByTrackId(String id);
 }
