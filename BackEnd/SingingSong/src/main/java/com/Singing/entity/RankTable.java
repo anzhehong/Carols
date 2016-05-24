@@ -27,6 +27,20 @@ public class RankTable {
     private String lyrics;
     private String tag_name;
 
+    public RankTable(String track_id, String track_name, String artist_name, String album_image,
+                     String oringinal_url, String instra_url, String lyrics) {
+        this.track_id = track_id;
+        this.track_name = track_name;
+        this.artist_name = artist_name;
+        this.album_image = album_image;
+        this.oringinal_url = oringinal_url;
+        this.instra_url = instra_url;
+        this.lyrics = lyrics;
+    }
+
+    public RankTable() {
+    }
+
     public int getRank() {
         return Rank;
     }

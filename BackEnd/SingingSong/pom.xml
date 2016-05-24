@@ -42,6 +42,12 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.python</groupId>
+      <artifactId>jython-standalone</artifactId>
+      <version>2.7.0</version>
+    </dependency>
+
     <!--springMVC核心框架   spring-core,spring-web都是其依赖包-->
     <dependency>
       <groupId>org.springframework</groupId>

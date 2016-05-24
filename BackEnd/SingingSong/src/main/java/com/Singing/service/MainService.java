@@ -1,5 +1,8 @@
 package com.Singing.service;
 
+import com.Singing.entity.History;
+import com.Singing.entity.RankTable;
+import com.Singing.entity.Recommendation;
 import com.Singing.entity.Song;
 
 import java.util.List;
@@ -11,5 +14,17 @@ public interface MainService {
     public List<Song> queryByArtist(String star);
     public List<Song> queryByAlbum(String album);
     public List<Song> queryByName(String name);
-    public List<Song> queryByRecommend();
+
+
+    public List<RankTable> getSongsByTrackName(String name);
+    public List<RankTable> getSongsByArtistName(String name);
+    public List<RankTable> getSongsByTagName(String tag);
+    public List<RankTable> getSongsByTrackIdCollection(List<String> ids);
+
+    public List<Recommendation> getSongsByTrackId(String id);
+    public List<Recommendation> getSongsByTrackIds(List<String> ids);
+
+    public boolean recordUserHistory(int userId, String trackId);
+    public List<History> getHistory(int userId);
+
 }

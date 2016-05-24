@@ -5,11 +5,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by Harold_LIU on 4/30/16.
+ * Created by fowafolo
+ * Date: 16/5/10
+ * Time: 23:37
  */
-@Table
-@Entity
-
 
 @Entity
 @Table

@@ -8,12 +8,6 @@ PODS:
   - CocoaAsyncSocket/GCD (7.4.3)
   - CocoaAsyncSocket/RunLoop (7.4.3)
   - DOUAudioStreamer (0.2.15)
-  - EZAudio (1.1.5):
-    - EZAudio/Full (= 1.1.5)
-  - EZAudio/Core (1.1.5)
-  - EZAudio/Full (1.1.5):
-    - EZAudio/Core
-    - TPCircularBuffer (= 1.1)
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
@@ -38,13 +32,11 @@ PODS:
   - SVProgressHUD (2.0.3)
   - SwiftyBeaver (0.4.2)
   - SwiftyJSON (2.3.2)
-  - TPCircularBuffer (1.1)
 
 DEPENDENCIES:
   - Alamofire (~> 3.3)
   - CocoaAsyncSocket
   - DOUAudioStreamer
-  - EZAudio (~> 1.1.4)
   - MagicalRecord
   - Mantle
   - MOBFoundation
@@ -75,7 +67,6 @@ SPEC CHECKSUMS:
   Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
   DOUAudioStreamer: 14f217bab01b52171fc2bd7d96e1f8fdd50fce68
-  EZAudio: 3b1cb4b6d7ebca68f0c2478576d75940aad4aa99
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MOBFoundation: 79efc94db961fe5a08cf32de69166f6a29a3b2b5
@@ -88,6 +79,5 @@ SPEC CHECKSUMS:
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   SwiftyBeaver: 3eced9aabe4f10b975453cc1baaa2d523a5eaeae
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  TPCircularBuffer: 4960a919e667280f7f38963d771f45871b64fe62
 
 COCOAPODS: 0.39.0

@@ -21,5 +21,6 @@
 
 //新浪微博SDK头文件
 #import "WeiboSDK.h"
+#import "EZAudio/EZAudio.h"
 
 #endif /* BridgeHeader_h */
