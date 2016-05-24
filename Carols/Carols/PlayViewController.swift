@@ -567,27 +567,38 @@ class PlayViewController: UIViewController {
     var microphone: EZMicrophone!
     var recorder: EZRecorder!
     var isRecording = false
+    var allowRecording = false
 }
 
 extension PlayViewController {
     
     @IBAction func recordButtonClicked(sender: UIButton) {
+        
+        if (recorder != nil ) {
+            print("delegate:  \(self.recorder.delegate)")
+        }
+        
         self.player.pause()
-        if isRecording {
-            self.microphone.stopFetchingAudio()
-            if (self.recorder != nil) {
-                self.recorder.closeAudioFile()
-            }
-            self.isRecording = false
-            let audioFile = EZAudioFile(URL: testFilePathURL())
-            self.player.playAudioFile(audioFile)
-        }else {
+        allowRecording = !allowRecording
+        if allowRecording {
             self.microphone.startFetchingAudio()
             self.recorder = EZRecorder(URL: testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(),
                                        fileType: .M4A, delegate: self)
-            self.isRecording = true
         }
+        self.isRecording = allowRecording
     }
+    
+    @IBAction func playButtonClicked(sender: AnyObject) {
+        self.microphone.stopFetchingAudio()
+        
+        self.isRecording = false
+        if (self.recorder != nil) {
+            self.recorder.closeAudioFile()
+        }
+        let audioFile = EZAudioFile(URL: testFilePathURL())
+        self.player.playAudioFile(audioFile)
+    }
+    
     
     func configureRecord() {
         let session = AVAudioSession.sharedInstance()
@@ -632,8 +643,22 @@ extension PlayViewController {
     }
     
     func setupNotifications() {
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PlayViewController.playerDidChangePlayState(_:)), name: "playerDidChangePlayState", object: self.player)
     }
+    
+    func playerDidChangePlayState(notificatoin: NSNotification) {
+        dispatch_async(dispatch_get_main_queue()) { 
+            let player = notificatoin.object as! EZAudioPlayer
+            let isPlaying = player.isPlaying
+            if isPlaying {
+                self.recorder.delegate = nil
+            }
+        }
+    }
+    
+//    func playerDidReachEndOfFile(notification: NSNotification) {
+//        
+//    }
     
     func testFilePathURL() -> NSURL {
         if let dir = applicationDocumentsDirectory() {

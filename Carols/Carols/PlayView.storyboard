@@ -170,6 +170,13 @@
                                             <action selector="recordButtonClicked:" destination="HmQ-op-XGW" eventType="touchUpInside" id="TuK-Af-AMY"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D1B-Fe-XM1">
+                                        <rect key="frame" x="40" y="65" width="30" height="30"/>
+                                        <state key="normal" title="play"/>
+                                        <connections>
+                                            <action selector="playButtonClicked:" destination="HmQ-op-XGW" eventType="touchUpInside" id="TFg-bn-jb6"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -183,6 +190,8 @@
                                     <constraint firstItem="II5-Yd-S5A" firstAttribute="centerY" secondItem="a4o-nc-Zwh" secondAttribute="centerY" id="9dp-qn-pHW"/>
                                     <constraint firstItem="a4o-nc-Zwh" firstAttribute="leading" secondItem="3MY-dy-t5k" secondAttribute="trailing" constant="40" id="AdK-f5-mfA"/>
                                     <constraint firstItem="cbY-Fy-zLs" firstAttribute="leading" secondItem="u5p-O5-vyQ" secondAttribute="trailing" constant="8" symbolic="YES" id="Ati-xf-ybX"/>
+                                    <constraint firstItem="D1B-Fe-XM1" firstAttribute="centerY" secondItem="II5-Yd-S5A" secondAttribute="centerY" id="H4B-2N-lYd"/>
+                                    <constraint firstItem="D1B-Fe-XM1" firstAttribute="leading" secondItem="II5-Yd-S5A" secondAttribute="trailing" constant="15" id="Hwy-12-WXJ"/>
                                     <constraint firstItem="a4o-nc-Zwh" firstAttribute="centerX" secondItem="LMy-WO-Ybg" secondAttribute="centerX" id="IiI-RX-EvF"/>
                                     <constraint firstItem="u5p-O5-vyQ" firstAttribute="leading" secondItem="II5-Yd-S5A" secondAttribute="leading" id="Mhi-ms-ujC"/>
                                     <constraint firstItem="PzC-3L-wgc" firstAttribute="leading" secondItem="Nm5-Yt-FV8" secondAttribute="trailing" constant="10" id="Mlb-wl-lV3"/>
