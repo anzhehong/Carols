@@ -91,6 +91,10 @@ class PlayViewController: UIViewController {
 //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        //MARK: 录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音
+        configureRecord()
+        
+        
         streamer = DOUAudioStreamer()
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
         currentIndex = 0
@@ -98,9 +102,6 @@ class PlayViewController: UIViewController {
         randomArray = NSMutableArray.init(capacity: 0)
         addPanRecognizer()
         
-        
-        //MARK: 录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音
-        configureRecord()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -431,7 +432,7 @@ class PlayViewController: UIViewController {
         stream.taudioFileURL = fileURL
         streamer = nil
         streamer = DOUAudioStreamer(audioFile: stream)
-        streamer?.play()
+//        streamer?.play()
     }
     
     func removeStreamerObserver() {
@@ -637,7 +638,7 @@ extension PlayViewController {
         }
         
         self.setupNotifications()
-        print("File written to application sandbox's documents directory: \(error?.localizedDescription)")
+        print("File written to application sandbox's documents directory: \(self.testFilePathURL())")
         
         self.microphone.startFetchingAudio()
     }
@@ -687,7 +688,9 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
     
     func recorderUpdatedCurrentTime(recorder: EZRecorder!) {
         //TODO:改变时间
-        print("\(recorder.formattedCurrentTime)")
+        dispatch_async(dispatch_get_main_queue()) { 
+            print("\(recorder.formattedCurrentTime)")
+        }
     }
     
     func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
