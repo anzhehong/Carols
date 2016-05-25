@@ -36,7 +36,7 @@ class BaseEntity : MTLModel,MTLJSONSerializing {
         var eneties:NSArray?
         do
         {
-        eneties = try MTLJSONAdapter.JSONArrayFromModels(array as [AnyObject])
+           eneties = try MTLJSONAdapter.JSONArrayFromModels(array as [AnyObject])
         }
         catch
         {
