@@ -1,9 +1,6 @@
 package com.Singing.controller;
 
-import com.Singing.entity.AAError;
-import com.Singing.entity.History;
-import com.Singing.entity.RankTable;
-import com.Singing.entity.Recommendation;
+import com.Singing.entity.*;
 import com.Singing.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -122,9 +119,6 @@ public class MainController {
     @ResponseBody
     public Map<String, Object> getRecommendByUserId(int userId) {
         Map<String ,Object> result = new HashMap<String, Object>();
-
-
-
         String pythonPath = System.getProperty("web.root") + "WEB-INF";
         System.out.println(pythonPath);
         List<String> trackIds = RecommendUtil.getTrackIds(userId, pythonPath);
@@ -170,7 +164,6 @@ public class MainController {
     @ResponseBody
     public Map<String, Object> getHistoryByUserIdAndTrackId(int userId) {
         Map<String ,Object> result = new HashMap<String, Object>();
-
         List<History> list = mainService.getHistory(userId);
         if (list!=null ){
             if (list.size()!=0) {
@@ -191,10 +184,88 @@ public class MainController {
         return result;
     }
 
+    @RequestMapping("getJazzRank")
+    @ResponseBody
+    public Map<String, Object> getJazzRankByLimitCount(int limit) {
+        Map<String ,Object> result = new HashMap<String, Object>();
+        int newLimit = limit > 200? 200:limit;
+        List<JazzTable> list = mainService.getJazzRankList(newLimit);
+        if (list != null ){
+            if (list.size()!=0) {
+                List<String> trackIds = new ArrayList<>();
+                System.out.println("jazz");
+                for (int i = 0 ; i < list.size() ; i ++ ) {
+                    trackIds.add(list.get(i).getTrack_id());
+                }
+                if (trackIds.size() > 0 ) {
+                    List<RankTable> songs = mainService.getSongsByTrackIdCollection(trackIds);
+                    return querySongsHandler(songs);
+                }
+            }
+        }
+        result.put("status",204);
+        AAError aaError = new AAError("Cannot get the Rank Table now.");
+        result.put("error", aaError);
+        return result;
+    }
+
+    @RequestMapping("getPopRank")
+    @ResponseBody
+    public Map<String, Object> getPopRankByLimitCount(int limit) {
+        Map<String ,Object> result = new HashMap<String, Object>();
+        int newLimit = limit > 200? 200:limit;
+        List<PopTable> list = mainService.getPopRankList(newLimit);
+        if (list != null ){
+            if (list.size()!=0) {
+                List<String> trackIds = new ArrayList<>();
+                System.out.println("pop");
+                for (int i = 0 ; i < list.size() ; i ++ ) {
+                    trackIds.add(list.get(i).getTrack_id());
+                }
+                if (trackIds.size() > 0 ) {
+                    List<RankTable> songs = mainService.getSongsByTrackIdCollection(trackIds);
+                    return querySongsHandler(songs);
+                }
+            }
+        }
+        result.put("status",204);
+        AAError aaError = new AAError("Cannot get the Rank Table now.");
+        result.put("error", aaError);
+        return result;
+    }
+
+    @RequestMapping("getRockRank")
+    @ResponseBody
+    public Map<String, Object> getRockRankByLimitCount(int limit) {
+        Map<String ,Object> result = new HashMap<String, Object>();
+        int newLimit = limit > 200? 200:limit;
+        List<RockTable> list = mainService.getRockRankList(newLimit);
+        if (list != null ){
+            if (list.size()!=0) {
+                List<String> trackIds = new ArrayList<>();
+                System.out.println("rock");
+                for (int i = 0 ; i < list.size() ; i ++ ) {
+                    trackIds.add(list.get(i).getTrack_id());
+                }
+                if (trackIds.size() > 0 ) {
+                    List<RankTable> songs = mainService.getSongsByTrackIdCollection(trackIds);
+                    return querySongsHandler(songs);
+                }
+            }
+        }
+        result.put("status",204);
+        AAError aaError = new AAError("Cannot get the Rank Table now.");
+        result.put("error", aaError);
+        return result;
+    }
+
+
     @RequestMapping("")
     public String homePage()
     {
-
+        List<JazzTable> result = mainService.getJazzRankList(10);
+        System.out.println(result);
+        System.out.println(result.size());
         return "Hallo";
     }
 }

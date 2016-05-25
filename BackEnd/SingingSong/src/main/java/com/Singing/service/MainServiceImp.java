@@ -31,6 +31,12 @@ public class MainServiceImp implements MainService {
     @Autowired
     private HistoryDAO historyDAO;
 
+    @Autowired
+    private JazzDAO jazzDAO;
+    @Autowired
+    private PopDAO popDAO;
+    @Autowired
+    private RockDAO rockDAO;
 
     @Override
     public List<Song> queryByArtist(String star) {
@@ -98,6 +104,11 @@ public class MainServiceImp implements MainService {
     }
 
     @Override
+    public List<JazzTable> getSongsByTrackIdsForJazz(List<String> ids) {
+        return jazzDAO.getByIds(ids);
+    }
+
+    @Override
     public boolean recordUserHistory(int userId, String trackId) {
         List<History> histories = historyDAO.getHistoriesByUserId(RecommendUtil.transforToStrUserId(userId));
         for (int i = 0; i< histories.size(); i ++) {
@@ -121,5 +132,20 @@ public class MainServiceImp implements MainService {
     public List<History> getHistory(int userId) {
         String id = RecommendUtil.transforToStrUserId(userId);
         return historyDAO.getHistoriesByUserId(id);
+    }
+
+    @Override
+    public List<JazzTable> getJazzRankList(int limit) {
+        return jazzDAO.getJazzRankList(limit);
+    }
+
+    @Override
+    public List<PopTable> getPopRankList(int limit) {
+        return popDAO.getPopRankList(limit);
+    }
+
+    @Override
+    public List<RockTable> getRockRankList(int limit) {
+        return rockDAO.getRockRankList(limit);
     }
 }
