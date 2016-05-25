@@ -96,7 +96,6 @@ class PlayViewController: UIViewController{
         //MARK: 录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音
         configureRecord()
         
-        
         streamer = DOUAudioStreamer()
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
         currentIndex = 0
@@ -558,7 +557,7 @@ class PlayViewController: UIViewController{
         //let URL = NSURL(string: "")
         let filePath = NSBundle.mainBundle().pathForResource(pathName, ofType: type)
         let result = try! NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: filePath!)!, options:.MutableContainers) as! NSDictionary
-        let array = result["data"]!.mutableCopy() as! NSArray
+        let array = result["songs"]!.mutableCopy() as! NSArray
         let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
         songs = mutableArray
         dontReloadMusic = true
