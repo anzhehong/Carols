@@ -103,7 +103,7 @@ class Song: BaseEntity {
     }
     
     class func getAllSongRank(completion:(([Song]?,NSError?)-> Void)) {
-        let url = "\(baseUrl)getAllRank?limit=10"
+        let url = "\(baseUrl)getAllRank?limit=20"
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
@@ -120,10 +120,66 @@ class Song: BaseEntity {
             
         }
     }
-
+    
+    class func getPopRank(completion:(([Song]?,NSError?)-> Void)) {
+        let url = "\(baseUrl)getPopRank?limit=20"
+        var songs = [Song]()
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
+            if response.result.error == nil {
+                let jsons = JSON(data: response.data!)["songs"].array
+                for json in jsons! {
+                    let song = parseJson(json)
+                    songs.append(song)
+                }
+                completion(songs,nil)
+            }
+            else {
+                completion(nil,response.result.error)
+            }
+            
+        }
+    }
+    
+    class func getJazzRank(completion:(([Song]?,NSError?)-> Void)) {
+        let url = "\(baseUrl)getJazzRank?limit=20"
+        var songs = [Song]()
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
+            if response.result.error == nil {
+                let jsons = JSON(data: response.data!)["songs"].array
+                for json in jsons! {
+                    let song = parseJson(json)
+                    songs.append(song)
+                }
+                completion(songs,nil)
+            }
+            else {
+                completion(nil,response.result.error)
+            }
+            
+        }
+    }
+    
+    class func getRockRank(completion:(([Song]?,NSError?)-> Void)) {
+        let url = "\(baseUrl)getRockRank?limit=20"
+        var songs = [Song]()
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
+            if response.result.error == nil {
+                let jsons = JSON(data: response.data!)["songs"].array
+                for json in jsons! {
+                    let song = parseJson(json)
+                    songs.append(song)
+                }
+                completion(songs,nil)
+            }
+            else {
+                completion(nil,response.result.error)
+            }
+            
+        }
+    }
     
     class func getHistory(userId:String,completion:(([Song]?,NSError?)-> Void)) {
-        let url = "\(baseUrl)getRecommendByUserId?userId=\(userId)"
+        let url = "\(baseUrl)getHistory?userId=\(userId)"
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
