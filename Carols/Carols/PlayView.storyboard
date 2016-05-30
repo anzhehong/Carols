@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HmQ-op-XGW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HmQ-op-XGW">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -44,14 +44,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Miu-Qx-t2s">
-                                <rect key="frame" x="27.5" y="40" width="25" height="22"/>
+                                <rect key="frame" x="28" y="40" width="25" height="22"/>
                                 <state key="normal" image="menu"/>
                                 <connections>
                                     <action selector="ShowList" destination="HmQ-op-XGW" eventType="touchUpInside" id="CRM-c6-BUz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSo-eB-Xp2">
-                                <rect key="frame" x="27.5" y="439" width="23" height="22"/>
+                                <rect key="frame" x="28" y="439" width="23" height="22"/>
                                 <state key="normal" image="empty_heart"/>
                                 <connections>
                                     <action selector="Like:" destination="HmQ-op-XGW" eventType="touchUpInside" id="EOU-i9-1U7"/>

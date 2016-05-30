@@ -76,7 +76,7 @@ class PlayViewController: UIViewController{
     var originArray = NSMutableArray()
     var musicDurationTimer:NSTimer?
     var playMode = PlayMode.Loop
-    var musicIsPlaying:Bool = true {
+    var musicIsPlaying:Bool = false {
         didSet{
             if musicIsPlaying {
                 PlayButton.setImage(UIImage(named: "big_pause_button"), forState: .Normal)
@@ -316,9 +316,11 @@ class PlayViewController: UIViewController{
     @IBAction func Play() {
         if musicIsPlaying {
             streamer!.pause()
+            playButtonClicked(UIButton())
             musicIsPlaying = false
         }
         else {
+            recordButtonClicked(UIButton())
             streamer!.play()
             musicIsPlaying = true
         }
