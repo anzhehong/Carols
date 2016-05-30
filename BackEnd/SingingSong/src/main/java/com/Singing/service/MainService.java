@@ -1,9 +1,6 @@
 package com.Singing.service;
 
-import com.Singing.entity.History;
-import com.Singing.entity.RankTable;
-import com.Singing.entity.Recommendation;
-import com.Singing.entity.Song;
+import com.Singing.entity.*;
 
 import java.util.List;
 
@@ -24,7 +21,13 @@ public interface MainService {
     public List<Recommendation> getSongsByTrackId(String id);
     public List<Recommendation> getSongsByTrackIds(List<String> ids);
 
+    public List<JazzTable> getSongsByTrackIdsForJazz(List<String> ids);
+
     public boolean recordUserHistory(int userId, String trackId);
     public List<History> getHistory(int userId);
+
+    public List<JazzTable> getJazzRankList(int limit);
+    public List<PopTable> getPopRankList(int limit);
+    public List<RockTable> getRockRankList(int limit);
 
 }
