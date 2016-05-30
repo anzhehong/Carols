@@ -69,6 +69,7 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
             }
             else {
                 print (error)
+                SVProgressHUD.dismiss()
             }
         })
 
