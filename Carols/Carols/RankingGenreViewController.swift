@@ -20,19 +20,37 @@ class RankingGenreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
         superView            = self.view
         tableView            = UITableView(frame: self.view.frame)
-        Song.getSongByTag(self.title!,completion: {result,error in
-            if error == nil {
+        
+        if sortType == "All" {
+            Song.getAllSongRank( {result,error in
+                if error == nil {
                 self.songs = result
                 print(self.songs?.count)
                 self.delay(0, closure: {
-                    SVProgressHUD.dismissWithDelay(2)
-                    self.initMenu()
+                SVProgressHUD.dismissWithDelay(2)
+                self.initMenu()
                 })
-            }
-            else {
+                }
+                else {
                 print (error)
-            }
-        })
+                }
+                })
+        }
+        else {
+            Song.getSongByTag(self.title!,completion: {result,error in
+                if error == nil {
+                    self.songs = result
+                    print(self.songs?.count)
+                    self.delay(0, closure: {
+                        SVProgressHUD.dismissWithDelay(2)
+                        self.initMenu()
+                    })
+                }
+                else {
+                    print (error)
+                }
+            })
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

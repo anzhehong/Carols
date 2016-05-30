@@ -102,6 +102,26 @@ class Song: BaseEntity {
         }
     }
     
+    class func getAllSongRank(completion:(([Song]?,NSError?)-> Void)) {
+        let url = "\(baseUrl)getAllRank?limit=10"
+        var songs = [Song]()
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
+            if response.result.error == nil {
+                let jsons = JSON(data: response.data!)["songs"].array
+                for json in jsons! {
+                    let song = parseJson(json)
+                    songs.append(song)
+                }
+                completion(songs,nil)
+            }
+            else {
+                completion(nil,response.result.error)
+            }
+            
+        }
+    }
+
+    
     class func getHistory(userId:String,completion:(([Song]?,NSError?)-> Void)) {
         let url = "\(baseUrl)getRecommendByUserId?userId=\(userId)"
         var songs = [Song]()

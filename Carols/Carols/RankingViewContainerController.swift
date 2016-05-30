@@ -68,8 +68,8 @@ class RankingViewContainerController: UIViewController, CAPSPageMenuDelegate {
         controllerArray.append(jazz)
         
         let rb      = RankingGenreViewController()
-        rb.sortType = "R&B"
-        rb.title    = "R&B"
+        rb.sortType = "Rock"
+        rb.title    = "Rock"
         controllerArray.append(rb)
         
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat(albumHeight + titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)
