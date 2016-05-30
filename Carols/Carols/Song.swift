@@ -34,76 +34,100 @@ class Song: BaseEntity {
             ]
     }
     
+    class func getSongByArtist(name:String) ->[Song]{
+        let url = "\(baseUrl)SongsByStarName?artistName=\(name)"
+        print(url)
+        var songs = [Song]()
+        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
+            if response.result.error == nil {
+                let result = try! NSJSONSerialization.JSONObjectWithData(response.data!, options:.MutableContainers) as! NSDictionary
+                let array = result["songs"]!.mutableCopy() as! NSArray
+                print("\(array)--test by liu")
+                let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
+                songs = mutableArray.copy() as! [Song]
+                print(songs)
+            }
+            else
+            {
+                print(response.result.error)
+            }
+        }
+        return songs
+    }
+    
     class func getRecommendationSongs(userId:String) ->[Song]{
         let url = "\(baseUrl)getRecommendByUserId?userId=\(userId)"
-        let result = [Song]()
+        var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
                 let result = try! NSJSONSerialization.JSONObjectWithData(response.data!, options:.MutableContainers) as! NSDictionary
                 let array = result["songs"]!.mutableCopy() as! NSArray
                 let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
-                print(mutableArray)
+                songs = mutableArray.copy() as! [Song]
             }
             else
             {
                print(response.result.error)
             }
         }
-        return result
+        return songs
     }
     
     class func getPopSongs() ->[Song]{
         let url = "\(baseUrl)SongsByTagName?name=pop"
-        let result = [Song]()
+        print("\(url)")
+        var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
                 let result = try! NSJSONSerialization.JSONObjectWithData(response.data!, options:.MutableContainers) as! NSDictionary
                 let array = result["songs"]!.mutableCopy() as! NSArray
                 let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
-                print(mutableArray)
+                print(mutableArray.count)
+                songs = mutableArray.copy() as! [Song]
+                print(songs)
             }
             else {
                 print(response.result.error)
             }
         }
-        return result
+        return songs
     }
     
     class func getJazzSongs() ->[Song]{
         let url = "\(baseUrl)SongsByTagName?name=jazz"
-        let result = [Song]()
+        var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
                 let result = try! NSJSONSerialization.JSONObjectWithData(response.data!, options:.MutableContainers) as! NSDictionary
                 let array = result["songs"]!.mutableCopy() as! NSArray
                 let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
                 print(mutableArray)
+                songs = mutableArray.copy() as! [Song]
             }
             else {
                 print(response.result.error)
             }
         }
-        return result
+        return songs
     }
     
     
     class func getHisory(user:String) ->[Song]{
         let url = "\(baseUrl)getHistory?userId=\(user)"
-        let result = [Song]()
+        var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
                 let result = try! NSJSONSerialization.JSONObjectWithData(response.data!, options:.MutableContainers) as! NSDictionary
                 let array = result["songs"]!.mutableCopy() as! NSArray
                 let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
-                print(mutableArray)
-                print("-----test")
+                songs = mutableArray.copy() as! [Song]
             }
             else
             {
                 print(response.result.error)
             }
         }
-        return result
+        return songs
     }
     
     class func saveHistory(user:String,trackId:String) ->Bool {

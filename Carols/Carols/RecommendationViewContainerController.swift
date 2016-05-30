@@ -12,15 +12,22 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     
     var tableView = UITableView()
     var superView = UIView()
-
+    var songs:[Song]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initTableView()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+     
+        //TODO:- Change to real user id
+//        self.delay(1,closure:{
+//            self.songs = Song.getPopSongs()
+//            print(self.songs?.count)
+//            print("Test by liu")
+//        })
     }
     
     func initTableView() {
@@ -49,11 +56,14 @@ extension RecommendationViewContainerController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 10 //(songs?.count)!
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = SongLibraryCell(style: .Default, reuseIdentifier: "songLibraryCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_4")!)
+//        cell.songName.text = songs![indexPath.row].SongName
+//        cell.singerName.text = songs![indexPath.row].SongArtist
+//        cell.album.sd_setImageWithURL(NSURL(string:songs![indexPath.row].SongImage!), placeholderImage: UIImage(named: "AlbumPic_4")!)
         return cell
     }
     

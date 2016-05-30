@@ -15,8 +15,8 @@ class SongLibraryCell: UITableViewCell {
     let albumWidth        = 50
 
     var album             = UIImageView()
-    let songName          = UILabel()
-    let singerName        = UILabel()
+    var songName          = UILabel()
+    var singerName        = UILabel()
     let singButton        = UIButton()
     
     init(style: UITableViewCellStyle, reuseIdentifier: String?,
