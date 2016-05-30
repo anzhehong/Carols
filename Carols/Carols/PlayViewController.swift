@@ -314,13 +314,13 @@ class PlayViewController: UIViewController{
     }
     
     @IBAction func Play() {
+        recordButtonClicked(UIButton())
         if musicIsPlaying {
             streamer!.pause()
             playButtonClicked(UIButton())
             musicIsPlaying = false
         }
         else {
-            recordButtonClicked(UIButton())
             streamer!.play()
             musicIsPlaying = true
         }
