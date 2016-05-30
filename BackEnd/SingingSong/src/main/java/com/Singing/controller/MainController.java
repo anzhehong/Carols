@@ -247,6 +247,7 @@ public class MainController {
                 for (int i = 0 ; i < list.size() ; i ++ ) {
                     trackIds.add(list.get(i).getTrack_id());
                 }
+
                 if (trackIds.size() > 0 ) {
                     List<RankTable> songs = mainService.getSongsByTrackIdCollection(trackIds);
                     return querySongsHandler(songs);
@@ -258,6 +259,47 @@ public class MainController {
         result.put("error", aaError);
         return result;
     }
+
+    @RequestMapping("getAllRank")
+    @ResponseBody
+    public Map<String, Object> getAllRankByLimitCount(int limit) {
+        Map<String ,Object> result = new HashMap<String, Object>();
+        int newLimit = limit > 200? 200:limit;
+        List<RockTable> list1 = mainService.getRockRankList(newLimit);
+        List<JazzTable> list2 = mainService.getJazzRankList(newLimit);
+        List<PopTable> list3 = mainService.getPopRankList(newLimit);
+        if (list1 != null || list2 != null || list3 != null){
+            List<String> trackIds = new ArrayList<>();
+            if (list1.size()!=0) {
+                System.out.println("rock");
+                for (int i = 0 ; i < list1.size() ; i ++ ) {
+                    trackIds.add(list1.get(i).getTrack_id());
+                }
+            }
+            if (list2.size()!=0) {
+                System.out.println("jazz");
+                for (int i = 0 ; i < list2.size() ; i ++ ) {
+                    trackIds.add(list2.get(i).getTrack_id());
+                }
+            }
+            if (list3.size()!=0) {
+                System.out.println("pop");
+                for (int i = 0 ; i < list3.size() ; i ++ ) {
+                    trackIds.add(list3.get(i).getTrack_id());
+                }
+            }
+            if (trackIds.size() > 0 ) {
+                List<RankTable> songs = mainService.getSongsByTrackIdCollection(trackIds);
+                return querySongsHandler(songs);
+            }
+        }
+        result.put("status",204);
+        AAError aaError = new AAError("Cannot get the Rank Table now.");
+        result.put("error", aaError);
+        return result;
+    }
+
+
 
 
     @RequestMapping("")
