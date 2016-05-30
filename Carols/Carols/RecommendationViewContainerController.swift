@@ -17,9 +17,12 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SVProgressHUD.show()
-        SVProgressHUD.showWithStatus("Updating")
-        SVProgressHUD.setDefaultMaskType(.Gradient)
+        
+        dispatch_async(dispatch_get_main_queue()) { 
+            SVProgressHUD.show()
+            SVProgressHUD.showWithStatus("Updating")
+            SVProgressHUD.setDefaultMaskType(.Gradient)
+        }
         //TODO:- String(User.currentUser().id)
         Song.getRecommendation("1", completion: {result,error in
             if error == nil {
@@ -39,23 +42,23 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         print("Viewwillappear")
-        SVProgressHUD.show()
-        SVProgressHUD.showWithStatus("Updating")
-        SVProgressHUD.setDefaultMaskType(.Gradient)
-        //TODO:- String(User.currentUser().id)
-        Song.getRecommendation("1", completion: {result,error in
-            if error == nil {
-                self.songs = result
-                print(self.songs?.count)
-                self.delay(0, closure: {
-                    SVProgressHUD.dismiss()
-                    self.initTableView()
-                })
-            }
-            else {
-                print (error)
-            }
-        })
+//        SVProgressHUD.show()
+//        SVProgressHUD.showWithStatus("Updating")
+//        SVProgressHUD.setDefaultMaskType(.Gradient)
+//        //TODO:- String(User.currentUser().id)
+//        Song.getRecommendation("1", completion: {result,error in
+//            if error == nil {
+//                self.songs = result
+//                print(self.songs?.count)
+//                self.delay(0, closure: {
+//                    SVProgressHUD.dismiss()
+//                    self.initTableView()
+//                })
+//            }
+//            else {
+//                print (error)
+//            }
+//        })
 
     }
     

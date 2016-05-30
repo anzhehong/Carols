@@ -47,9 +47,13 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
 //                print (error)
 //            }
 //        })
-        SVProgressHUD.show()
-        SVProgressHUD.showWithStatus("Updating")
-        SVProgressHUD.setDefaultMaskType(.Gradient)
+
+//        dispatch_async(dispatch_get_main_queue()) {
+//            SVProgressHUD.show()
+//            SVProgressHUD.showWithStatus("Customizing...")
+//            SVProgressHUD.setDefaultMaskType(.Gradient)
+//        }
+        
         //TODO:- String(User.currentUser().id)
         Song.getRecommendation("1", completion: {result,error in
             SVProgressHUD.dismiss()

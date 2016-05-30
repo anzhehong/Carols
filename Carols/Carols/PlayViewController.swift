@@ -96,6 +96,7 @@ class PlayViewController: UIViewController{
         //MARK: 录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音
         configureRecord()
         
+        PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
         streamer = DOUAudioStreamer()
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
         currentIndex = 0

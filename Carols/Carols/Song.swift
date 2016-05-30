@@ -199,8 +199,8 @@ class Song: BaseEntity {
     }
     
     class func getRecommendation(userid:String,completion:(([Song]?,NSError?)-> Void)) {
-//        let url = "\(baseUrl)getRecommendByUserId?userId=\(userid)"
-        let url = "http://192.168.1.101:8080/Carols/Main/getRecommendByUserId?userId=1"
+        let url = "\(baseUrl)getRecommendByUserId?userId=\(userid)"
+//        let url = "http://192.168.1.101:8080/Carols/Main/getRecommendByUserId?userId=1"
         var songs = [Song]()
 //        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
 //            if response.result.error == nil {
