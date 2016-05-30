@@ -36,8 +36,39 @@ class RankingGenreViewController: UIViewController, UITableViewDataSource, UITab
                 }
                 })
         }
+        else if sortType == "Rock" {
+            Song.getRockRank( {result,error in
+                if error == nil {
+                    self.songs = result
+                    print(self.songs?.count)
+                    self.delay(0, closure: {
+                        SVProgressHUD.dismissWithDelay(2)
+                        self.initMenu()
+                    })
+                }
+                else {
+                    print (error)
+                }
+            })
+        }
+        else if sortType == "Pop" {
+            Song.getPopRank( {result,error in
+                if error == nil {
+                    self.songs = result
+                    print(self.songs?.count)
+                    self.delay(0, closure: {
+                        SVProgressHUD.dismissWithDelay(2)
+                        self.initMenu()
+                    })
+                }
+                else {
+                    print (error)
+                }
+            })
+
+        }
         else {
-            Song.getSongByTag(self.title!,completion: {result,error in
+            Song.getJazzRank( {result,error in
                 if error == nil {
                     self.songs = result
                     print(self.songs?.count)
