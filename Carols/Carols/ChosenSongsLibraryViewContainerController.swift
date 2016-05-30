@@ -7,18 +7,53 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var tableView = UITableView()
-    
+    var songs:[Song]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        initTableView()
+        tableView = UITableView(frame: self.view.frame)
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+        Song.getHistory("1", completion: {result,error in
+            if error == nil {
+                self.songs = result
+                self.delay(0, closure: {
+                    SVProgressHUD.dismiss()
+                    self.initTableView()
+                })
+            }
+            else {
+                print (error)
+            }
+        })
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+        Song.getHistory("1", completion: {result,error in
+            if error == nil {
+                self.songs = result
+                self.delay(0, closure: {
+                    SVProgressHUD.dismiss()
+                    self.initTableView()
+                })
+            }
+            else {
+                print (error)
+            }
+        })
     }
     
     func initTableView() {
-        tableView = UITableView(frame: self.view.frame)
         tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
         tableView.separatorColor = UIColor.blackColor()
         self.view.addSubview(tableView)
@@ -42,7 +77,7 @@ extension ChosenSongsLibraryViewContainerController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return (songs?.count)!
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -50,6 +85,8 @@ extension ChosenSongsLibraryViewContainerController {
         if indexPath.row == 0 {
             cell.actionImage.setImage(UIImage(named: "Play Icon"), forState: .Normal)
         }
+        cell.singerNameLabel.text = songs![indexPath.row].SongArtist
+        cell.songNameLabel.text = songs![indexPath.row].SongName
         return cell
     }
     

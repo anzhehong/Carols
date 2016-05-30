@@ -10,7 +10,7 @@ def readfile():
 	#f1 = open("train_triplets.txt").readlines()
 	# visible_triplet
 	#f2 = open("/home/saliency/Carols/MusicRecommendation/Kaggle/History.txt","r")
-	f2 = open(("/Users/fowafolo/Documents/Programming/Carols/BackEnd/SingingSong/src/main/webapp/WEB-INF/History.txt"),"r")
+	f2 = open(("/Users/Harold_LIU/Desktop/myCode/Carols/BackEnd/SingingSong/target/CarolsBack-1.0-SNAPSHOT/WEB-INF/History.txt"),"r")
         return f2
 
 def cal_usr_song_cnt(f2):

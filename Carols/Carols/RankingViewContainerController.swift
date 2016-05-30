@@ -9,6 +9,7 @@
 import UIKit
 import PageMenu
 
+
 class RankingViewContainerController: UIViewController, CAPSPageMenuDelegate {
 
     let album       = UIImageView()
@@ -23,6 +24,8 @@ class RankingViewContainerController: UIViewController, CAPSPageMenuDelegate {
     let titleHeight = 64
     var pageMenu : CAPSPageMenu?
     var parameters: [CAPSPageMenuOption]?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

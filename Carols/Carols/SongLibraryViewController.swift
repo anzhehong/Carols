@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class SongLibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -19,14 +20,59 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     var superView               = UIView()
     let containerView           = UIView()
     let recommendationContainer = UIView()
-
+    var songs:[Song]?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         superView = self.view
-        
-        initAlbum()
-        initThreeButton()
-        initTableView()
+
+        Song.getRecommendation("1", completion: {result,error in
+            if error == nil {
+                self.songs = result
+                print(self.songs?.count)
+                self.delay(0, closure: {
+                    self.initAlbum()
+                    self.initThreeButton()
+                    self.initTableView()
+                    SVProgressHUD.dismissWithDelay(2)
+                })
+            }
+            else {
+                print (error)
+            }
+        })
+
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+        //TODO:- String(User.currentUser().id)
+        Song.getRecommendation("1", completion: {result,error in
+            if error == nil {
+                self.songs = result
+                print(self.songs?.count)
+                self.delay(0, closure: {
+                    self.initAlbum()
+                    self.initThreeButton()
+                    self.initTableView()
+                    SVProgressHUD.dismiss()
+                })
+            }
+            else {
+                print (error)
+            }
+        })
+
     }
     
     func initAlbum()  {
@@ -112,8 +158,6 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func initTableView() {
-        
-        
         superView.addSubview(recommendationContainer)
         recommendationContainer.snp_makeConstraints { (make) in
             make.left.right.equalTo(superView)
@@ -171,11 +215,19 @@ extension SongLibraryViewController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return (songs?.count)!
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = SongLibraryCell(style: .Default, reuseIdentifier: "songLibraryCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_4")!)
+        guard songs![indexPath.row].SongImage != nil else {
+            cell.songName.text = songs![indexPath.row].SongName
+            cell.singerName.text = songs![indexPath.row].SongArtist
+            return cell
+        }
+        cell.album.sd_setImageWithURL(NSURL(string: songs![indexPath.row].SongImage!), placeholderImage: UIImage(named: "AlbumPic_4")!)
+        cell.songName.text = songs![indexPath.row].SongName
+        cell.singerName.text = songs![indexPath.row].SongArtist
         return cell
     }
     

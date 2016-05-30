@@ -1,7 +1,7 @@
 {
   "songs": [
       {
-      "track_id": 43,
+      "track_id": "43",
       "track_name": "Old Memory",
       "artist_name": "三輪学",
       "album_image": "http://aufree.qiniudn.com/images/album/img20/89520/4280541424067346.jpg",
@@ -10,7 +10,7 @@
       "lyrics": "此曲旋律轻快, 美妙, 仿佛欲将人带入一个十分干净且祥和的小镇... "
       },
       {
-      "track_id": 2,
+      "track_id": "2",
       "track_name": "A Little Story",
       "artist_name": "Valentin",
       "album_image": "http://aufree.qiniudn.com/images/album/img28/65928/4263201298258620.jpg",
@@ -20,7 +20,7 @@
        "ddd":"fff"
       },
       {
-      "track_id": 111,
+      "track_id": "111",
       "track_name": "letter song",
       "artist_name": "ヲタみん",
       "album_image": "http://aufree.qiniudn.com/images/album/img75/87975/6615037721361503772.jpg",

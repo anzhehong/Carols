@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class RecommendationViewContainerController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -16,18 +17,46 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initTableView()
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+        //TODO:- String(User.currentUser().id)
+        Song.getRecommendation("1", completion: {result,error in
+            if error == nil {
+                self.songs = result
+                print(self.songs?.count)
+                self.delay(0, closure: {
+                    SVProgressHUD.dismiss()
+                    self.initTableView()
+                })
+            }
+            else {
+                print ("error")
+            }
+        })
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-     
-        //TODO:- Change to real user id
-//        self.delay(1,closure:{
-//            self.songs = Song.getPopSongs()
-//            print(self.songs?.count)
-//            print("Test by liu")
-//        })
+        print("Viewwillappear")
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+        //TODO:- String(User.currentUser().id)
+        Song.getRecommendation("1", completion: {result,error in
+            if error == nil {
+                self.songs = result
+                print(self.songs?.count)
+                self.delay(0, closure: {
+                    SVProgressHUD.dismiss()
+                    self.initTableView()
+                })
+            }
+            else {
+                print (error)
+            }
+        })
+
     }
     
     func initTableView() {
@@ -56,14 +85,20 @@ extension RecommendationViewContainerController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10 //(songs?.count)!
+        return (songs?.count)!
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = SongLibraryCell(style: .Default, reuseIdentifier: "songLibraryCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_4")!)
-//        cell.songName.text = songs![indexPath.row].SongName
-//        cell.singerName.text = songs![indexPath.row].SongArtist
-//        cell.album.sd_setImageWithURL(NSURL(string:songs![indexPath.row].SongImage!), placeholderImage: UIImage(named: "AlbumPic_4")!)
+        guard songs![indexPath.row].SongImage != nil else {
+            cell.songName.text = songs![indexPath.row].SongName
+            cell.singerName.text = songs![indexPath.row].SongArtist
+            return cell
+        }
+        
+        cell.songName.text = songs![indexPath.row].SongName
+        cell.singerName.text = songs![indexPath.row].SongArtist
+        cell.album.sd_setImageWithURL(NSURL(string:songs![indexPath.row].SongImage!), placeholderImage: UIImage(named: "AlbumPic_4")!)
         return cell
     }
     

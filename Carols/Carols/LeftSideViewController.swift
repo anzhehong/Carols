@@ -9,10 +9,11 @@
 import UIKit
 import SlideMenuControllerSwift
 import SDWebImage
+import SVProgressHUD
 
 class LeftSideViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let cellNames: [String] = ["Home", "Ranking List", "Chosen Songs", "Playing", "History", "Logout"]
+    let cellNames: [String] = ["Home", "Ranking List", "Chosen Songs", "Recommendation", "History", "Logout"]
     var tableView           = UITableView()
     
     
@@ -126,6 +127,7 @@ extension LeftSideViewController {
         if indexPath.row == 0 {
             slideMenuController.mainViewController = MainViewController()
         } else if indexPath.row == 1 {
+            
             slideMenuController.mainViewController = RankingViewController()
         }
         else if indexPath.row == 2 {

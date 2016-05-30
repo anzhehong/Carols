@@ -7,20 +7,58 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class SongHistoryViewContainerController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var tableView = UITableView()
     var superView = UIView()
-    
+    var songs : [Song]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        initTableView()
+        superView = self.view
+        tableView = UITableView(frame: self.view.frame)
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+        Song.getHistory("1", completion: {result,error in
+            if error == nil {
+                self.songs = result
+                print(self.songs?.count)
+                self.delay(0, closure: {
+                    SVProgressHUD.dismiss()
+                    self.initTableView()
+                })
+            }
+            else {
+                print (error)
+            }
+        })
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+        Song.getHistory("1", completion: {result,error in
+            if error == nil {
+                self.songs = result
+                print(self.songs?.count)
+                self.delay(0, closure: {
+                    SVProgressHUD.dismiss()
+                    self.initTableView()
+                })
+            }
+            else {
+                print (error)
+            }
+        })
+
+       
     }
 
     func initTableView() {
-        superView = self.view
-        tableView = UITableView(frame: self.view.frame)
         tableView.delegate = self
         tableView.dataSource = self
         superView.addSubview(tableView)
@@ -37,11 +75,14 @@ extension SongHistoryViewContainerController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return (songs?.count)!
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = HistoryCell(style: .Default, reuseIdentifier: "chosenSongCell", songName: "White Turns Blue", singerName: "Copeland")
+        cell.songNameLabel.text = songs![indexPath.row].SongName
+        cell.songNameLabel.text = songs![indexPath.row].SongArtist
+        
         return cell
     }
     

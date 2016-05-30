@@ -23,4 +23,5 @@
 #import "WeiboSDK.h"
 #import "EZAudio/EZAudio.h"
 
+#import "SVProgressHUD/SVProgressHUD.h"
 #endif /* BridgeHeader_h */

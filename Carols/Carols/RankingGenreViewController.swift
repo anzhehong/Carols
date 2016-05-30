@@ -7,21 +7,56 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class RankingGenreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var tableView = UITableView()
     var superView = UIView()
     var sortType  = "All"
-
+    var songs : [Song]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        initMenu()
+        superView            = self.view
+        tableView            = UITableView(frame: self.view.frame)
+        Song.getSongByTag(self.title!,completion: {result,error in
+            if error == nil {
+                self.songs = result
+                print(self.songs?.count)
+                self.delay(0, closure: {
+                    SVProgressHUD.dismissWithDelay(2)
+                    self.initMenu()
+                })
+            }
+            else {
+                print (error)
+            }
+        })
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        SVProgressHUD.show()
+        SVProgressHUD.showWithStatus("Updating")
+        SVProgressHUD.setDefaultMaskType(.Gradient)
+        Song.getSongByTag(self.title!,completion: {result,error in
+            if error == nil {
+                self.songs = result
+                print(self.songs?.count)
+                self.delay(0, closure: {
+                    self.initMenu()
+                })
+            }
+            else {
+                print (error)
+            }
+        })
     }
     
     func initMenu() {
-        superView            = self.view
-        tableView            = UITableView(frame: self.view.frame)
+
         tableView.dataSource = self
         tableView.delegate   = self
         superView.addSubview(tableView)
@@ -37,11 +72,14 @@ extension RankingGenreViewController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return (songs?.count)!
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = SongLibraryCell(style: .Default, reuseIdentifier: "songLibraryCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_4")!)
+        cell.singerName.text = songs![indexPath.row].SongArtist
+        cell.songName.text = songs![indexPath.row].SongName
+
         return cell
     }
     
