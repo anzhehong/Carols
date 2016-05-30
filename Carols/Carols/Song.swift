@@ -37,7 +37,7 @@ class Song: BaseEntity {
         let song = Song()
         song.SongId = json["track_id"].string
         song.SongName = json["track_name"].string
-        song.SongURL = json["track_name"].string
+        song.SongURL = json["oringinal_url"].string
         song.SongImage = json["album_image"].string
         song.SongArtist = json["artist_name"].string
         song.SongLyrics = json["lyrics"].string

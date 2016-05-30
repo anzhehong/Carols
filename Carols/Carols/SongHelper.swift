@@ -25,8 +25,15 @@ class SongHelper {
             
             let imageWidth = "\((screen.width - 70) * 2)"
             let song = songList[index] as! Song
-            let url = BaseHandler.imageGet(song.SongImage!, width: imageWidth, height: imageWidth)
-            guard  SDWebImageManager.sharedManager().imageCache.imageFromDiskCacheForKey(url?.absoluteString) != nil else
+            var url = NSURL()
+            if let imageurl = song.SongImage
+            {
+                url = NSURL(string: imageurl)!
+            }
+            else {
+                url = NSURL(string:"")!
+            }
+            guard  SDWebImageManager.sharedManager().imageCache.imageFromDiskCacheForKey(url.absoluteString) != nil else
             {
                 SDWebImageDownloader.sharedDownloader().downloadImageWithURL(url, options: .UseNSURLCache, progress: nil, completed: nil)
                 return

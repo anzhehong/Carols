@@ -207,8 +207,17 @@ class PlayViewController: UIViewController{
     
     func setBackgroundImage () {
         let width = String(Int((UIScreen.mainScreen().bounds.width - 70) * 2))
-        let url = BaseHandler.imageGet((currentSong?.SongImage)!, width: width, height: width)
-        BackgroundImage.sd_setImageWithURL(url)
+        let current = songs[currentIndex] as! Song
+        var url = NSURL()
+        
+        if let imageurl = current.SongImage
+        {
+         url = NSURL(string: imageurl)!
+        }
+        else {
+            url = NSURL(string:"")!
+        }
+        BackgroundImage.sd_setImageWithURL(url,placeholderImage: UIImage(named: "music_placeholder"))
         SongsImage.sd_setImageWithURL(url, placeholderImage: UIImage(named: "music_placeholder"))
         if !visualEffictView.isDescendantOfView(Background) {
             let blurEffect = UIBlurEffect(style: .Dark)
@@ -430,10 +439,10 @@ class PlayViewController: UIViewController{
         configNowPlayingInfoCenter()
         let stream = Stream()
         //TODO:- Change to network Path Here
-        //let musicURL = NSURL(string: "")
+        let musicURL = NSURL(string: (currentSong?.SongURL)!)
         let filePath = NSBundle.mainBundle().pathForResource(currentSong?.SongFile, ofType: "mp3")
         let fileURL = NSURL(fileURLWithPath: filePath!)
-        stream.taudioFileURL = fileURL
+        stream.taudioFileURL = musicURL
         streamer = nil
         streamer = DOUAudioStreamer(audioFile: stream)
         //FIXME: 线程？还是什么问题？
@@ -554,14 +563,22 @@ class PlayViewController: UIViewController{
     //MARK:- DataSource 
     func setVCData (pathName:String,type:String,chooseIndex:Int){
         //TODO: Chane to Net URL
-        //let URL = NSURL(string: "")
+        
         let filePath = NSBundle.mainBundle().pathForResource(pathName, ofType: type)
         let result = try! NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: filePath!)!, options:.MutableContainers) as! NSDictionary
         let array = result["songs"]!.mutableCopy() as! NSArray
         let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
         songs = mutableArray
+        
         dontReloadMusic = true
         specialIndex = chooseIndex
+    }
+    
+    
+    func configureVC(data:[Song],chooesIndex:Int) {
+        songs = NSMutableArray(array:data)
+        dontReloadMusic = true
+        specialIndex = chooesIndex
     }
     
     //MARK: - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
