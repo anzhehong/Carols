@@ -22,7 +22,7 @@ class Song: BaseEntity {
     var liked:Bool?
    
 //    static let baseUrl = "http://115.28.74.242:8080/Carols/Main/"
-    static let baseUrl = "http://192.168.1.101:8080/Carols/Main/"
+    static let baseUrl = "http://localhost:8080/Carols/Main/"
     
     override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject]! {
         return ["SongId":"track_id",

@@ -33,7 +33,8 @@ class AAUser: NSObject {
     
 
 //    static let baseUrl = "http://115.28.74.242:8080/Carols/Main/"
-    static let baseUrl = "http://192.168.1.101:8080/Carols/Main/"
+//    static let baseUrl = "http://192.168.1.101:8080/Carols/Main/"
+    static let baseUrl = "http://localhost:8080/Carols/Main/"
     
     class func register(nickname: String, phoneNum: String,
                         pass: String, completion: AAErrorHandler) {
