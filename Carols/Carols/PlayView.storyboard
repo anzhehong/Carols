@@ -44,14 +44,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Miu-Qx-t2s">
-                                <rect key="frame" x="27.5" y="40" width="25" height="22"/>
+                                <rect key="frame" x="28" y="40" width="25" height="22"/>
                                 <state key="normal" image="menu"/>
                                 <connections>
                                     <action selector="ShowList" destination="HmQ-op-XGW" eventType="touchUpInside" id="CRM-c6-BUz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSo-eB-Xp2">
-                                <rect key="frame" x="27.5" y="439" width="23" height="22"/>
+                                <rect key="frame" x="28" y="439" width="23" height="22"/>
                                 <state key="normal" image="empty_heart"/>
                                 <connections>
                                     <action selector="Like:" destination="HmQ-op-XGW" eventType="touchUpInside" id="EOU-i9-1U7"/>
@@ -68,13 +68,13 @@
                                 <rect key="frame" x="52" y="70" width="496" height="369"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Vr5-PK-gCb">
-                                        <rect key="frame" x="20" y="-43.5" width="456" height="456"/>
+                                        <rect key="frame" x="20" y="-43" width="456" height="456"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Vr5-PK-gCb" secondAttribute="height" multiplier="1:1" id="ToU-0f-zP6"/>
                                         </constraints>
                                     </imageView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wyH-3d-j2m">
-                                        <rect key="frame" x="20" y="412.5" width="456" height="128"/>
+                                        <rect key="frame" x="20" y="413" width="456" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="iXb-4S-vKe"/>
@@ -175,14 +175,18 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm5-Yt-FV8">
                                         <rect key="frame" x="480" y="66" width="45" height="30"/>
-                                        <state key="normal" title="record"/>
+                                        <state key="normal" title="record">
+                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="recordButtonClicked:" destination="HmQ-op-XGW" eventType="touchUpInside" id="TuK-Af-AMY"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D1B-Fe-XM1">
-                                        <rect key="frame" x="40" y="65" width="30" height="30"/>
-                                        <state key="normal" title="play"/>
+                                        <rect key="frame" x="40" y="65" width="46" height="30"/>
+                                        <state key="normal" title="Replay">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="playButtonClicked:" destination="HmQ-op-XGW" eventType="touchUpInside" id="TFg-bn-jb6"/>
                                         </connections>

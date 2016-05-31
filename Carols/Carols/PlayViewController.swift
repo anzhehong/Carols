@@ -816,10 +816,10 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.textLabel?.text = ""
             }
             if indexPath.row == lrcLineNumber {
-                cell.textLabel?.textColor = UIColor(red: 255/255, green: 255/255, blue: 0/255, alpha: 1)
+                cell.textLabel?.textColor = UIColor(red: 247.0/255, green: 15.0/255, blue: 68.0/255, alpha: 1.0)
                 cell.textLabel?.font = UIFont.systemFontOfSize(15)
             }else {
-                cell.textLabel?.textColor = UIColor(red: 255/255, green: 25/255, blue: 200/255, alpha: 1)
+                cell.textLabel?.textColor = UIColor.whiteColor()
                 cell.textLabel?.font = UIFont.systemFontOfSize(13)
             }
             return cell
@@ -847,8 +847,7 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
         let dic: NSDictionary = mo.LRCWithName(pathLRC)
         LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
         timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
-        AALog.debug(LRCDictionary)
-        AALog.warning(timeArray)
+        AALog.test("origin direcotry: \(pathLRC)")
     }
     
     func showTime() {
@@ -897,5 +896,29 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     func handleLyricsWithURL(url: String) {
         let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
         Alamofire.download(.GET, url , destination: destination)
+        
+        var localPath: NSURL?
+        Alamofire.download(.GET,
+            url,
+            destination: { (temporaryURL, response) in
+                let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+                let pathComponent = response.suggestedFilename
+                
+                localPath = directoryURL.URLByAppendingPathComponent(pathComponent!)
+                return localPath!
+        })
+            .response { (request, response, _, error) in
+                print(response)
+                print("Downloaded file to \(localPath!)")
+                
+                let mo = DoModel.initSingleModel()
+                let dic: NSDictionary = mo.LRCWithName(localPath!.absoluteString)
+                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+                
+                AALog.debug(self.LRCDictionary)
+                AALog.warning(self.timeArray)
+                self.tableView.reloadData()
+        }
     }
 }
