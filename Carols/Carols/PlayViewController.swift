@@ -55,7 +55,6 @@ class PlayViewController: UIViewController{
     @IBOutlet weak var ModelButton: UIButton!
     @IBOutlet weak var PlayButton: UIButton!
     
-    @IBOutlet weak var LyricView: UIView!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -791,7 +790,40 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let identifier = "cell"
+        if let cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? MyCell {
+            
+            if let str = LRCDictionary.objectForKey(timeArray[indexPath.row]) as? String {
+                cell.textLabel?.text = str
+                
+            }else {
+                cell.textLabel?.text = ""
+            }
+            if indexPath.row == lrcLineNumber {
+                cell.textLabel?.textColor = UIColor(red: 255/255, green: 255/255, blue: 0/255, alpha: 1)
+                cell.textLabel?.font = UIFont.systemFontOfSize(15)
+            }else {
+                cell.textLabel?.textColor = UIColor(red: 255/255, green: 25/255, blue: 200/255, alpha: 1)
+                cell.textLabel?.font = UIFont.systemFontOfSize(13)
+            }
+            return cell
+        }else {
+            let cell = MyCell(style: .Default, reuseIdentifier: identifier)
+            if let str = LRCDictionary.objectForKey(timeArray[indexPath.row]) as? String {
+                cell.textLabel?.text = str
+                
+            }else {
+                cell.textLabel?.text = ""
+            }
+            if indexPath.row == lrcLineNumber {
+                cell.textLabel?.textColor = UIColor(red: 255/255, green: 255/255, blue: 0/255, alpha: 1)
+                cell.textLabel?.font = UIFont.systemFontOfSize(15)
+            }else {
+                cell.textLabel?.textColor = UIColor(red: 255/255, green: 25/255, blue: 200/255, alpha: 1)
+                cell.textLabel?.font = UIFont.systemFontOfSize(13)
+            }
+            return cell
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -801,7 +833,7 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     func initTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.backgroundColor = UIColor.redColor()
+        self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = .None //消除cell间隔的横线
         NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(PlayViewController.showTime), userInfo: nil, repeats: true)
         
@@ -813,8 +845,10 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
         let pathLRC = NSBundle.mainBundle().pathForResource("梁静茹-偶阵雨", ofType: "lrc")
         let mo = DoModel.initSingleModel()
         let dic: NSDictionary = mo.LRCWithName(pathLRC)
-        NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+        LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
         timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+        AALog.debug(LRCDictionary)
+        AALog.warning(timeArray)
     }
     
     func showTime() {
