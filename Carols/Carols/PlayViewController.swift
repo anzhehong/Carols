@@ -54,6 +54,7 @@ class PlayViewController: UIViewController{
     @IBOutlet weak var ModelButton: UIButton!
     @IBOutlet weak var PlayButton: UIButton!
     
+    @IBOutlet weak var theTableView: UITableView!
     @IBOutlet weak var LyricView: UIView!
 //MARK:- Params
     var streamer :DOUAudioStreamer?
