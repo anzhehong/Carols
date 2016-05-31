@@ -53,7 +53,7 @@ class PlayViewController: UIViewController{
     @IBOutlet weak var MusicTimeSlider: MusicSlider!
     @IBOutlet weak var ModelButton: UIButton!
     @IBOutlet weak var PlayButton: UIButton!
-    
+    //MARK:- The tableView 
     @IBOutlet weak var theTableView: UITableView!
     @IBOutlet weak var LyricView: UIView!
 //MARK:- Params
