@@ -27,24 +27,30 @@ class ChosenSongCell: UITableViewCell {
         singerNameLabel.textColor = UIColor ( red: 0.5608, green: 0.5373, blue: 0.5451, alpha: 1.0 )
         singerNameLabel.font      = UIFont.systemFontOfSize(16)
         
-        self.addSubview(songNameLabel)
-        songNameLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(self).offset(8)
-            make.left.equalTo(self).offset(25)
-        }
-        
-        self.addSubview(singerNameLabel)
-        singerNameLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(songNameLabel)
-            make.top.equalTo(songNameLabel.snp_bottom).offset(3)
-        }
-        
         actionImage.setImage(UIImage(named: "To top Icon"), forState: .Normal)
         self.addSubview(actionImage)
         actionImage.snp_makeConstraints { (make) in
             make.right.equalTo(self.snp_right).offset(-18)
             make.height.width.equalTo(25)
             make.centerY.equalTo(self)
+        }
+        
+        self.addSubview(songNameLabel)
+        songNameLabel.adjustsFontSizeToFitWidth = true
+        songNameLabel.minimumScaleFactor = 0.4
+        songNameLabel.snp_makeConstraints { (make) in
+            make.top.equalTo(self).offset(8)
+            make.left.equalTo(self).offset(25)
+            make.right.lessThanOrEqualTo(actionImage.snp_left).offset(-5)
+        }
+        
+        self.addSubview(singerNameLabel)
+        singerNameLabel.adjustsFontSizeToFitWidth = true
+        singerNameLabel.minimumScaleFactor = 0.4
+        singerNameLabel.snp_makeConstraints { (make) in
+            make.left.equalTo(songNameLabel)
+            make.top.equalTo(songNameLabel.snp_bottom).offset(3)
+            make.right.lessThanOrEqualTo(actionImage.snp_left).offset(-5)
         }
         
         self.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )

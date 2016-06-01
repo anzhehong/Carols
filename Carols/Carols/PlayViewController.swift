@@ -10,6 +10,7 @@ import UIKit
 import DOUAudioStreamer
 import SDWebImage
 import MediaPlayer
+import Alamofire
 
 
 enum PlayMode {
@@ -68,6 +69,7 @@ class PlayViewController: UIViewController{
     var isNotPresenting:Bool?
     var like:Bool = false
    // let delegate:PlaySongDelegate
+    var lyric: String?
     
     var visualEffictView = UIVisualEffectView()
     let musicIndicator = MusicIndicator.sharedInstance
@@ -77,7 +79,7 @@ class PlayViewController: UIViewController{
     var originArray = NSMutableArray()
     var musicDurationTimer:NSTimer?
     var playMode = PlayMode.Loop
-    var musicIsPlaying:Bool = true {
+    var musicIsPlaying:Bool = false {
         didSet{
             if musicIsPlaying {
                 PlayButton.setImage(UIImage(named: "big_pause_button"), forState: .Normal)
@@ -97,6 +99,7 @@ class PlayViewController: UIViewController{
         //MARK: 录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音
         configureRecord()
         
+        PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
         streamer = DOUAudioStreamer()
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
         currentIndex = 0
@@ -104,6 +107,8 @@ class PlayViewController: UIViewController{
         randomArray = NSMutableArray.init(capacity: 0)
         addPanRecognizer()
         
+        //歌词
+        initTableView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -120,7 +125,7 @@ class PlayViewController: UIViewController{
     }
     
     override func viewDidAppear(animated: Bool) {
-        print(currentSong)
+//        print(currentSong)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -239,7 +244,7 @@ class PlayViewController: UIViewController{
     func addPanRecognizer() {
        let gesture = UISwipeGestureRecognizer.init(target: self, action: #selector(PlayViewController.dismiss(_:)))
         gesture.direction = .Down
-        view.addGestureRecognizer(gesture)
+//        view.addGestureRecognizer(gesture)
     }
    
     func updateUI() {
@@ -315,8 +320,10 @@ class PlayViewController: UIViewController{
     }
     
     @IBAction func Play() {
+        recordButtonClicked(UIButton())
         if musicIsPlaying {
             streamer!.pause()
+            playButtonClicked(UIButton())
             musicIsPlaying = false
         }
         else {
@@ -443,6 +450,11 @@ class PlayViewController: UIViewController{
         let musicURL = NSURL(string: (currentSong?.SongURL)!)
         let filePath = NSBundle.mainBundle().pathForResource(currentSong?.SongFile, ofType: "mp3")
         let fileURL = NSURL(fileURLWithPath: filePath!)
+        lyric = currentSong?.SongLyrics
+        if let LRC = lyric {
+            //MARK: 下载歌词
+            handleLyricsWithURL(LRC)
+        }
         stream.taudioFileURL = musicURL
         streamer = nil
         streamer = DOUAudioStreamer(audioFile: stream)
@@ -592,6 +604,13 @@ class PlayViewController: UIViewController{
     var recorder: EZRecorder!
     var isRecording = false
     var allowRecording = false
+    
+    
+    
+    //MARK: 歌词
+    var LRCDictionary: NSMutableDictionary!
+    var timeArray: NSMutableArray!
+    var lrcLineNumber = 0
 }
 
 extension PlayViewController {
@@ -756,6 +775,149 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
         if self.isRecording {
             self.recorder.appendDataFromBufferList(bufferList,
                                                    withBufferSize: bufferSize)
+        }
+    }
+}
+
+extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return timeArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let identifier = "cell"
+        if let cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? MyCell {
+            
+            if let str = LRCDictionary.objectForKey(timeArray[indexPath.row]) as? String {
+                cell.textLabel?.text = str
+                
+            }else {
+                cell.textLabel?.text = ""
+            }
+            if indexPath.row == lrcLineNumber {
+                cell.textLabel?.textColor = UIColor(red: 255/255, green: 255/255, blue: 0/255, alpha: 1)
+                cell.textLabel?.font = UIFont.systemFontOfSize(15)
+            }else {
+                cell.textLabel?.textColor = UIColor(red: 255/255, green: 25/255, blue: 200/255, alpha: 1)
+                cell.textLabel?.font = UIFont.systemFontOfSize(13)
+            }
+            return cell
+        }else {
+            let cell = MyCell(style: .Default, reuseIdentifier: identifier)
+            if let str = LRCDictionary.objectForKey(timeArray[indexPath.row]) as? String {
+                cell.textLabel?.text = str
+                
+            }else {
+                cell.textLabel?.text = ""
+            }
+            if indexPath.row == lrcLineNumber {
+                cell.textLabel?.textColor = UIColor(red: 247.0/255, green: 15.0/255, blue: 68.0/255, alpha: 1.0)
+                cell.textLabel?.font = UIFont.systemFontOfSize(15)
+            }else {
+                cell.textLabel?.textColor = UIColor.whiteColor()
+                cell.textLabel?.font = UIFont.systemFontOfSize(13)
+            }
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 35
+    }
+    
+    func initTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.separatorStyle = .None //消除cell间隔的横线
+        NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(PlayViewController.showTime), userInfo: nil, repeats: true)
+        
+        lrcLineNumber = 0
+        timeArray = NSMutableArray()
+        LRCDictionary = NSMutableDictionary()
+        
+        //init lrc
+        let pathLRC = NSBundle.mainBundle().pathForResource("梁静茹-偶阵雨", ofType: "lrc")
+        let mo = DoModel.initSingleModel()
+        let dic: NSDictionary = mo.LRCWithName(pathLRC)
+        LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+        timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+        AALog.test("origin direcotry: \(pathLRC)")
+    }
+    
+    func showTime() {
+//        let mo  = DoModel.initSingleModel()
+        self.displayWord()
+        if let duration = streamer?.duration {
+            if let currentTime = streamer?.currentTime {
+                if duration - currentTime < 0.1 {
+                    //结束之后转换图片从头开始
+                    streamer?.stop()
+                }
+            }
+        }
+    }
+    
+    func displayWord() {
+        let mo  = DoModel.initSingleModel()
+        let num = timeArray.count
+        for i in 0..<num {
+            let currentTime = mo.changeTime(timeArray[i] as! String)
+            if i + 1 < timeArray.count {
+                let currentTime1 = mo.changeTime(timeArray[i+1] as! String)
+                if (UInt((streamer?.currentTime)!) > currentTime && UInt((streamer?.currentTime)!) < currentTime1) {
+                    self.updateLRCTableView(i)
+                    tableView.reloadData()
+                    break
+                }
+            } else if UInt((streamer?.currentTime)!) > currentTime {
+                self.updateLRCTableView(i)
+                tableView.reloadData()
+                break
+            }
+        }
+    }
+    
+    func updateLRCTableView(lineNumber: Int) {
+        lrcLineNumber = lineNumber
+        tableView.reloadData()
+        if lineNumber > 0 {
+            let indexPath = NSIndexPath(forRow: lineNumber, inSection: 0)
+            tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
+        }
+    }
+    
+    
+    func handleLyricsWithURL(url: String) {
+        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
+        Alamofire.download(.GET, url , destination: destination)
+        
+        var localPath: NSURL?
+        Alamofire.download(.GET,
+            url,
+            destination: { (temporaryURL, response) in
+                let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+                let pathComponent = response.suggestedFilename
+                
+                localPath = directoryURL.URLByAppendingPathComponent(pathComponent!)
+                return localPath!
+        })
+            .response { (request, response, _, error) in
+                print(response)
+                print("Downloaded file to \(localPath!)")
+                
+                let mo = DoModel.initSingleModel()
+                let dic: NSDictionary = mo.LRCWithName(localPath!.absoluteString)
+                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+                
+                AALog.debug(self.LRCDictionary)
+                AALog.warning(self.timeArray)
+                self.tableView.reloadData()
         }
     }
 }

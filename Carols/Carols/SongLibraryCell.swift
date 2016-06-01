@@ -37,27 +37,33 @@ class SongLibraryCell: UITableViewCell {
             make.centerY.equalTo(self)
         }
         
-        self.addSubview(songName)
-        songName.textColor = UIColor.UIColorFromRGB(0xFFFFFF)
-        songName.font = UIFont.systemFontOfSize(20)
-        songName.snp_makeConstraints { (make) in
-            make.left.equalTo(album.snp_right).offset(20)
-            make.top.equalTo(self).offset(8)
-        }
-        
-        self.addSubview(singerName)
-        singerName.textColor = UIColor.UIColorFromRGB(0xA49EA1)
-        singerName.font = UIFont.systemFontOfSize(18)
-        singerName.snp_makeConstraints { (make) in
-            make.left.equalTo(songName)
-            make.top.equalTo(songName.snp_bottom).offset(3)
-        }
-        
         singButton.setImage(UIImage(named: "SingIcon"), forState: .Normal)
         self.addSubview(singButton)
         singButton.snp_makeConstraints { (make) in
             make.centerY.equalTo(self)
             make.right.equalTo(self).offset(-18)
+        }
+        
+        self.addSubview(songName)
+        songName.textColor = UIColor.UIColorFromRGB(0xFFFFFF)
+        songName.font = UIFont.systemFontOfSize(20)
+        songName.adjustsFontSizeToFitWidth = true
+        songName.minimumScaleFactor = 0.4
+        songName.snp_makeConstraints { (make) in
+            make.left.equalTo(album.snp_right).offset(20)
+            make.top.equalTo(self).offset(8)
+            make.right.lessThanOrEqualTo(singButton.snp_left).offset(-5)
+        }
+        
+        self.addSubview(singerName)
+        singerName.textColor = UIColor.UIColorFromRGB(0xA49EA1)
+        singerName.font = UIFont.systemFontOfSize(18)
+        singerName.adjustsFontSizeToFitWidth = true
+        singerName.minimumScaleFactor = 0.4
+        singerName.snp_makeConstraints { (make) in
+            make.left.equalTo(songName)
+            make.right.lessThanOrEqualTo(singButton.snp_left).offset(-5)
+            make.top.equalTo(songName.snp_bottom).offset(3)
         }
         
         self.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )

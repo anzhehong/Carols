@@ -16,9 +16,11 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView = UITableView(frame: self.view.frame)
-        SVProgressHUD.show()
-        SVProgressHUD.showWithStatus("Updating")
-        SVProgressHUD.setDefaultMaskType(.Gradient)
+        dispatch_async(dispatch_get_main_queue()) { 
+            SVProgressHUD.show()
+            SVProgressHUD.showWithStatus("Updating")
+            SVProgressHUD.setDefaultMaskType(.Gradient)
+        }
         Song.getHistory("1", completion: {result,error in
             if error == nil {
                 self.songs = result
@@ -36,21 +38,21 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        SVProgressHUD.show()
-        SVProgressHUD.showWithStatus("Updating")
-        SVProgressHUD.setDefaultMaskType(.Gradient)
-        Song.getHistory("1", completion: {result,error in
-            if error == nil {
-                self.songs = result
-                self.delay(0, closure: {
-                    SVProgressHUD.dismiss()
-                    self.initTableView()
-                })
-            }
-            else {
-                print (error)
-            }
-        })
+//        SVProgressHUD.show()
+//        SVProgressHUD.showWithStatus("Updating")
+//        SVProgressHUD.setDefaultMaskType(.Gradient)
+//        Song.getHistory("1", completion: {result,error in
+//            if error == nil {
+//                self.songs = result
+//                self.delay(0, closure: {
+//                    SVProgressHUD.dismiss()
+//                    self.initTableView()
+//                })
+//            }
+//            else {
+//                print (error)
+//            }
+//        })
     }
     
     func initTableView() {

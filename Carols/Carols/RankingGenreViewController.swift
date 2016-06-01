@@ -128,6 +128,7 @@ extension RankingGenreViewController {
         let cell = SongLibraryCell(style: .Default, reuseIdentifier: "songLibraryCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_4")!)
         cell.singerName.text = songs![indexPath.row].SongArtist
         cell.songName.text = songs![indexPath.row].SongName
+        cell.album.sd_setImageWithURL(NSURL(string: songs![indexPath.row].SongImage!), placeholderImage: UIImage(named: "AlbumPic_4")!)
 
         return cell
     }

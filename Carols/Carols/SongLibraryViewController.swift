@@ -24,39 +24,39 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        SVProgressHUD.show()
-        SVProgressHUD.showWithStatus("Updating")
-        SVProgressHUD.setDefaultMaskType(.Gradient)
+//        SVProgressHUD.show()
+//        SVProgressHUD.showWithStatus("Updating")
+//        SVProgressHUD.setDefaultMaskType(.Gradient)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         superView = self.view
 
-        Song.getRecommendation("1", completion: {result,error in
-            if error == nil {
-                self.songs = result
-                print(self.songs?.count)
-                self.delay(0, closure: {
-                    self.initAlbum()
-                    self.initThreeButton()
-                    self.initTableView()
-                })
-            }
-            else {
-                print (error)
-            }
-        })
+//        Song.getRecommendation("1", completion: {result,error in
+//            if error == nil {
+//                self.songs = result
+//                print(self.songs?.count)
+//                self.delay(0, closure: {
+//                    self.initAlbum()
+//                    self.initThreeButton()
+//                    self.initTableView()
+//                })
+//            }
+//            else {
+//                print (error)
+//            }
+//        })
 
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        SVProgressHUD.show()
-        SVProgressHUD.showWithStatus("Updating")
-        SVProgressHUD.setDefaultMaskType(.Gradient)
+//        dispatch_async(dispatch_get_main_queue()) {
+//            SVProgressHUD.show()
+//            SVProgressHUD.showWithStatus("Customizing...")
+//            SVProgressHUD.setDefaultMaskType(.Gradient)
+//        }
+        
         //TODO:- String(User.currentUser().id)
         Song.getRecommendation("1", completion: {result,error in
+            SVProgressHUD.dismiss()
             if error == nil {
                 self.songs = result
                 print(self.songs?.count)
@@ -64,16 +64,38 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
                     self.initAlbum()
                     self.initThreeButton()
                     self.initTableView()
-                    SVProgressHUD.dismiss()
                 })
             }
             else {
                 print (error)
-                SVProgressHUD.dismiss()
             }
         })
 
     }
+
+//    override func viewWillAppear(animated: Bool) {
+//        super.viewWillAppear(animated)
+//        SVProgressHUD.show()
+//        SVProgressHUD.showWithStatus("Updating")
+//        SVProgressHUD.setDefaultMaskType(.Gradient)
+//        //TODO:- String(User.currentUser().id)
+//        Song.getRecommendation("1", completion: {result,error in
+//            SVProgressHUD.dismiss()
+//            if error == nil {
+//                self.songs = result
+//                print(self.songs?.count)
+//                self.delay(0, closure: {
+//                    self.initAlbum()
+//                    self.initThreeButton()
+//                    self.initTableView()
+//                })
+//            }
+//            else {
+//                print (error)
+//            }
+//        })
+//
+//    }
     
     func initAlbum()  {
         album.image = UIImage(named: "AlbumLarge")
@@ -195,6 +217,7 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         }
         
         let tableView = RecommendationViewContainerController.GetTableView()
+        superView.backgroundColor = UIColor ( red: 0.102, green: 0.0902, blue: 0.0941, alpha: 1.0 )
         superView.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self

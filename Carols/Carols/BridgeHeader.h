@@ -24,4 +24,8 @@
 #import "EZAudio/EZAudio.h"
 
 #import "SVProgressHUD/SVProgressHUD.h"
+
+#import "DoModel.h"
+#import "Song.h"
+#import "MyCell.h"
 #endif /* BridgeHeader_h */
