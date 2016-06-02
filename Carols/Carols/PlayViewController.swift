@@ -31,7 +31,7 @@ protocol PlaySongDelegate {
 }
 
 class PlayViewController: UIViewController{
-
+    
     //MARK:- Let PlayView be Signton
     class var sharedInstance: PlayViewController {
         struct Static {
@@ -54,10 +54,11 @@ class PlayViewController: UIViewController{
     @IBOutlet weak var MusicTimeSlider: MusicSlider!
     @IBOutlet weak var ModelButton: UIButton!
     @IBOutlet weak var PlayButton: UIButton!
-    //MARK:- The tableView 
-    @IBOutlet weak var theTableView: UITableView!
-    @IBOutlet weak var LyricView: UIView!
-//MARK:- Params
+    
+    @IBOutlet weak var ScoreBackgroundView: EZAudioPlotGL!
+    @IBOutlet weak var tableView: UITableView!
+    
+    //MARK:- Params
     var streamer :DOUAudioStreamer?
     var dontReloadMusic:Bool = false
     var songs = NSMutableArray()
@@ -68,7 +69,8 @@ class PlayViewController: UIViewController{
     var parentId:NSNumber?
     var isNotPresenting:Bool?
     var like:Bool = false
-   // let delegate:PlaySongDelegate
+    var scoreModel:Bool = false
+    // let delegate:PlaySongDelegate
     var lyric: String?
     
     var visualEffictView = UIVisualEffectView()
@@ -93,7 +95,7 @@ class PlayViewController: UIViewController{
     }
     var currentIndex:Int = 0
     
-//MARK:- LifeCycle
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         //MARK: 录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音
@@ -106,7 +108,7 @@ class PlayViewController: UIViewController{
         originArray = [].mutableCopy() as! NSMutableArray
         randomArray = NSMutableArray.init(capacity: 0)
         addPanRecognizer()
-        
+        configureScoreUI()
         //歌词
         initTableView()
     }
@@ -125,7 +127,7 @@ class PlayViewController: UIViewController{
     }
     
     override func viewDidAppear(animated: Bool) {
-//        print(currentSong)
+        //        print(currentSong)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -133,8 +135,8 @@ class PlayViewController: UIViewController{
         navigationController?.navigationBarHidden = false
         dontReloadMusic = true
     }
-
-//MARK:- Private Init
+    
+    //MARK:- Private Init
     internal required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -143,7 +145,7 @@ class PlayViewController: UIViewController{
         super.init(nibName: nil, bundle: nil)
     }
     
-//MARK:- Check Index
+    //MARK:- Check Index
     func loadOriginArray() {
         if originArray.count == 0 {
             for (index,_) in songs.enumerate() {
@@ -184,11 +186,11 @@ class PlayViewController: UIViewController{
             break
         case .Shuffle:
             ModelButton.setImage(UIImage(named: "shuffle_icon"), forState: .Normal)
-
+            
             break
         }
     }
-
+    
     func setupRadioMusic() {
         updateModeButton()
         checkIndex()
@@ -208,7 +210,7 @@ class PlayViewController: UIViewController{
         guard currentIndex >= songs.count else {
             return
         }
-            currentIndex = 0
+        currentIndex = 0
     }
     
     func setBackgroundImage () {
@@ -218,7 +220,7 @@ class PlayViewController: UIViewController{
         
         if let imageurl = current.SongImage
         {
-         url = NSURL(string: imageurl)!
+            url = NSURL(string: imageurl)!
         }
         else {
             url = NSURL(string:"")!
@@ -240,13 +242,26 @@ class PlayViewController: UIViewController{
         return .LightContent
     }
     
-//MARK:- Basic Setup
+    //MARK:- Basic Setup
     func addPanRecognizer() {
-       let gesture = UISwipeGestureRecognizer.init(target: self, action: #selector(PlayViewController.dismiss(_:)))
+        let gesture = UISwipeGestureRecognizer.init(target: self, action: #selector(PlayViewController.dismiss(_:)))
         gesture.direction = .Down
-//        view.addGestureRecognizer(gesture)
+        //        view.addGestureRecognizer(gesture)
     }
-   
+    
+    func configureScoreUI() {
+        ScoreBackgroundView.backgroundColor = UIColor.greenColor()
+        ScoreBackgroundView.color = UIColor.blueColor()
+        ScoreBackgroundView.plotType = EZPlotType.Buffer
+        ScoreBackgroundView.shouldFill = true
+        ScoreBackgroundView.shouldMirror = true
+        
+        player = EZAudioPlayer(delegate: self)
+        
+        
+    }
+    
+    
     func updateUI() {
         StartTime.text = String(streamer!.currentTime)
         EndTime.text = String(streamer!.duration)
@@ -269,21 +284,31 @@ class PlayViewController: UIViewController{
             updateUI()
         }
     }
-//MARK:- Gesture
+    //MARK:- Gesture
     
-
-//MARK:- Action
+    @IBAction func ScoreStart(sender: UITapGestureRecognizer) {
+         print("Start pan")
+        scoreModel = !scoreModel
+        if scoreModel {
+            ScoreBackgroundView.alpha = 1.0
+        }
+        else {
+            ScoreBackgroundView.alpha = 0.0
+        }
+    }
+    
+    //MARK:- Action
     @IBAction func ShowList() {
-       dontReloadMusic = true
+        dontReloadMusic = true
     }
     
     @IBAction func dismiss(sender: UIButton) {
-     
+        
         navigationController?.dismissViewControllerAnimated(true , completion: {
             [weak self] in
             self!.dontReloadMusic = false
-     //       self!.lastMusicURL = self.currentPlaying()?.SongURL
-        })
+            //       self!.lastMusicURL = self.currentPlaying()?.SongURL
+            })
     }
     
     @IBAction func Like(sender: UIButton) {
@@ -377,7 +402,7 @@ class PlayViewController: UIViewController{
         }
         else
         {
-          checkNextIndexValue()
+            checkNextIndexValue()
         }
         setupStreamer()
     }
@@ -388,10 +413,10 @@ class PlayViewController: UIViewController{
         }
         else
         {
-            currentIndex += 1 
+            currentIndex += 1
         }
     }
-  
+    
     func setupRandomMusic() {
         loadOriginArray()
         let random = Int(arc4random()) % originArray.count
@@ -400,11 +425,11 @@ class PlayViewController: UIViewController{
         originArray.removeObject(originArray.lastObject!)
         currentIndex = randomArray[0].integerValue
     }
-  
+    
     func setupStreamer() {
         createStreamer()
     }
-
+    
     func updaterSliderValue(timer:AnyObject) {
         
         if streamer!.status == .Finished {
@@ -459,7 +484,7 @@ class PlayViewController: UIViewController{
         streamer = nil
         streamer = DOUAudioStreamer(audioFile: stream)
         //FIXME: 线程？还是什么问题？
-//        streamer?.play()
+        //        streamer?.play()
     }
     
     func removeStreamerObserver() {
@@ -573,7 +598,7 @@ class PlayViewController: UIViewController{
         }
     }
     
-    //MARK:- DataSource 
+    //MARK:- DataSource
     func setVCData (pathName:String,type:String,chooseIndex:Int){
         //TODO: Chane to Net URL
         
@@ -690,7 +715,7 @@ extension PlayViewController {
     }
     
     func playerDidChangePlayState(notificatoin: NSNotification) {
-        dispatch_async(dispatch_get_main_queue()) { 
+        dispatch_async(dispatch_get_main_queue()) {
             let player = notificatoin.object as! EZAudioPlayer
             let isPlaying = player.isPlaying
             if isPlaying {
@@ -699,9 +724,9 @@ extension PlayViewController {
         }
     }
     
-//    func playerDidReachEndOfFile(notification: NSNotification) {
-//        
-//    }
+    //    func playerDidReachEndOfFile(notification: NSNotification) {
+    //
+    //    }
     
     func testFilePathURL() -> NSURL {
         if let dir = applicationDocumentsDirectory() {
@@ -730,26 +755,26 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
     
     func recorderUpdatedCurrentTime(recorder: EZRecorder!) {
         //TODO:改变时间
-        dispatch_async(dispatch_get_main_queue()) { 
+        dispatch_async(dispatch_get_main_queue()) {
             print("\(recorder.formattedCurrentTime)")
         }
     }
     
     func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
-        //TODO: 
-//        __weak typeof (self) weakSelf = self;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [weakSelf.playingAudioPlot updateBuffer:buffer[0]
-//                withBufferSize:bufferSize];
-//            });
+        //TODO:
+        //        __weak typeof (self) weakSelf = self;
+        //        dispatch_async(dispatch_get_main_queue(), ^{
+        //            [weakSelf.playingAudioPlot updateBuffer:buffer[0]
+        //                withBufferSize:bufferSize];
+        //            });
     }
     
     func audioPlayer(audioPlayer: EZAudioPlayer!, updatedPosition framePosition: Int64, inAudioFile audioFile: EZAudioFile!) {
-        //TODO: 
-//        __weak typeof (self) weakSelf = self;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            weakSelf.currentTimeLabel.text = [audioPlayer formattedCurrentTime];
-//            });
+        //TODO:
+        //        __weak typeof (self) weakSelf = self;
+        //        dispatch_async(dispatch_get_main_queue(), ^{
+        //            weakSelf.currentTimeLabel.text = [audioPlayer formattedCurrentTime];
+        //            });
     }
     
     func microphone(microphone: EZMicrophone!, changedPlayingState isPlaying: Bool) {
@@ -757,18 +782,21 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
     }
     
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
-        //TODO: 
-//        __weak typeof (self) weakSelf = self;
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            //
-//            // All the audio plot needs is the buffer data (float*) and the size.
-//            // Internally the audio plot will handle all the drawing related code,
-//            // history management, and freeing its own resources. Hence, one badass
-//            // line of code gets you a pretty plot :)
-//            //
-//            [weakSelf.recordingAudioPlot updateBuffer:buffer[0]
-//                withBufferSize:bufferSize];
-//            });
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.ScoreBackgroundView?.updateBuffer(buffer[0], withBufferSize: bufferSize);
+        });
+        //TODO:
+        //        __weak typeof (self) weakSelf = self;
+        //        dispatch_async(dispatch_get_main_queue(), ^{
+        //            //
+        //            // All the audio plot needs is the buffer data (float*) and the size.
+        //            // Internally the audio plot will handle all the drawing related code,
+        //            // history management, and freeing its own resources. Hence, one badass
+        //            // line of code gets you a pretty plot :)
+        //            //
+        //            [weakSelf.recordingAudioPlot updateBuffer:buffer[0]
+        //                withBufferSize:bufferSize];
+        //            });
     }
     
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
@@ -776,6 +804,7 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
             self.recorder.appendDataFromBufferList(bufferList,
                                                    withBufferSize: bufferSize)
         }
+        
     }
 }
 
@@ -850,7 +879,7 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func showTime() {
-//        let mo  = DoModel.initSingleModel()
+        //        let mo  = DoModel.initSingleModel()
         self.displayWord()
         if let duration = streamer?.duration {
             if let currentTime = streamer?.currentTime {

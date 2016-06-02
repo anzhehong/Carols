@@ -21,8 +21,8 @@ class Song: BaseEntity {
     var SongLyrics:String?
     var liked:Bool?
    
-//    static let baseUrl = "http://115.28.74.242:8080/Carols/Main/"
-    static let baseUrl = "http://localhost:8080/Carols/Main/"
+    //static let baseUrl = "http://115.28.74.242:8080/Carols/Main/"
+    static let baseUrl = "http://localhost:8080/Main/"
     
     override class func JSONKeyPathsByPropertyKey() -> [NSObject : AnyObject]! {
         return ["SongId":"track_id",
@@ -105,6 +105,7 @@ class Song: BaseEntity {
     
     class func getAllSongRank(completion:(([Song]?,NSError?)-> Void)) {
         let url = "\(baseUrl)getAllRank?limit=20"
+        
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
