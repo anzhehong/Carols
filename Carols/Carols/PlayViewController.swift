@@ -12,7 +12,6 @@ import SDWebImage
 import MediaPlayer
 import Alamofire
 
-
 enum PlayMode {
     case SingleSong
     case Loop
@@ -56,7 +55,10 @@ class PlayViewController: UIViewController{
     @IBOutlet weak var PlayButton: UIButton!
     
     @IBOutlet weak var ScoreBackgroundView: EZAudioPlotGL!
+    @IBOutlet weak var StandardView: EZAudioPlotGL!
+    
     @IBOutlet weak var tableView: UITableView!
+    
     
     //MARK:- Params
     var streamer :DOUAudioStreamer?
@@ -98,7 +100,6 @@ class PlayViewController: UIViewController{
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        //MARK: 录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音录音
         configureRecord()
         
         PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
@@ -250,14 +251,20 @@ class PlayViewController: UIViewController{
     }
     
     func configureScoreUI() {
-        ScoreBackgroundView.backgroundColor = UIColor.greenColor()
-        ScoreBackgroundView.color = UIColor.blueColor()
+        ScoreBackgroundView.backgroundColor = UIColor.clearColor()
+        ScoreBackgroundView.color = UIColor.whiteColor()
         ScoreBackgroundView.plotType = EZPlotType.Buffer
         ScoreBackgroundView.shouldFill = true
         ScoreBackgroundView.shouldMirror = true
+        ScoreBackgroundView.gain = 2.0
         
+        StandardView.backgroundColor = UIColor.clearColor()
+        StandardView.color = UIColor.whiteColor()
+        StandardView.plotType = .Buffer
+        StandardView.shouldMirror = true
+        StandardView.shouldFill = true
+        StandardView.gain = 0.5
         player = EZAudioPlayer(delegate: self)
-        
         
     }
     
@@ -287,13 +294,16 @@ class PlayViewController: UIViewController{
     //MARK:- Gesture
     
     @IBAction func ScoreStart(sender: UITapGestureRecognizer) {
-         print("Start pan")
         scoreModel = !scoreModel
         if scoreModel {
             ScoreBackgroundView.alpha = 1.0
+            StandardView.alpha = 1.0
+            SongsImage.alpha = 0.0
         }
         else {
             ScoreBackgroundView.alpha = 0.0
+            StandardView.alpha = 0.0
+            SongsImage.alpha = 1.0
         }
     }
     
@@ -303,11 +313,9 @@ class PlayViewController: UIViewController{
     }
     
     @IBAction func dismiss(sender: UIButton) {
-        
         navigationController?.dismissViewControllerAnimated(true , completion: {
             [weak self] in
             self!.dontReloadMusic = false
-            //       self!.lastMusicURL = self.currentPlaying()?.SongURL
             })
     }
     
@@ -345,15 +353,19 @@ class PlayViewController: UIViewController{
     }
     
     @IBAction func Play() {
-        recordButtonClicked(UIButton())
+        recordButtonClicked()
         if musicIsPlaying {
             streamer!.pause()
-            playButtonClicked(UIButton())
             musicIsPlaying = false
         }
         else {
+            //TODO:- Change to Music URL
             streamer!.play()
             musicIsPlaying = true
+             let URL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("1770040300_2031329_l", ofType: ".mp3")!)
+            let audioFile = EZAudioFile(URL:URL)
+            player.playAudioFile(audioFile)
+           
         }
     }
     
@@ -471,14 +483,13 @@ class PlayViewController: UIViewController{
         loadPreviousAndNextMusicImage()
         configNowPlayingInfoCenter()
         let stream = Stream()
-        //TODO:- Change to network Path Here
         let musicURL = NSURL(string: (currentSong?.SongURL)!)
         let filePath = NSBundle.mainBundle().pathForResource(currentSong?.SongFile, ofType: "mp3")
         let fileURL = NSURL(fileURLWithPath: filePath!)
         lyric = currentSong?.SongLyrics
         if let LRC = lyric {
             //MARK: 下载歌词
-            handleLyricsWithURL(LRC)
+            //handleLyricsWithURL(LRC)
         }
         stream.taudioFileURL = musicURL
         streamer = nil
@@ -518,7 +529,6 @@ class PlayViewController: UIViewController{
     func updateStatus() {
         musicIsPlaying = false
         musicIndicator.state = .Stopped
-        
         switch streamer!.status {
         case .Playing:
             musicIsPlaying = true
@@ -555,11 +565,9 @@ class PlayViewController: UIViewController{
         HeartLike.setImage(UIImage(named: "empty_heart"), forState: .Normal)
     }
     
-    func updateMusicCellsState() {
-    }
+    func updateMusicCellsState() {}
     
-    func updateBufferingStatus()  {
-    }
+    func updateBufferingStatus()  {}
     
     func loadPreviousAndNextMusicImage () {
         SongHelper.cacheMusicCovorWithMusicEntities(songs, currentIndex: currentIndex)
@@ -620,18 +628,12 @@ class PlayViewController: UIViewController{
     }
     
     //MARK: - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-    // - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-    // - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-    // - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
     @IBOutlet weak var recordButton: UIButton!
     var player: EZAudioPlayer!
     var microphone: EZMicrophone!
     var recorder: EZRecorder!
     var isRecording = false
     var allowRecording = false
-    
-    
-    
     //MARK: 歌词
     var LRCDictionary: NSMutableDictionary!
     var timeArray: NSMutableArray!
@@ -640,12 +642,10 @@ class PlayViewController: UIViewController{
 
 extension PlayViewController {
     
-    @IBAction func recordButtonClicked(sender: UIButton) {
-        
+    @IBAction func recordButtonClicked() {
         if (recorder != nil ) {
             print("delegate:  \(self.recorder.delegate)")
         }
-        
         self.player.pause()
         allowRecording = !allowRecording
         if allowRecording {
@@ -656,7 +656,7 @@ extension PlayViewController {
         self.isRecording = allowRecording
     }
     
-    @IBAction func playButtonClicked(sender: AnyObject) {
+    @IBAction func playButtonClicked() {
         self.microphone.stopFetchingAudio()
         
         self.isRecording = false
@@ -664,6 +664,8 @@ extension PlayViewController {
             self.recorder.closeAudioFile()
         }
         let audioFile = EZAudioFile(URL: testFilePathURL())
+        
+        
         self.player.playAudioFile(audioFile)
     }
     
@@ -695,7 +697,6 @@ extension PlayViewController {
         }
         
         self.microphone = EZMicrophone(delegate: self)
-        self.player = EZAudioPlayer(delegate: self)
         
         do {
             try session.overrideOutputAudioPort(.Speaker)
@@ -724,9 +725,7 @@ extension PlayViewController {
         }
     }
     
-    //    func playerDidReachEndOfFile(notification: NSNotification) {
-    //
-    //    }
+    func playerDidReachEndOfFile(notification: NSNotification) {}
     
     func testFilePathURL() -> NSURL {
         if let dir = applicationDocumentsDirectory() {
@@ -761,42 +760,19 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
     }
     
     func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
-        //TODO:
-        //        __weak typeof (self) weakSelf = self;
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        //            [weakSelf.playingAudioPlot updateBuffer:buffer[0]
-        //                withBufferSize:bufferSize];
-        //            });
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.StandardView.updateBuffer(buffer[0], withBufferSize: bufferSize);
+        });
     }
     
     func audioPlayer(audioPlayer: EZAudioPlayer!, updatedPosition framePosition: Int64, inAudioFile audioFile: EZAudioFile!) {
-        //TODO:
-        //        __weak typeof (self) weakSelf = self;
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        //            weakSelf.currentTimeLabel.text = [audioPlayer formattedCurrentTime];
-        //            });
     }
     
-    func microphone(microphone: EZMicrophone!, changedPlayingState isPlaying: Bool) {
-        print(isPlaying)
-    }
     
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.ScoreBackgroundView?.updateBuffer(buffer[0], withBufferSize: bufferSize);
         });
-        //TODO:
-        //        __weak typeof (self) weakSelf = self;
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        //            //
-        //            // All the audio plot needs is the buffer data (float*) and the size.
-        //            // Internally the audio plot will handle all the drawing related code,
-        //            // history management, and freeing its own resources. Hence, one badass
-        //            // line of code gets you a pretty plot :)
-        //            //
-        //            [weakSelf.recordingAudioPlot updateBuffer:buffer[0]
-        //                withBufferSize:bufferSize];
-        //            });
     }
     
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
@@ -920,33 +896,32 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
-    func handleLyricsWithURL(url: String) {
-        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
-        Alamofire.download(.GET, url , destination: destination)
-        
-        var localPath: NSURL?
-        Alamofire.download(.GET,
-            url,
-            destination: { (temporaryURL, response) in
-                let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-                let pathComponent = response.suggestedFilename
-                
-                localPath = directoryURL.URLByAppendingPathComponent(pathComponent!)
-                return localPath!
-        })
-            .response { (request, response, _, error) in
-                print(response)
-                print("Downloaded file to \(localPath!)")
-                
-                let mo = DoModel.initSingleModel()
-                let dic: NSDictionary = mo.LRCWithName(localPath!.absoluteString)
-                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
-                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
-                
-                AALog.debug(self.LRCDictionary)
-                AALog.warning(self.timeArray)
-                self.tableView.reloadData()
-        }
-    }
+//    func handleLyricsWithURL(url: String) {
+//        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
+//        Alamofire.download(.GET, url , destination: destination)
+//        
+//        var localPath: NSURL?
+//        Alamofire.download(.GET,
+//            url,
+//            destination: { (temporaryURL, response) in
+//                let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+//                let pathComponent = response.suggestedFilename
+//                
+//                localPath = directoryURL.URLByAppendingPathComponent(pathComponent!)
+//                return localPath!
+//        })
+//            .response { (request, response, _, error) in
+//                print(response)
+//                print("Downloaded file to \(localPath!)")
+//                
+//                let mo = DoModel.initSingleModel()
+//                let dic: NSDictionary = mo.LRCWithName(localPath!.absoluteString)
+//                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+//                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+//                
+//                AALog.debug(self.LRCDictionary)
+//                AALog.warning(self.timeArray)
+//                self.tableView.reloadData()
+//        }
+//    }
 }
