@@ -247,7 +247,7 @@ class PlayViewController: UIViewController{
     func addPanRecognizer() {
         let gesture = UISwipeGestureRecognizer.init(target: self, action: #selector(PlayViewController.dismiss(_:)))
         gesture.direction = .Down
-        //        view.addGestureRecognizer(gesture)
+        view.addGestureRecognizer(gesture)
     }
     
     func configureScoreUI() {
@@ -257,9 +257,8 @@ class PlayViewController: UIViewController{
         ScoreBackgroundView.shouldFill = true
         ScoreBackgroundView.shouldMirror = true
         ScoreBackgroundView.gain = 2.0
-        
         StandardView.backgroundColor = UIColor.clearColor()
-        StandardView.color = UIColor.whiteColor()
+        StandardView.color = UIColor(red: 201/255, green: 38/255, blue: 58/255, alpha: 1.0)
         StandardView.plotType = .Buffer
         StandardView.shouldMirror = true
         StandardView.shouldFill = true
@@ -355,8 +354,10 @@ class PlayViewController: UIViewController{
     @IBAction func Play() {
         recordButtonClicked()
         if musicIsPlaying {
+            player.pause()
             streamer!.pause()
             musicIsPlaying = false
+            finishSing()
         }
         else {
             //TODO:- Change to Music URL
@@ -367,6 +368,16 @@ class PlayViewController: UIViewController{
             player.playAudioFile(audioFile)
            
         }
+    }
+    
+    func finishSing() {
+        let alert = UIAlertController(title: "你这次演唱的得分是：", message: "0.00", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "回放", style: .Default, handler: { (action) in
+            self.playButtonClicked()
+        }))
+        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
+
     }
     
     @IBAction func ChangePlayTime(sender: MusicSlider) {
@@ -658,14 +669,11 @@ extension PlayViewController {
     
     @IBAction func playButtonClicked() {
         self.microphone.stopFetchingAudio()
-        
         self.isRecording = false
         if (self.recorder != nil) {
             self.recorder.closeAudioFile()
         }
         let audioFile = EZAudioFile(URL: testFilePathURL())
-        
-        
         self.player.playAudioFile(audioFile)
     }
     
