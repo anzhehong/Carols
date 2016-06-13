@@ -426,7 +426,7 @@ class PlayViewController: UIViewController{
                 currentIndex -= 1
             }
         }
-        setupStreamer()
+        createStreamer()
     }
     
     @IBAction func more() {
@@ -445,7 +445,7 @@ class PlayViewController: UIViewController{
         {
             checkNextIndexValue()
         }
-        setupStreamer()
+        createStreamer()
     }
     func checkNextIndexValue() {
         let last = songs.count - 1
@@ -467,12 +467,7 @@ class PlayViewController: UIViewController{
         currentIndex = randomArray[0].integerValue
     }
     
-    func setupStreamer() {
-        createStreamer()
-    }
-    
     func updaterSliderValue(timer:AnyObject) {
-        
         if streamer!.status == .Finished {
             streamer?.play()
         }
@@ -625,7 +620,6 @@ class PlayViewController: UIViewController{
                         MPMediaItemPropertyAlbumTitle: self.songTitle!,
                         MPMediaItemPropertyPlaybackDuration:audioDuration, MPMediaItemPropertyArtwork: artWork]
                 }
-                //TODO:- @()
             })
         }
     }
@@ -633,24 +627,20 @@ class PlayViewController: UIViewController{
     //MARK:- DataSource
     func setVCData (pathName:String,type:String,chooseIndex:Int){
         //TODO: Chane to Net URL
-        
         let filePath = NSBundle.mainBundle().pathForResource(pathName, ofType: type)
         let result = try! NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: filePath!)!, options:.MutableContainers) as! NSDictionary
         let array = result["songs"]!.mutableCopy() as! NSArray
         let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
         songs = mutableArray
-        
         dontReloadMusic = true
         specialIndex = chooseIndex
     }
-    
     
     func configureVC(data:[Song],chooesIndex:Int) {
         songs = NSMutableArray(array:data)
         dontReloadMusic = true
         specialIndex = chooesIndex
     }
-    
     
 }
 
