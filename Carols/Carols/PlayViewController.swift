@@ -97,6 +97,18 @@ class PlayViewController: UIViewController{
     }
     var currentIndex:Int = 0
     
+    //MARK: - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+    @IBOutlet weak var recordButton: UIButton!
+    var player: EZAudioPlayer!
+    var microphone: EZMicrophone!
+    var recorder: EZRecorder!
+    var isRecording = false
+    var allowRecording = false
+    //MARK: 歌词
+    var LRCDictionary: NSMutableDictionary!
+    var timeArray: NSMutableArray!
+    var lrcLineNumber = 0
+    
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -640,19 +652,6 @@ class PlayViewController: UIViewController{
     }
     
     
-    
-    
-    //MARK: - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-    @IBOutlet weak var recordButton: UIButton!
-    var player: EZAudioPlayer!
-    var microphone: EZMicrophone!
-    var recorder: EZRecorder!
-    var isRecording = false
-    var allowRecording = false
-    //MARK: 歌词
-    var LRCDictionary: NSMutableDictionary!
-    var timeArray: NSMutableArray!
-    var lrcLineNumber = 0
 }
 
 extension PlayViewController {
@@ -816,10 +815,10 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.textLabel?.text = ""
             }
             if indexPath.row == lrcLineNumber {
-                cell.textLabel?.textColor = UIColor(red: 255/255, green: 255/255, blue: 0/255, alpha: 1)
+                cell.textLabel?.textColor = UIColor(red: 247.0/255, green: 15.0/255, blue: 68.0/255, alpha: 1.0)
                 cell.textLabel?.font = UIFont.systemFontOfSize(15)
             }else {
-                cell.textLabel?.textColor = UIColor(red: 255/255, green: 25/255, blue: 200/255, alpha: 1)
+                cell.textLabel?.textColor = UIColor.whiteColor()
                 cell.textLabel?.font = UIFont.systemFontOfSize(13)
             }
             return cell
@@ -863,16 +862,14 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
         let dic: NSDictionary = mo.LRCWithName(pathLRC)
         LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
         timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
-        AALog.test("origin direcotry: \(pathLRC)")
+   //     AALog.test("origin direcotry: \(pathLRC)")
     }
     
     func showTime() {
-        //        let mo  = DoModel.initSingleModel()
         self.displayWord()
         if let duration = streamer?.duration {
             if let currentTime = streamer?.currentTime {
                 if duration - currentTime < 0.1 {
-                    //结束之后转换图片从头开始
                     streamer?.stop()
                 }
             }
