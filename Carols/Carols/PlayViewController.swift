@@ -142,7 +142,7 @@ class PlayViewController: UIViewController{
         super.init(coder: aDecoder)
     }
     
-    init() {
+    private init() {
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -250,6 +250,13 @@ class PlayViewController: UIViewController{
         view.addGestureRecognizer(gesture)
     }
     
+    func convertTime(timer:NSTimeInterval) -> String {
+        let time = Int(timer)
+        let seconds = String(format: "%d",Int(Float(time)%60))
+        let minutes =  String(format: "%d",Int((Float(time/60))%60))
+        return "\(minutes):\(seconds)"
+    }
+    
     func configureScoreUI() {
         ScoreBackgroundView.backgroundColor = UIColor.clearColor()
         ScoreBackgroundView.color = UIColor.whiteColor()
@@ -267,10 +274,9 @@ class PlayViewController: UIViewController{
         
     }
     
-    
     func updateUI() {
-        StartTime.text = String(streamer!.currentTime)
-        EndTime.text = String(streamer!.duration)
+        StartTime.text = convertTime(streamer!.currentTime)
+        EndTime.text = convertTime(streamer!.duration - streamer!.currentTime)
     }
     
     func updateSliderValue (timer:NSTimer) {
@@ -386,7 +392,7 @@ class PlayViewController: UIViewController{
             createStreamer()
         }
         streamer!.currentTime = streamer!.duration * Double(sender.value)
-        updateProgressLabelValue()
+        updateUI()
     }
     
     @IBAction func preSong() {
@@ -468,14 +474,9 @@ class PlayViewController: UIViewController{
             }
             
             MusicTimeSlider.setValue(Float( streamer!.currentTime/streamer!.duration), animated: true)
-            updateProgressLabelValue()
+            updateUI()
         }
         
-    }
-    
-    func updateProgressLabelValue() {
-        StartTime.text = "\(streamer!.currentTime)"
-        EndTime.text = "\(streamer!.duration)"
     }
     
     func invalidMusicDurationTimer() {
@@ -637,6 +638,9 @@ class PlayViewController: UIViewController{
         dontReloadMusic = true
         specialIndex = chooesIndex
     }
+    
+    
+    
     
     //MARK: - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
     @IBOutlet weak var recordButton: UIButton!
