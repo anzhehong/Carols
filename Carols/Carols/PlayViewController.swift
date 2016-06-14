@@ -59,6 +59,8 @@ class PlayViewController: UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var singerLabel: UILabel!
+    @IBOutlet weak var originalLabel: UILabel!
     
     //MARK:- Params
     var streamer :DOUAudioStreamer?
@@ -316,8 +318,12 @@ class PlayViewController: UIViewController{
             ScoreBackgroundView.alpha = 1.0
             StandardView.alpha = 1.0
             SongsImage.alpha = 0.0
+            singerLabel.alpha = 1.0
+            originalLabel.alpha = 1.0
         }
         else {
+            singerLabel.alpha = 0.0
+            originalLabel.alpha = 0.0
             ScoreBackgroundView.alpha = 0.0
             StandardView.alpha = 0.0
             SongsImage.alpha = 1.0
@@ -663,8 +669,8 @@ extension PlayViewController {
     @IBAction func playButtonClicked() {
         self.microphone.stopFetchingAudio()
         self.isRecording = false
-        if (self.recorder != nil) {
-            self.recorder.closeAudioFile()
+        if (recorder != nil) {
+            recorder.closeAudioFile()
         }
         let audioFile = EZAudioFile(URL: testFilePathURL())
         self.player.playAudioFile(audioFile)
@@ -696,7 +702,6 @@ extension PlayViewController {
         if error != nil {
             print("Error setting up audio session active:\(error!.localizedDescription)")
         }
-        
         self.microphone = EZMicrophone(delegate: self)
         
         do {
@@ -705,11 +710,8 @@ extension PlayViewController {
             print("Error overriding output to the speaker \(specialError.localizedDescription)")
             error = specialError
         }
-        
         self.setupNotifications()
         print("File written to application sandbox's documents directory: \(self.testFilePathURL())")
-        
-        self.microphone.startFetchingAudio()
     }
     
     func setupNotifications() {
@@ -756,7 +758,6 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
     func recorderUpdatedCurrentTime(recorder: EZRecorder!) {
         //TODO:改变时间
         dispatch_async(dispatch_get_main_queue()) {
-            print("\(recorder.formattedCurrentTime)")
         }
     }
     
