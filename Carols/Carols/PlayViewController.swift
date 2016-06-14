@@ -18,16 +18,9 @@ enum PlayMode {
     case Shuffle
 }
 
-
 let kStatusKVOKey = UnsafeMutablePointer<(Void)>()
 let kDurationKVOKey = UnsafeMutablePointer<(Void)>()
 let kBufferingRatioKVOKey = UnsafeMutablePointer<()>()
-
-protocol PlaySongDelegate {
-    func PlayListDataSource (songs:[Song]) -> Bool;
-    func CurrentPlaying () -> Song;
-    func PlayMusicWithCurrentIndex(idnex:Int)
-}
 
 class PlayViewController: UIViewController{
     
@@ -72,19 +65,40 @@ class PlayViewController: UIViewController{
     var specialIndex:Int?
     var parentId:NSNumber?
     var isNotPresenting:Bool?
-    var like:Bool = false
     var scoreModel:Bool = false
-    // let delegate:PlaySongDelegate
     var lyric: String?
-    
     var visualEffictView = UIVisualEffectView()
     let musicIndicator = MusicIndicator.sharedInstance
     var lastMusicURL = ""
-    
     var randomArray = NSMutableArray()
     var originArray = NSMutableArray()
     var musicDurationTimer:NSTimer?
-    var playMode = PlayMode.Loop
+    var currentIndex:Int = 0
+    var like:Bool = false {
+        didSet {
+            if like {
+                HeartLike.setImage(UIImage(named:"red_heart"), forState: .Normal)
+            }
+            else {
+                HeartLike.setImage(UIImage(named:"empty_heart"), forState: .Normal)
+            }
+        }
+    }
+    var playMode = PlayMode.Loop {
+        didSet {
+            switch playMode {
+            case .Loop:
+                ModelButton.setImage(UIImage(named: "loop_all_icon"), forState: .Normal)
+                break
+            case .SingleSong:
+                ModelButton.setImage(UIImage(named: "loop_single_icon"), forState: .Normal)
+                break
+            case .Shuffle:
+                ModelButton.setImage(UIImage(named: "shuffle_icon"), forState: .Normal)
+                break
+            }
+        }
+    }
     var musicIsPlaying:Bool = false {
         didSet{
             if musicIsPlaying {
@@ -97,7 +111,6 @@ class PlayViewController: UIViewController{
             view.setNeedsDisplay()
         }
     }
-    var currentIndex:Int = 0
     
     //MARK: - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
     @IBOutlet weak var recordButton: UIButton!
@@ -114,8 +127,8 @@ class PlayViewController: UIViewController{
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+ 
         configureRecord()
-        
         PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
         streamer = DOUAudioStreamer()
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
@@ -124,6 +137,7 @@ class PlayViewController: UIViewController{
         randomArray = NSMutableArray.init(capacity: 0)
         addPanRecognizer()
         configureScoreUI()
+        createStreamer()
         //歌词
         initTableView()
     }
@@ -131,18 +145,16 @@ class PlayViewController: UIViewController{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBarHidden = true
-        playMode = .Loop
-        setupRadioMusic()
+        guard currentIndex >= songs.count else {
+            return
+        }
+        currentIndex = 0
         if !dontReloadMusic {
             return
         }
         originArray.removeAllObjects()
         loadOriginArray()
         createStreamer()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        //        print(currentSong)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -159,8 +171,7 @@ class PlayViewController: UIViewController{
     private init() {
         super.init(nibName: nil, bundle: nil)
     }
-    
-    //MARK:- Check Index
+    //MARK:- Basic Setup
     func loadOriginArray() {
         if originArray.count == 0 {
             for (index,_) in songs.enumerate() {
@@ -173,66 +184,16 @@ class PlayViewController: UIViewController{
         
     }
     
-    func setterCurrentIndex(index:Int) {
-        currentIndex = index
-        setupMusicView(songs[index] as! Song)
-    }
-    
     func setupMusicView(song:Song) {
         currentSong = song
         songTitle = currentSong?.SongName
         artistName = currentSong?.SongArtist
         setBackgroundImage()
-        checkHeartIcon()
-    }
-    
-    func setPlayMode(mode:PlayMode) {
-        playMode = mode
-        updateModeButton()
-    }
-    
-    func updateModeButton() {
-        switch playMode {
-        case .Loop:
-            ModelButton.setImage(UIImage(named: "loop_all_icon"), forState: .Normal)
-            break
-        case .SingleSong:
-            ModelButton.setImage(UIImage(named: "loop_single_icon"), forState: .Normal)
-            break
-        case .Shuffle:
-            ModelButton.setImage(UIImage(named: "shuffle_icon"), forState: .Normal)
-            
-            break
-        }
-    }
-    
-    func setupRadioMusic() {
-        updateModeButton()
-        checkIndex()
-    }
-    
-    func checkHeartIcon() {
-        if like {
-            HeartLike.setImage(UIImage(named:"red_heart"), forState: .Normal)
-        }
-        else {
-            HeartLike.setImage(UIImage(named:"empty_heart"), forState: .Normal)
-        }
-    }
-    
-    func checkIndex()
-    {
-        guard currentIndex >= songs.count else {
-            return
-        }
-        currentIndex = 0
     }
     
     func setBackgroundImage () {
-        let width = String(Int((UIScreen.mainScreen().bounds.width - 70) * 2))
         let current = songs[currentIndex] as! Song
         var url = NSURL()
-        
         if let imageurl = current.SongImage
         {
             url = NSURL(string: imageurl)!
@@ -256,21 +217,13 @@ class PlayViewController: UIViewController{
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
-    
-    //MARK:- Basic Setup
+
     func addPanRecognizer() {
         let gesture = UISwipeGestureRecognizer.init(target: self, action: #selector(PlayViewController.dismiss(_:)))
         gesture.direction = .Down
         view.addGestureRecognizer(gesture)
     }
-    
-    func convertTime(timer:NSTimeInterval) -> String {
-        let time = Int(timer)
-        let seconds = String(format: "%d",Int(Float(time)%60))
-        let minutes =  String(format: "%d",Int((Float(time/60))%60))
-        return "\(minutes):\(seconds)"
-    }
-    
+
     func configureScoreUI() {
         ScoreBackgroundView.backgroundColor = UIColor.clearColor()
         ScoreBackgroundView.color = UIColor.whiteColor()
@@ -286,6 +239,13 @@ class PlayViewController: UIViewController{
         StandardView.gain = 0.5
         player = EZAudioPlayer(delegate: self)
         
+    }
+    
+    func convertTime(timer:NSTimeInterval) -> String {
+        let time = Int(timer)
+        let seconds = String(format: "%d",Int(Float(time)%60))
+        let minutes =  String(format: "%d",Int((Float(time/60))%60))
+        return "\(minutes):\(seconds)"
     }
     
     func updateUI() {
@@ -305,13 +265,27 @@ class PlayViewController: UIViewController{
             if streamer!.currentTime >= streamer!.duration {
                 streamer!.currentTime -= streamer!.duration
             }
-            
             MusicTimeSlider.setValue(Float(streamer!.currentTime/streamer!.duration), animated: true)
             updateUI()
         }
     }
-    //MARK:- Gesture
     
+    func finishSing() {
+        microphone.stopFetchingAudio()
+        self.isRecording = false
+        if (recorder != nil) {
+            recorder.closeAudioFile()
+        }
+        
+        let alert = UIAlertController(title: "你这次演唱的得分是：", message: "0.00", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "回放", style: .Default, handler: { (action) in
+            self.playButtonClicked()
+        }))
+        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    //MARK:- Gesture
     @IBAction func ScoreStart(sender: UITapGestureRecognizer) {
         scoreModel = !scoreModel
         if scoreModel {
@@ -344,12 +318,7 @@ class PlayViewController: UIViewController{
     
     @IBAction func Like(sender: UIButton) {
         HeartLike.heartAnimation()
-        if like {
-            unlike()
-        }
-        else {
-            toLike()
-        }
+        like = !like
     }
     
     @IBAction func changeModel(sender: UIButton) {
@@ -387,21 +356,10 @@ class PlayViewController: UIViewController{
             //TODO:- Change to Music URL
             streamer!.play()
             musicIsPlaying = true
-             let URL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("1770040300_2031329_l", ofType: ".mp3")!)
+            let URL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("1770040300_2031329_l", ofType: ".mp3")!)
             let audioFile = EZAudioFile(URL:URL)
             player.playAudioFile(audioFile)
-           
         }
-    }
-    
-    func finishSing() {
-        let alert = UIAlertController(title: "你这次演唱的得分是：", message: "0.00", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "回放", style: .Default, handler: { (action) in
-            self.playButtonClicked()
-        }))
-        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-        presentViewController(alert, animated: true, completion: nil)
-
     }
     
     @IBAction func ChangePlayTime(sender: MusicSlider) {
@@ -519,8 +477,6 @@ class PlayViewController: UIViewController{
         stream.taudioFileURL = musicURL
         streamer = nil
         streamer = DOUAudioStreamer(audioFile: stream)
-        //FIXME: 线程？还是什么问题？
-        //        streamer?.play()
     }
     
     func removeStreamerObserver() {
@@ -580,16 +536,6 @@ class PlayViewController: UIViewController{
         updateMusicCellsState()
     }
     
-    func  toLike() {
-        like = true
-        HeartLike.setImage(UIImage(named: "red_heart"), forState: .Normal)
-    }
-    
-    func unlike() {
-        like = false
-        HeartLike.setImage(UIImage(named: "empty_heart"), forState: .Normal)
-    }
-    
     func updateMusicCellsState() {}
     
     func updateBufferingStatus()  {}
@@ -631,24 +577,22 @@ class PlayViewController: UIViewController{
     }
     
     //MARK:- DataSource
-    func setVCData (pathName:String,type:String,chooseIndex:Int){
-        //TODO: Chane to Net URL
-        let filePath = NSBundle.mainBundle().pathForResource(pathName, ofType: type)
-        let result = try! NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: filePath!)!, options:.MutableContainers) as! NSDictionary
-        let array = result["songs"]!.mutableCopy() as! NSArray
-        let mutableArray = NSMutableArray(array: Song.entitiesArrayFromArray(array)!)
-        songs = mutableArray
-        dontReloadMusic = true
-        specialIndex = chooseIndex
-    }
-    
     func configureVC(data:[Song],chooesIndex:Int) {
         songs = NSMutableArray(array:data)
         dontReloadMusic = true
         specialIndex = chooesIndex
     }
-    
 }
+
+
+
+
+
+
+
+
+
+
 
 extension PlayViewController {
     
