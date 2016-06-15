@@ -59,7 +59,7 @@ class SongHelper {
                  imageView.contentMode = .ScaleAspectFill
                  MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle :song!.SongName!,
                  MPMediaItemPropertyArtist:song!.SongArtist!,
-                 MPMediaItemPropertyAlbumTitle: PlayViewController.sharedInstance.songTitle!,
+                 MPMediaItemPropertyAlbumTitle: PlayViewController.sharedInstance.songTitl!,
                 MPMediaItemPropertyPlaybackDuration:audioDuration, MPMediaItemPropertyArtwork: artWork]
                 }
                 else
@@ -68,7 +68,7 @@ class SongHelper {
                     imageView.contentMode = .ScaleAspectFill
                     MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle :song!.SongName!,
                         MPMediaItemPropertyArtist:song!.SongArtist!,
-                        MPMediaItemPropertyAlbumTitle: PlayViewController.sharedInstance.songTitle!,
+                        MPMediaItemPropertyAlbumTitle: PlayViewController.sharedInstance.songTitl!,
                         MPMediaItemPropertyPlaybackDuration:audioDuration, MPMediaItemPropertyArtwork: artWork]
                 }
                 //TODO:- @()

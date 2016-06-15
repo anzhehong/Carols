@@ -25,13 +25,14 @@ let kBufferingRatioKVOKey = UnsafeMutablePointer<()>()
 class PlayViewController: UIViewController{
     
     //MARK:- Let PlayView be Signton
-    class var sharedInstance: PlayViewController {
+    static var sharedInstance :PlayViewController {
         struct Static {
             static var onceToken: dispatch_once_t = 0
             static var instance: PlayViewController? = nil
         }
         dispatch_once(&Static.onceToken) {
-            Static.instance = PlayViewController()
+            Static.instance = nil
+            Static.instance = (UIStoryboard(name: "PlayView", bundle: nil).instantiateViewControllerWithIdentifier("musicVC")) as? PlayViewController
         }
         return Static.instance!
     }
@@ -46,21 +47,23 @@ class PlayViewController: UIViewController{
     @IBOutlet weak var MusicTimeSlider: MusicSlider!
     @IBOutlet weak var ModelButton: UIButton!
     @IBOutlet weak var PlayButton: UIButton!
-    
     @IBOutlet weak var ScoreBackgroundView: EZAudioPlotGL!
     @IBOutlet weak var StandardView: EZAudioPlotGL!
-    
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var singerLabel: UILabel!
     @IBOutlet weak var originalLabel: UILabel!
+    @IBOutlet weak var SongTitle: UILabel!
     
     //MARK:- Params
     var streamer :DOUAudioStreamer?
     var dontReloadMusic:Bool = false
     var songs = NSMutableArray()
     var currentSong:Song?
-    var songTitle:String?
+    var songTitl:String? {
+        didSet {
+            SongTitle.text = songTitl
+        }
+    }
     var artistName:String?
     var specialIndex:Int?
     var parentId:NSNumber?
@@ -240,40 +243,54 @@ class PlayViewController: UIViewController{
     }
     
     func updateUI() {
-        StartTime.text = convertTime(streamer!.currentTime)
-        EndTime.text = convertTime(streamer!.duration - streamer!.currentTime)
+        StartTime.text = convertTime(player.currentTime)
+        EndTime.text = convertTime(player.duration - player.currentTime)
     }
     
     func updateSliderValue (timer:NSTimer) {
-        if streamer!.status == .Finished {
-            streamer!.play()
+        if player.state == .EndOfFile{
+            player.play()
         }
         
-        if streamer!.duration == 0.0 {
+        if player.duration == 0.0 {
             MusicTimeSlider.setValue(0.0, animated: false)
         }
         else {
-            if streamer!.currentTime >= streamer!.duration {
-                streamer!.currentTime -= streamer!.duration
+            if player.currentTime >=  player.duration {
+                player.currentTime -= player.duration
             }
-            MusicTimeSlider.setValue(Float(streamer!.currentTime/streamer!.duration), animated: true)
+            MusicTimeSlider.setValue(Float(player.currentTime/player.duration), animated: true)
             updateUI()
         }
     }
     
+    func startSinging() {
+        microphone.startFetchingAudio()
+        streamer!.play()
+        streamer?.volume = 0
+        musicIsPlaying = true
+        player.play()
+    }
+    
     func finishSing() {
+        player.pause()
+        streamer!.pause()
+        musicIsPlaying = false
         microphone.stopFetchingAudio()
-        self.isRecording = false
+        isRecording = false
         if (recorder != nil) {
             recorder.closeAudioFile()
         }
+
         let alert = UIAlertController(title: "你这次演唱的得分是：", message: "0.00", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "回放", style: .Default, handler: { (action) in
-            self.playButtonClicked()
+            let audioFile = EZAudioFile(URL: self.testFilePathURL())
+            self.player.playAudioFile(audioFile)
         }))
         alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-        presentViewController(alert, animated: true, completion: nil)
+       // presentViewController(alert, animated: true, completion: nil)
     }
+    
     //MARK:- Gesture
     @IBAction func ScoreStart(sender: UITapGestureRecognizer) {
         scoreModel = !scoreModel
@@ -292,7 +309,6 @@ class PlayViewController: UIViewController{
             SongsImage.alpha = 1.0
         }
     }
-    
     //MARK:- Action
     @IBAction func ShowList() {
         dontReloadMusic = true
@@ -314,15 +330,12 @@ class PlayViewController: UIViewController{
         switch playMode {
         case .Loop:
             playMode = .SingleSong
-            sender.setImage(UIImage(named: "loop_single_icon"), forState: .Normal)
             break
         case .SingleSong:
             playMode = .Shuffle
-            sender.setImage(UIImage(named: "shuffle_icon"), forState: .Normal)
             break
         case .Shuffle:
             playMode = .Loop
-            sender.setImage(UIImage(named: "loop_all_icon"), forState: .Normal)
             break
         }
         
@@ -331,29 +344,22 @@ class PlayViewController: UIViewController{
     @IBAction func Play() {
         recordButtonClicked()
         if musicIsPlaying {
-            player.pause()
-            streamer!.pause()
-            musicIsPlaying = false
             finishSing()
         }
         else {
-            //TODO:- Change to Music URL
-            streamer!.play()
-            musicIsPlaying = true
-            let URL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("1770040300_2031329_l", ofType: ".mp3")!)
-            let audioFile = EZAudioFile(URL:URL)
-            player.playAudioFile(audioFile)
+          startSinging()
         }
     }
     
     @IBAction func ChangePlayTime(sender: MusicSlider) {
-        if streamer!.status == .Finished {
-            streamer = nil
+        if player.state == .EndOfFile {
+            player = nil
             createStreamer()
         }
-        streamer!.currentTime = streamer!.duration * Double(sender.value)
+        player.currentTime = player.duration * Double(sender.value)
         updateUI()
     }
+    
     
     @IBAction func preSong() {
         if songs.count == 1 {
@@ -375,10 +381,6 @@ class PlayViewController: UIViewController{
             }
         }
         createStreamer()
-    }
-    
-    @IBAction func more() {
-        print("More")
     }
     
     @IBAction func nextSong() {
@@ -417,19 +419,19 @@ class PlayViewController: UIViewController{
     }
     
     func updaterSliderValue(timer:AnyObject) {
-        if streamer!.status == .Finished {
-            streamer?.play()
+        if player.state == .EndOfFile {
+            player.play()
         }
         
-        if streamer?.duration == 0.0 {
+        if player.duration == 0.0 {
             MusicTimeSlider.setValue(0.0, animated: false)
         }
         else {
-            if streamer?.currentTime >= streamer?.duration {
-                streamer?.currentTime -= (streamer?.duration)!
+            if player.currentTime >= player.duration {
+                player.currentTime -= (player.duration)
             }
             
-            MusicTimeSlider.setValue(Float( streamer!.currentTime/streamer!.duration), animated: true)
+            MusicTimeSlider.setValue(Float( player.currentTime/player.duration), animated: true)
             updateUI()
         }
         
@@ -447,17 +449,18 @@ class PlayViewController: UIViewController{
             currentIndex = specialIndex!
             specialIndex = 0
         }
-        currentSong = songs[currentIndex] as! Song
-        songTitle = currentSong?.SongName
+        currentSong = songs[currentIndex] as? Song
+        songTitl = currentSong?.SongName
         artistName = currentSong?.SongArtist
         setBackgroundImage()
-        
         loadPreviousAndNextMusicImage()
         configNowPlayingInfoCenter()
         let stream = Stream()
         let musicURL = NSURL(string: (currentSong?.SongURL)!)
         let filePath = NSBundle.mainBundle().pathForResource(currentSong?.SongFile, ofType: "mp3")
         let fileURL = NSURL(fileURLWithPath: filePath!)
+        player.playAudioFile(EZAudioFile(URL: fileURL))
+        player.pause()
         lyric = currentSong?.SongLyrics
         if let LRC = lyric {
             //MARK: 下载歌词
@@ -469,15 +472,15 @@ class PlayViewController: UIViewController{
     }
     
     func removeStreamerObserver() {
-        streamer?.removeObserver(self, forKeyPath: "status")
-        streamer?.removeObserver(self, forKeyPath: "duration")
-        streamer?.removeObserver(self, forKeyPath: "bufferingRatio")
+        player.removeObserver(self, forKeyPath: "status")
+        player.removeObserver(self, forKeyPath: "duration")
+        player.removeObserver(self, forKeyPath: "bufferingRatio")
     }
     
     func addStreamerObserver() {
-        streamer?.addObserver(self, forKeyPath: "status", options: .New, context: kStatusKVOKey)
-        streamer?.addObserver(self, forKeyPath: "duration", options: .New, context: kDurationKVOKey)
-        streamer?.addObserver(self, forKeyPath: "bufferingRatio", options: .New, context: kBufferingRatioKVOKey)
+        player.addObserver(self, forKeyPath: "status", options: .New, context: kStatusKVOKey)
+        player.addObserver(self, forKeyPath: "duration", options: .New, context: kDurationKVOKey)
+        player.addObserver(self, forKeyPath: "bufferingRatio", options: .New, context: kBufferingRatioKVOKey)
     }
     
     
@@ -499,16 +502,16 @@ class PlayViewController: UIViewController{
     func updateStatus() {
         musicIsPlaying = false
         musicIndicator.state = .Stopped
-        switch streamer!.status {
+        switch player.state {
         case .Playing:
             musicIsPlaying = true
             musicIndicator.state = .Playing
             break
         case .Paused:
             break
-        case .Idle:
+        case .Seeking:
             break
-        case .Finished:
+        case .EndOfFile:
             if playMode == .SingleSong {
                 streamer?.play()
             }
@@ -516,10 +519,10 @@ class PlayViewController: UIViewController{
                 nextSong()
             }
             break
-        case .Buffering:
+        case .ReadyToPlay:
             musicIndicator.state = .Playing
             break
-        case .Error:
+        case .Unknown:
             break
         }
         updateMusicCellsState()
@@ -549,7 +552,7 @@ class PlayViewController: UIViewController{
                     imageView.contentMode = .ScaleAspectFill
                     MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle :song!.SongName!,
                         MPMediaItemPropertyArtist:song!.SongArtist!,
-                        MPMediaItemPropertyAlbumTitle: self.songTitle!,
+                        MPMediaItemPropertyAlbumTitle: self.songTitl!,
                         MPMediaItemPropertyPlaybackDuration:audioDuration, MPMediaItemPropertyArtwork: artWork]
                 }
                 else
@@ -558,7 +561,7 @@ class PlayViewController: UIViewController{
                     imageView.contentMode = .ScaleAspectFill
                     MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = [MPMediaItemPropertyTitle :song!.SongName!,
                         MPMediaItemPropertyArtist:song!.SongArtist!,
-                        MPMediaItemPropertyAlbumTitle: self.songTitle!,
+                        MPMediaItemPropertyAlbumTitle: self.songTitl!,
                         MPMediaItemPropertyPlaybackDuration:audioDuration, MPMediaItemPropertyArtwork: artWork]
                 }
             })
@@ -593,17 +596,6 @@ extension PlayViewController {
         }
         self.isRecording = allowRecording
     }
-    
-    @IBAction func playButtonClicked() {
-        self.microphone.stopFetchingAudio()
-        self.isRecording = false
-        if (recorder != nil) {
-            recorder.closeAudioFile()
-        }
-        let audioFile = EZAudioFile(URL: testFilePathURL())
-        self.player.playAudioFile(audioFile)
-    }
-    
     
     func configureRecord() {
         let session = AVAudioSession.sharedInstance()
@@ -784,13 +776,11 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func showTime() {
-        self.displayWord()
-        if let duration = streamer?.duration {
-            if let currentTime = streamer?.currentTime {
-                if duration - currentTime < 0.1 {
-                    streamer?.stop()
-                }
-            }
+     self.displayWord()
+     let duration = player.duration
+     let currentTime = player.currentTime
+     if duration - currentTime < 0.1 {
+            player.pause()
         }
     }
     
@@ -801,12 +791,12 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
             let currentTime = mo.changeTime(timeArray[i] as! String)
             if i + 1 < timeArray.count {
                 let currentTime1 = mo.changeTime(timeArray[i+1] as! String)
-                if (UInt((streamer?.currentTime)!) > currentTime && UInt((streamer?.currentTime)!) < currentTime1) {
+                if (UInt(player.currentTime) > currentTime && UInt(player.currentTime) < currentTime1) {
                     self.updateLRCTableView(i)
                     tableView.reloadData()
                     break
                 }
-            } else if UInt((streamer?.currentTime)!) > currentTime {
+            } else if UInt(player.currentTime) > currentTime {
                 self.updateLRCTableView(i)
                 tableView.reloadData()
                 break

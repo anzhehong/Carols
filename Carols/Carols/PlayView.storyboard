@@ -44,15 +44,24 @@
                                     <constraint firstItem="uJU-8k-4ZS" firstAttribute="leading" secondItem="ea2-79-SBe" secondAttribute="leading" id="uFo-wc-Px2"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Miu-Qx-t2s">
-                                <rect key="frame" x="27.5" y="40" width="25" height="22"/>
-                                <state key="normal" image="menu"/>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Miu-Qx-t2s">
+                                <rect key="frame" x="27" y="40" width="25" height="22"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="menu">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="ShowList" destination="HmQ-op-XGW" eventType="touchUpInside" id="CRM-c6-BUz"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="歌曲名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NA1-bv-pE3">
+                                <rect key="frame" x="274" y="41" width="51" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSo-eB-Xp2">
-                                <rect key="frame" x="27.5" y="439" width="23" height="22"/>
+                                <rect key="frame" x="27" y="439" width="23" height="22"/>
                                 <state key="normal" image="empty_heart"/>
                                 <connections>
                                     <action selector="Like:" destination="HmQ-op-XGW" eventType="touchUpInside" id="EOU-i9-1U7"/>
@@ -75,7 +84,7 @@
                                         </constraints>
                                     </imageView>
                                     <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Apy-m0-CpT" customClass="EZAudioPlot">
-                                        <rect key="frame" x="0.0" y="0.0" width="496" height="184.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="496" height="185"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="歌唱音频曲线：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fT-pH-sD2">
                                                 <rect key="frame" x="20" y="20" width="119" height="21"/>
@@ -91,7 +100,7 @@
                                         </constraints>
                                     </view>
                                     <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ekd-0T-fwE" customClass="EZAudioPlot">
-                                        <rect key="frame" x="0.0" y="134.5" width="496" height="184.5"/>
+                                        <rect key="frame" x="0.0" y="134" width="496" height="185"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="原唱音频曲线：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="96V-QP-8eL">
                                                 <rect key="frame" x="20" y="20" width="119" height="21"/>
@@ -107,7 +116,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wyH-3d-j2m">
-                                        <rect key="frame" x="20" y="412.5" width="456" height="128"/>
+                                        <rect key="frame" x="20" y="412" width="456" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="128" id="iXb-4S-vKe"/>
@@ -177,13 +186,6 @@
                                             <action selector="changeModel:" destination="HmQ-op-XGW" eventType="touchUpInside" id="mo4-Lk-HO2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PzC-3L-wgc">
-                                        <rect key="frame" x="535" y="69" width="25" height="23"/>
-                                        <state key="normal" image="more_icon"/>
-                                        <connections>
-                                            <action selector="more" destination="HmQ-op-XGW" eventType="touchUpInside" id="ljI-ex-Ur9"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4o-nc-Zwh">
                                         <rect key="frame" x="250" y="50" width="60" height="60"/>
                                         <state key="normal" image="big_pause_button"/>
@@ -225,22 +227,13 @@
                                             <action selector="preSong" destination="HmQ-op-XGW" eventType="touchUpInside" id="zgh-lX-58I"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm5-Yt-FV8">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm5-Yt-FV8">
                                         <rect key="frame" x="480" y="66" width="45" height="30"/>
                                         <state key="normal" title="record">
                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="recordButtonClicked:" destination="HmQ-op-XGW" eventType="touchUpInside" id="TuK-Af-AMY"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D1B-Fe-XM1">
-                                        <rect key="frame" x="40" y="65" width="46" height="30"/>
-                                        <state key="normal" title="Replay">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="playButtonClicked" destination="HmQ-op-XGW" eventType="touchUpInside" id="ZxJ-nE-q2L"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -250,19 +243,13 @@
                                     <constraint firstItem="II5-Yd-S5A" firstAttribute="centerY" secondItem="LMy-WO-Ybg" secondAttribute="centerY" id="5NS-q2-gpc"/>
                                     <constraint firstItem="II5-Yd-S5A" firstAttribute="top" secondItem="u5p-O5-vyQ" secondAttribute="bottom" constant="8" symbolic="YES" id="5h5-8d-NKu"/>
                                     <constraint firstItem="o0P-Sx-dxh" firstAttribute="leading" secondItem="cbY-Fy-zLs" secondAttribute="trailing" constant="8" symbolic="YES" id="7ak-Mz-dOK"/>
-                                    <constraint firstAttribute="trailing" secondItem="PzC-3L-wgc" secondAttribute="trailing" id="7xW-6y-rvx"/>
                                     <constraint firstItem="cbY-Fy-zLs" firstAttribute="centerX" secondItem="LMy-WO-Ybg" secondAttribute="centerX" id="8Ca-Xj-AjB"/>
-                                    <constraint firstItem="Nm5-Yt-FV8" firstAttribute="centerY" secondItem="PzC-3L-wgc" secondAttribute="centerY" id="8fk-9N-ouG"/>
                                     <constraint firstItem="II5-Yd-S5A" firstAttribute="centerY" secondItem="a4o-nc-Zwh" secondAttribute="centerY" id="9dp-qn-pHW"/>
                                     <constraint firstItem="a4o-nc-Zwh" firstAttribute="leading" secondItem="3MY-dy-t5k" secondAttribute="trailing" constant="40" id="AdK-f5-mfA"/>
                                     <constraint firstItem="cbY-Fy-zLs" firstAttribute="leading" secondItem="u5p-O5-vyQ" secondAttribute="trailing" constant="8" symbolic="YES" id="Ati-xf-ybX"/>
-                                    <constraint firstItem="D1B-Fe-XM1" firstAttribute="centerY" secondItem="II5-Yd-S5A" secondAttribute="centerY" id="H4B-2N-lYd"/>
-                                    <constraint firstItem="D1B-Fe-XM1" firstAttribute="leading" secondItem="II5-Yd-S5A" secondAttribute="trailing" constant="15" id="Hwy-12-WXJ"/>
                                     <constraint firstItem="a4o-nc-Zwh" firstAttribute="centerX" secondItem="LMy-WO-Ybg" secondAttribute="centerX" id="IiI-RX-EvF"/>
                                     <constraint firstItem="u5p-O5-vyQ" firstAttribute="leading" secondItem="II5-Yd-S5A" secondAttribute="leading" id="Mhi-ms-ujC"/>
-                                    <constraint firstItem="PzC-3L-wgc" firstAttribute="leading" secondItem="Nm5-Yt-FV8" secondAttribute="trailing" constant="10" id="Mlb-wl-lV3"/>
                                     <constraint firstItem="ooW-3b-Y3I" firstAttribute="leading" secondItem="a4o-nc-Zwh" secondAttribute="trailing" constant="40" id="Pee-na-ruF"/>
-                                    <constraint firstItem="PzC-3L-wgc" firstAttribute="centerY" secondItem="a4o-nc-Zwh" secondAttribute="centerY" id="Rcv-52-hK2"/>
                                     <constraint firstItem="u5p-O5-vyQ" firstAttribute="centerY" secondItem="cbY-Fy-zLs" secondAttribute="centerY" id="Tql-ql-hh1"/>
                                     <constraint firstItem="II5-Yd-S5A" firstAttribute="leading" secondItem="LMy-WO-Ybg" secondAttribute="leading" constant="8" id="YYw-VK-wz5"/>
                                     <constraint firstItem="ooW-3b-Y3I" firstAttribute="centerY" secondItem="a4o-nc-Zwh" secondAttribute="centerY" id="Z6y-IF-pC5"/>
@@ -289,12 +276,14 @@
                             <constraint firstItem="NSo-eB-Xp2" firstAttribute="centerY" secondItem="yxZ-ng-kd3" secondAttribute="centerY" multiplier="1.5" id="IpL-Et-JY2"/>
                             <constraint firstItem="bew-u6-Fg9" firstAttribute="leading" secondItem="yxZ-ng-kd3" secondAttribute="leadingMargin" constant="32" id="J8t-OT-xBm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ea2-79-SBe" secondAttribute="trailing" constant="-20" id="Mtn-Mg-YwM"/>
+                            <constraint firstItem="NA1-bv-pE3" firstAttribute="centerX" secondItem="yxZ-ng-kd3" secondAttribute="centerX" id="OBE-fY-A8K"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bew-u6-Fg9" secondAttribute="trailing" constant="32" id="Vsa-ot-1N0"/>
                             <constraint firstItem="ea2-79-SBe" firstAttribute="leading" secondItem="yxZ-ng-kd3" secondAttribute="leadingMargin" constant="-20" id="Xv6-ua-Pxq"/>
                             <constraint firstAttribute="leadingMargin" secondItem="LMy-WO-Ybg" secondAttribute="leading" id="Y5W-ku-8Si"/>
                             <constraint firstItem="bAm-qS-Fxv" firstAttribute="leading" secondItem="bew-u6-Fg9" secondAttribute="leading" id="aqZ-uI-Dnh"/>
                             <constraint firstItem="ea2-79-SBe" firstAttribute="top" secondItem="FJm-A1-cLD" secondAttribute="bottom" constant="-20" id="eb9-Ft-YhZ"/>
                             <constraint firstItem="NSo-eB-Xp2" firstAttribute="top" secondItem="bew-u6-Fg9" secondAttribute="bottom" id="gTT-Q3-lPr"/>
+                            <constraint firstItem="NA1-bv-pE3" firstAttribute="centerY" secondItem="Miu-Qx-t2s" secondAttribute="centerY" id="gWs-Bf-EtN"/>
                             <constraint firstItem="j6d-I8-OcY" firstAttribute="top" secondItem="ea2-79-SBe" secondAttribute="bottom" constant="-4" id="gti-dx-wNO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RKU-AA-SQ0" secondAttribute="trailing" id="l0M-74-wKc"/>
                             <constraint firstItem="j6d-I8-OcY" firstAttribute="top" secondItem="LMy-WO-Ybg" secondAttribute="bottom" constant="8" symbolic="YES" id="oO8-vO-DIH"/>
@@ -321,6 +310,7 @@
                         <outlet property="MusicTimeSlider" destination="cbY-Fy-zLs" id="EsM-QQ-N0w"/>
                         <outlet property="PlayButton" destination="a4o-nc-Zwh" id="Rdr-93-bzi"/>
                         <outlet property="ScoreBackgroundView" destination="Apy-m0-CpT" id="XbI-Ni-w4f"/>
+                        <outlet property="SongTitle" destination="NA1-bv-pE3" id="U82-f5-d2X"/>
                         <outlet property="SongsImage" destination="Vr5-PK-gCb" id="q6X-3N-ecU"/>
                         <outlet property="StandardView" destination="ekd-0T-fwE" id="RE6-nC-o03"/>
                         <outlet property="StartTime" destination="u5p-O5-vyQ" id="0k4-CQ-BE1"/>
@@ -346,7 +336,6 @@
         <image name="big_pause_button" width="60" height="60"/>
         <image name="empty_heart" width="23" height="21"/>
         <image name="menu" width="25" height="17"/>
-        <image name="more_icon" width="25" height="23"/>
         <image name="music_placeholder" width="308" height="308"/>
         <image name="next_song" width="20" height="28"/>
         <image name="prev_song" width="20" height="28"/>
