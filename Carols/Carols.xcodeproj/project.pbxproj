@@ -68,6 +68,7 @@
 		62FFC2F41CCB51270073EBD3 /* AAHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FFC2F31CCB51270073EBD3 /* AAHandler.swift */; };
 		62FFC2F61CCB51A70073EBD3 /* ThirdPartyLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FFC2F51CCB51A70073EBD3 /* ThirdPartyLoginRequest.swift */; };
 		62FFC2F81CCB5CDD0073EBD3 /* AAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FFC2F71CCB5CDD0073EBD3 /* AAUser.swift */; };
+		E7BFFFCA1D11411F008BC02D /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFFFC91D11411F008BC02D /* SearchTableViewController.swift */; };
 		E7C079E81CF2EE4100E9948C /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C079E51CF2EE4100E9948C /* Stream.swift */; };
 		E7C079E91CF2EE4100E9948C /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C079E61CF2EE4100E9948C /* BaseEntity.swift */; };
 		E7C079EA1CF2EE4100E9948C /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C079E71CF2EE4100E9948C /* Song.swift */; };
@@ -193,6 +194,7 @@
 		7179656382A29027B25697E9 /* Pods-Carols.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.release.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.release.xcconfig"; sourceTree = "<group>"; };
 		7C0B0EE4A25643C739A4F4DB /* Pods-Carols.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.debug.xcconfig"; sourceTree = "<group>"; };
 		C68B8BF5F9B6A07ED10FF290 /* Pods_Carols.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Carols.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7BFFFC91D11411F008BC02D /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		E7C079E51CF2EE4100E9948C /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		E7C079E61CF2EE4100E9948C /* BaseEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
 		E7C079E71CF2EE4100E9948C /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 				625EC15D1CB41B47009BA175 /* RankingViewController.swift */,
 				625EC1611CB4233E009BA175 /* RankingGenreViewController.swift */,
 				62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */,
+				E7BFFFC91D11411F008BC02D /* SearchTableViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -709,6 +712,7 @@
 				625EC1521CB3F303009BA175 /* ChosenSongCell.swift in Sources */,
 				629CD5421CD8CB23001F7D84 /* User.swift in Sources */,
 				629CD53E1CD8CA71001F7D84 /* DatabaseModel.xcdatamodeld in Sources */,
+				E7BFFFCA1D11411F008BC02D /* SearchTableViewController.swift in Sources */,
 				629611B31CC9EDA200724A84 /* AANumber.swift in Sources */,
 				6248379C1CF44F310008CA1E /* EZAudioPlayer.m in Sources */,
 				629611B81CCA020400724A84 /* ThirdPartyLoginModel.swift in Sources */,

@@ -112,14 +112,12 @@ class PlayViewController: UIViewController{
         }
     }
     
-    //MARK: - 录音！！！！！！！！！！！！！！！！！！！！！！！！！！！！
     @IBOutlet weak var recordButton: UIButton!
     var player: EZAudioPlayer!
     var microphone: EZMicrophone!
     var recorder: EZRecorder!
     var isRecording = false
     var allowRecording = false
-    //MARK: 歌词
     var LRCDictionary: NSMutableDictionary!
     var timeArray: NSMutableArray!
     var lrcLineNumber = 0
@@ -182,13 +180,6 @@ class PlayViewController: UIViewController{
             }
         }
         
-    }
-    
-    func setupMusicView(song:Song) {
-        currentSong = song
-        songTitle = currentSong?.SongName
-        artistName = currentSong?.SongArtist
-        setBackgroundImage()
     }
     
     func setBackgroundImage () {
@@ -276,14 +267,12 @@ class PlayViewController: UIViewController{
         if (recorder != nil) {
             recorder.closeAudioFile()
         }
-        
         let alert = UIAlertController(title: "你这次演唱的得分是：", message: "0.00", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "回放", style: .Default, handler: { (action) in
             self.playButtonClicked()
         }))
         alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
         presentViewController(alert, animated: true, completion: nil)
-        
     }
     //MARK:- Gesture
     @IBAction func ScoreStart(sender: UITapGestureRecognizer) {
@@ -337,11 +326,6 @@ class PlayViewController: UIViewController{
             break
         }
         
-    }
-    
-    func PlayMusicWithCurrentIndex(idnex:Int) {
-        currentIndex = idnex
-        createStreamer()
     }
     
     @IBAction func Play() {
@@ -411,6 +395,7 @@ class PlayViewController: UIViewController{
         }
         createStreamer()
     }
+    
     func checkNextIndexValue() {
         let last = songs.count - 1
         if currentIndex == last || currentIndex >= songs.count {
@@ -462,7 +447,11 @@ class PlayViewController: UIViewController{
             currentIndex = specialIndex!
             specialIndex = 0
         }
-        setupMusicView(songs[currentIndex] as! Song)
+        currentSong = songs[currentIndex] as! Song
+        songTitle = currentSong?.SongName
+        artistName = currentSong?.SongArtist
+        setBackgroundImage()
+        
         loadPreviousAndNextMusicImage()
         configNowPlayingInfoCenter()
         let stream = Stream()
@@ -589,11 +578,6 @@ class PlayViewController: UIViewController{
 
 
 
-
-
-
-
-
 extension PlayViewController {
     
     @IBAction func recordButtonClicked() {
@@ -691,7 +675,6 @@ extension PlayViewController {
             return nil
         }
     }
-    
 }
 
 extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicrophoneDelegate {
