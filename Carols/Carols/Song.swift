@@ -222,8 +222,8 @@ class Song: BaseEntity {
         }
     }
     
-    class func saveHistory(userId:String,completion:((String?,NSError?)-> Void)) {
-        let url = "\(baseUrl)getRecommendByUserId?userId=\(userId)"
+    class func saveHistory(userId:String,songId:String,completion:((String?,NSError?)-> Void)) {
+        let url = "\(baseUrl)recordHistory?userId=\(userId)&trackId=\(songId)"
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON
          {(response) in
                 if response.result.error == nil {
