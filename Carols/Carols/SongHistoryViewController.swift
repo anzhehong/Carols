@@ -27,4 +27,11 @@ class SongHistoryViewController: BaseViewController{
         self.addChildViewController(pageMenu!)
         self.view.addSubview(pageMenu!.view)
     }
+    
+    override func searchGroup(){
+        let vc =  (UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("serachVC")) as! SearchTableViewController
+        vc.title = "歌曲名"
+        let nav = UINavigationController(rootViewController: vc)
+        presentViewController(nav, animated: true, completion: nil)
+    }
 }
