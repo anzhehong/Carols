@@ -32,9 +32,12 @@ class SongLibraryCell: UITableViewCell {
     
     func configureUI() {
         self.addSubview(album)
+        album.layer.cornerRadius = 8
         album.snp_makeConstraints { (make) in
             make.left.equalTo(self).offset(11)
             make.centerY.equalTo(self)
+            make.width.equalTo(albumWidth)
+            make.height.equalTo(albumWidth)
         }
         
         singButton.setImage(UIImage(named: "SingIcon"), forState: .Normal)

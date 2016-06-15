@@ -31,7 +31,7 @@ class SingUpViewController: UIViewController, UITextFieldDelegate {
         background.image = UIImage(named: "loginBack")
         superView.addSubview(background)
         
-        signUpLabel.text      = "Sign Up"
+        signUpLabel.text      = "注册"
         signUpLabel.textColor = UIColor.GlobalRed()
         signUpLabel.font      = UIFont.boldSystemFontOfSize(30)
         superView.addSubview(signUpLabel)
@@ -50,7 +50,7 @@ class SingUpViewController: UIViewController, UITextFieldDelegate {
         avator.layer.cornerRadius = 60 // width /2
         avator.clipsToBounds = true
         
-        usernameTextField.attributedPlaceholder = NSAttributedString(string: "User Name", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
+        usernameTextField.attributedPlaceholder = NSAttributedString(string: "用户名", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
         usernameTextField.textColor = UIColor.GlobalGray()
         usernameTextField.textAlignment = .Center
         usernameTextField.delegate = self
@@ -78,7 +78,7 @@ class SingUpViewController: UIViewController, UITextFieldDelegate {
             make.height.leading.trailing.equalTo(line1)
         }
         
-        phoneNumTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
+        phoneNumTextField.attributedPlaceholder = NSAttributedString(string: "手机号码", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
         phoneNumTextField.textColor     = UIColor.GlobalGray()
         phoneNumTextField.textAlignment = .Center
         phoneNumTextField.delegate      = self
@@ -96,7 +96,7 @@ class SingUpViewController: UIViewController, UITextFieldDelegate {
             make.height.leading.trailing.equalTo(line1)
         }
         
-        passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "密码", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
         passwordTextField.textAlignment         = .Center
         passwordTextField.delegate              = self
         superView.addSubview(passwordTextField)

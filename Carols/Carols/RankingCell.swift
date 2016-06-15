@@ -32,11 +32,14 @@ class RankingCell: UITableViewCell {
     
     func configureUI() {
         self.addSubview(album)
+        album.layer.cornerRadius = 10
         album.snp_makeConstraints { (make) in
             make.left.equalTo(self).offset(11)
             make.centerY.equalTo(self)
+            make.width.equalTo(albumWidth)
+            make.height.equalTo(albumWidth)
         }
-        
+
         self.addSubview(songName)
         songName.textColor = UIColor.UIColorFromRGB(0xFFFFFF)
         songName.font      = UIFont.systemFontOfSize(20)

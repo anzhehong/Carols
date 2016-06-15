@@ -109,7 +109,7 @@ class Song: BaseEntity {
     
     class func getAllSongRank(completion:(([Song]?,NSError?)-> Void)) {
         let url = "\(baseUrl)getAllRank?limit=20"
-        
+        print(url)
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
@@ -207,20 +207,6 @@ class Song: BaseEntity {
         let url = "\(baseUrl)getRecommendByUserId?userId=\(userid)"
 //        let url = "http://192.168.1.101:8080/Carols/Main/getRecommendByUserId?userId=1"
         var songs = [Song]()
-//        Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
-//            if response.result.error == nil {
-//                let jsons = JSON(data: response.data!)["songs"].array
-//                for json in jsons! {
-//                    let song = parseJson(json)
-//                    songs.append(song)
-//                }
-//                completion(songs,nil)
-//            }
-//            else {
-//                completion(nil,response.result.error)
-//            }
-//        }
-        
         Alamofire.request(.GET, url).responseJSON { (response) in
             if response.result.error == nil {
                 let jsons = JSON(data: response.data!)["songs"].array

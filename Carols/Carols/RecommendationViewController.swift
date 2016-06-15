@@ -19,7 +19,7 @@ class RecommendationViewController: BaseViewController {
     func initMenu() {
         
         let vc   = RecommendationViewContainerController()
-        vc.title = "Recommendation"
+        vc.title = "猜你喜欢😍"
         controllerArray.append(vc)
         
         pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat( titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)

@@ -66,7 +66,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(logo.snp_bottom)
         }
         
-        userTextField.attributedPlaceholder = NSAttributedString(string: "Phone Number", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
+        userTextField.attributedPlaceholder = NSAttributedString(string: "手机号码", attributes: [NSForegroundColorAttributeName:UIColor.GlobalGray()])
         userTextField.textColor             = UIColor.GlobalGray()
         userTextField.delegate              = self
         superView.addSubview(userTextField)
@@ -94,7 +94,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.centerX.equalTo(superView)
         }
         
-        passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor.GlobalGray()])
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: "密码", attributes: [NSForegroundColorAttributeName: UIColor.GlobalGray()])
         passwordTextField.textColor             = UIColor.GlobalRed()
         passwordTextField.delegate              = self
         superView.addSubview(passwordTextField)
@@ -119,7 +119,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.width.centerX.height.equalTo(redLine1)
         }
         
-        loginDescription.text      = "New User?"
+        loginDescription.text      = "新用户？"
         loginDescription.textColor = UIColor.GlobalGray()
         loginDescription.font      = UIFont.boldSystemFontOfSize(15)
         superView.addSubview(loginDescription)
@@ -128,7 +128,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.right.equalTo(superView.snp_centerX).offset(-3)
         }
         
-        signUpButton.setTitle("Sign Up", forState: .Normal)
+        signUpButton.setTitle("注册", forState: .Normal)
         signUpButton.titleLabel?.font = UIFont.boldSystemFontOfSize(15)
         signUpButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         signUpButton.setTitleColor(UIColor.GlobalGray(), forState: .Selected)
@@ -142,7 +142,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         superView.addSubview(loginButton)
         loginButton.backgroundColor = UIColor.GlobalRed()
-        loginButton.setTitle("Login", forState: .Normal)
+        loginButton.setTitle("登录", forState: .Normal)
         loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         loginButton.layer.cornerRadius = 10
         loginButton.addTarget(self, action: #selector(LoginViewController.loginButtonClicked), forControlEvents: .TouchUpInside)
@@ -153,7 +153,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(loginDescription.snp_bottom).offset(49)
         }
         
-        thirdDescriptionLabel.text      = "Login by"
+        thirdDescriptionLabel.text      = "第三方登录"
         thirdDescriptionLabel.textColor = UIColor.GlobalGray()
         superView.addSubview(thirdDescriptionLabel)
         thirdDescriptionLabel.snp_makeConstraints { (make) in
@@ -226,7 +226,7 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     func wechatLogin() {
         dispatch_async(dispatch_get_main_queue(), {
             SVProgressHUD.show()
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.showWithStatus("加载中...")
             SVProgressHUD.setDefaultMaskType(.Gradient)
         })
         if WXApi.isWXAppInstalled() {
@@ -259,7 +259,7 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     func qqLogin() {
         dispatch_async(dispatch_get_main_queue(), {
             SVProgressHUD.show()
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.showWithStatus("加载中...")
             SVProgressHUD.setDefaultMaskType(.Gradient)
         })
         if QQApiInterface.isQQInstalled() {
@@ -308,9 +308,7 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
     
     func loginButtonClicked() {
         AppDelegate.rootViewController = self
-        self.pushVC()
         if let phone = userTextField.text {
-            
             if let pass = passwordTextField.text {
                 dispatch_async(dispatch_get_main_queue(), {
                     SVProgressHUD.show()
@@ -343,7 +341,7 @@ extension LoginViewController: WXApiDelegate, TencentSessionDelegate {
         let screenWidth = UIScreen.mainScreen().bounds.width
         let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
         slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
-        let rootVC = AppDelegate.sharedAppDelegate().window?.rootViewController
+        _ = AppDelegate.sharedAppDelegate().window?.rootViewController
         //        rootVC?.presentViewController(slideMenuController, animated: true, completion: nil)
         //        self.presentViewController(slideMenuController, animated: true, completion: nil)
         AppDelegate.rootViewController!.presentViewController(slideMenuController, animated: true, completion: nil)

@@ -25,8 +25,6 @@ class RankingViewContainerController: UIViewController, CAPSPageMenuDelegate {
     var pageMenu : CAPSPageMenu?
     var parameters: [CAPSPageMenuOption]?
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         superView = self.view
@@ -54,7 +52,7 @@ class RankingViewContainerController: UIViewController, CAPSPageMenuDelegate {
     
     func initMenu() {
         let all   = RankingGenreViewController()
-        all.title = "All"
+        all.title = "总排行"
         controllerArray.append(all)
         
         let pop      = RankingGenreViewController()

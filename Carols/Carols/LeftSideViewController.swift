@@ -13,7 +13,7 @@ import SVProgressHUD
 
 class LeftSideViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let cellNames: [String] = ["Home", "Ranking List", "Chosen Songs", "Recommendation", "History", "Logout"]
+    let cellNames: [String] = ["首页", "排行榜", "待唱列表", "猜你喜欢", "历史记录", "登出"]
     var tableView           = UITableView()
     
     

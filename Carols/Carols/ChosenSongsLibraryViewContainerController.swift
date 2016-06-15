@@ -36,25 +36,6 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
 
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-//        SVProgressHUD.show()
-//        SVProgressHUD.showWithStatus("Updating")
-//        SVProgressHUD.setDefaultMaskType(.Gradient)
-//        Song.getHistory("1", completion: {result,error in
-//            if error == nil {
-//                self.songs = result
-//                self.delay(0, closure: {
-//                    SVProgressHUD.dismiss()
-//                    self.initTableView()
-//                })
-//            }
-//            else {
-//                print (error)
-//            }
-//        })
-    }
-    
     func initTableView() {
         tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
         tableView.separatorColor = UIColor.blackColor()

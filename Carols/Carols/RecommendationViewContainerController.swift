@@ -17,19 +17,12 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        dispatch_async(dispatch_get_main_queue()) { 
-            SVProgressHUD.show()
-            SVProgressHUD.showWithStatus("Updating")
-            SVProgressHUD.setDefaultMaskType(.Gradient)
-        }
-        //TODO:- String(User.currentUser().id)
+        tableView.backgroundColor = UIColor.GlobalGray()
         Song.getRecommendation("1", completion: {result,error in
             if error == nil {
                 self.songs = result
                 print(self.songs?.count)
                 self.delay(0, closure: {
-                    SVProgressHUD.dismiss()
                     self.initTableView()
                 })
             }
@@ -39,36 +32,13 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
         })
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        print("Viewwillappear")
-//        SVProgressHUD.show()
-//        SVProgressHUD.showWithStatus("Updating")
-//        SVProgressHUD.setDefaultMaskType(.Gradient)
-//        //TODO:- String(User.currentUser().id)
-//        Song.getRecommendation("1", completion: {result,error in
-//            if error == nil {
-//                self.songs = result
-//                print(self.songs?.count)
-//                self.delay(0, closure: {
-//                    SVProgressHUD.dismiss()
-//                    self.initTableView()
-//                })
-//            }
-//            else {
-//                print (error)
-//            }
-//        })
-
-    }
-    
     func initTableView() {
         superView = self.view
         tableView = UITableView(frame: self.view.frame)
         tableView.delegate = self
         tableView.dataSource = self
         superView.addSubview(tableView)
-        tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
+        tableView.backgroundColor = UIColor (red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
         tableView.separatorColor = UIColor.blackColor()
     }
 
@@ -111,9 +81,7 @@ extension RecommendationViewContainerController {
     
     //MARK:- Delegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("Test From Liu: \(indexPath.row)")
         let vc =  (UIStoryboard(name: "PlayView", bundle: nil).instantiateViewControllerWithIdentifier("musicVC")) as! PlayViewController
-      //  vc.setVCData("music_list", type: ".json",chooseIndex:0)
         vc.configureVC(songs!,chooesIndex: indexPath.row)
         let nav = UINavigationController(rootViewController: vc)
         presentViewController(nav, animated: true, completion: nil)

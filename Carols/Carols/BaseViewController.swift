@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import PageMenu
 
+
 class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     
     //MARK: - Title
@@ -37,7 +38,6 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
         superView = self.view
         initTitle()
         initPageParams()
-        historyButton.addTarget(self, action: #selector(BaseViewController.searchGroup), forControlEvents: .TouchUpInside)
     }
     
     
@@ -54,13 +54,11 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
             .ViewBackgroundColor(UIColor.GlobalMenuBlack()),
             .SelectedMenuItemLabelColor(UIColor.whiteColor()),
             .UnselectedMenuItemLabelColor(UIColor.whiteColor()),
-//            .MenuItemFont(UIFont(name: "HelveticaNeue", size: 14.5)!),
             .BottomMenuHairlineColor(UIColor.GlobalMenuBlack()),
             ]
     }
     
     func initTitle() {
-        
         nameLabel.text = "Hello,\(userName)"
         nameLabel.textColor = UIColor ( red: 0.9843, green: 0.0549, blue: 0.2667, alpha: 1.0 )
         nameLabel.font = UIFont.boldSystemFontOfSize(16.8)
@@ -79,7 +77,8 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
             make.height.width.equalTo(24)
         }
         
-        historyButton.setImage(UIImage(named: "History Icon"), forState: .Normal)
+        historyButton.setImage(UIImage(named: "Search Icon"), forState: .Normal)
+        historyButton.addTarget(self, action: #selector(BaseViewController.searchGroup), forControlEvents: .TouchUpInside)
         superView.addSubview(historyButton)
         historyButton.snp_makeConstraints { (make) in
             make.centerY.equalTo(nameLabel)
@@ -99,9 +98,12 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     
     func searchGroup(){
         print("pressed me!")
+        let vc =  (UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("serachVC")) as! SearchTableViewController
+        vc.title = "歌曲名"
+        let nav = UINavigationController(rootViewController: vc)
+        presentViewController(nav, animated: true, completion: nil)
     }
 
-    
     // MARK: - Container View Controller
     override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
         return true

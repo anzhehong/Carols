@@ -66,7 +66,6 @@ class SongHistoryViewContainerController: UIViewController, UITableViewDataSourc
         superView.addSubview(tableView)
         tableView.backgroundColor = UIColor ( red: 0.1529, green: 0.1373, blue: 0.1451, alpha: 1.0 )
         tableView.separatorColor = UIColor.blackColor()
-
     }
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import NAKPlaybackIndicatorView
 
 class SongLibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -47,7 +48,7 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         })
 
     }
-    
+
     func initAlbum()  {
         album.image = UIImage(named: "AlbumLarge")
         superView.addSubview(album)
@@ -61,7 +62,6 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: init three button
     func initThreeButton() {
-        
         containerView.backgroundColor = UIColor ( red: 0.102, green: 0.0902, blue: 0.0941, alpha: 1.0 )
         superView.addSubview(containerView)
         containerView.snp_makeConstraints { (make) in
@@ -89,7 +89,7 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         }
         
         let chooseSongLabel = UILabel()
-        chooseSongLabel.text = "Choose Song"
+        chooseSongLabel.text = "搜索歌曲🔍"
         chooseSongLabel.font = UIFont.systemFontOfSize(18)
         chooseSongLabel.textColor = UIColor.UIColorFromRGB(0xFFFFFF)
         containerView.addSubview(chooseSongLabel)
@@ -131,6 +131,7 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func initTableView() {
+        superView.backgroundColor = UIColor.GlobalGray()
         superView.addSubview(recommendationContainer)
         recommendationContainer.snp_makeConstraints { (make) in
             make.left.right.equalTo(superView)
@@ -140,7 +141,7 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         recommendationContainer.backgroundColor = UIColor ( red: 0.1569, green: 0.1333, blue: 0.1451, alpha: 1.0 )
         
         let recommendationLabel = UILabel()
-        recommendationLabel.text = "Recommendation"
+        recommendationLabel.text = "Carols猜你喜欢😍"
         recommendationLabel.font = UIFont.systemFontOfSize(18)
         recommendationLabel.textColor = UIColor.UIColorFromRGB(0xFFFFFF)
         recommendationContainer.addSubview(recommendationLabel)
@@ -158,17 +159,8 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
             make.width.equalTo(5)
             make.centerY.equalTo(recommendationLabel)
         }
-
-        let redArrow = UIImageView()
-        redArrow.image = UIImage(named: "RightArrowIcon")
-        recommendationContainer.addSubview(redArrow)
-        redArrow.snp_makeConstraints { (make) in
-            make.right.equalTo(recommendationContainer).offset(-20)
-            make.centerY.equalTo(recommendationContainer)
-        }
         
         let tableView = RecommendationViewContainerController.GetTableView()
-        superView.backgroundColor = UIColor ( red: 0.102, green: 0.0902, blue: 0.0941, alpha: 1.0 )
         superView.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
@@ -197,7 +189,7 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func searchGroup() {
-        initSearchView("biubiu")
+        initSearchView("风格")
     }
     
 }

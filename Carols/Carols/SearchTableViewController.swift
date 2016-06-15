@@ -13,16 +13,15 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate{
 
     //Params
     @IBOutlet weak var searchBar: UISearchBar!
-    
     var searchResults: [Song]?
     //MARK:- Life Cycle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         tableView.backgroundView = UIImageView(image: UIImage(named: "loginBack"))
-        navigationController?.navigationBar.barTintColor = UIColor.darkGrayColor()
+        navigationController?.navigationBar.barTintColor = UIColor.GlobalMenuBlack()
         navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.GlobalRed()]
     }
     
     //MARK:- Data Source & Delegate
@@ -38,9 +37,9 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate{
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let searchCell = SongLibraryCell(style: .Default, reuseIdentifier: "searchCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_4")!)
+        let searchCell = SongLibraryCell(style: .Default, reuseIdentifier: "searchCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_3")!)
         let URL = NSURL(string: searchResults![indexPath.row].SongURL!)
-        searchCell.album.sd_setImageWithURL(URL, placeholderImage: UIImage(named: "AlbumPic_4"))
+        searchCell.album.sd_setImageWithURL(URL, placeholderImage: UIImage(named: "AlbumPic_3"))
         searchCell.singerName.text = searchResults![indexPath.row].SongArtist
         searchCell.songName.text = searchResults![indexPath.row].SongName
         return searchCell

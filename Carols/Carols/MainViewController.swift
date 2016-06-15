@@ -22,10 +22,10 @@ class MainViewController: BaseViewController {
     func initMenu() {
         
         let songLibraryVC          = SongLibraryViewController()
-        songLibraryVC.title        = "Song Library"
+        songLibraryVC.title        = "曲库"
         controllerArray.append(songLibraryVC)
         let chosenSongsLibraryVC   = ChosenSongsLibraryViewContainerController()
-        chosenSongsLibraryVC.title = "Chosen Songs"
+        chosenSongsLibraryVC.title = "待唱列表"
         controllerArray.append(chosenSongsLibraryVC)
         
         pageMenu           = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, CGFloat( titleHeight), self.view.frame.width, self.view.frame.height), pageMenuOptions: parameters)

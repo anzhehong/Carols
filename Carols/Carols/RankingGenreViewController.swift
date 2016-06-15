@@ -25,9 +25,7 @@ class RankingGenreViewController: UIViewController, UITableViewDataSource, UITab
             Song.getAllSongRank( {result,error in
                 if error == nil {
                 self.songs = result
-                print(self.songs?.count)
                 self.delay(0, closure: {
-                SVProgressHUD.dismissWithDelay(2)
                 self.initMenu()
                 })
                 }
@@ -84,28 +82,7 @@ class RankingGenreViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        SVProgressHUD.show()
-        SVProgressHUD.showWithStatus("Updating")
-        SVProgressHUD.setDefaultMaskType(.Gradient)
-        Song.getSongByTag(self.title!,completion: {result,error in
-            if error == nil {
-                self.songs = result
-                print(self.songs?.count)
-                self.delay(0, closure: {
-                    self.initMenu()
-                })
-            }
-            else {
-                print (error)
-            }
-        })
-    }
-    
     func initMenu() {
-
         tableView.dataSource = self
         tableView.delegate   = self
         superView.addSubview(tableView)
@@ -129,7 +106,6 @@ extension RankingGenreViewController {
         cell.singerName.text = songs![indexPath.row].SongArtist
         cell.songName.text = songs![indexPath.row].SongName
         cell.album.sd_setImageWithURL(NSURL(string: songs![indexPath.row].SongImage!), placeholderImage: UIImage(named: "AlbumPic_4")!)
-
         return cell
     }
     
@@ -139,7 +115,6 @@ extension RankingGenreViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let vc =  (UIStoryboard(name: "PlayView", bundle: nil).instantiateViewControllerWithIdentifier("musicVC")) as! PlayViewController
-      //  vc.setVCData("music_list", type: ".json",chooseIndex:0)
         vc.configureVC(songs!,chooesIndex: indexPath.row)
         let nav = UINavigationController(rootViewController: vc)
         presentViewController(nav, animated: true, completion: nil)
