@@ -16,12 +16,7 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView = UITableView(frame: self.view.frame)
-        dispatch_async(dispatch_get_main_queue()) { 
-            SVProgressHUD.show()
-            SVProgressHUD.showWithStatus("Updating")
-            SVProgressHUD.setDefaultMaskType(.Gradient)
-        }
-        Song.getHistory("1", completion: {result,error in
+        Song.getHistory((User.currentUser().id?.stringValue)!, completion: {result,error in
             if error == nil {
                 self.songs = result
                 self.delay(0, closure: {
@@ -78,9 +73,7 @@ extension ChosenSongsLibraryViewContainerController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("Test From Liu: \(indexPath.row)")
         let vc =  (UIStoryboard(name: "PlayView", bundle: nil).instantiateViewControllerWithIdentifier("musicVC")) as! PlayViewController
-       // vc.setVCData("music_list", type: ".json",chooseIndex:0)
         vc.configureVC(songs!,chooesIndex: indexPath.row)
         let nav = UINavigationController(rootViewController: vc)
         presentViewController(nav, animated: true, completion: nil)

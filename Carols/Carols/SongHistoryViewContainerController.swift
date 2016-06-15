@@ -18,12 +18,7 @@ class SongHistoryViewContainerController: UIViewController, UITableViewDataSourc
         super.viewDidLoad()
         superView = self.view
         tableView = UITableView(frame: self.view.frame)
-        dispatch_async(dispatch_get_main_queue()) { 
-            SVProgressHUD.show()
-            SVProgressHUD.showWithStatus("Updating")
-            SVProgressHUD.setDefaultMaskType(.Gradient)
-        }
-        Song.getHistory("1", completion: {result,error in
+        Song.getHistory((User.currentUser().id?.stringValue)!, completion: {result,error in
             if error == nil {
                 self.songs = result
                 print(self.songs?.count)
@@ -36,28 +31,6 @@ class SongHistoryViewContainerController: UIViewController, UITableViewDataSourc
                 print (error)
             }
         })
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-//        SVProgressHUD.show()
-//        SVProgressHUD.showWithStatus("Updating")
-//        SVProgressHUD.setDefaultMaskType(.Gradient)
-//        Song.getHistory("1", completion: {result,error in
-//            if error == nil {
-//                self.songs = result
-//                print(self.songs?.count)
-//                self.delay(0, closure: {
-//                    SVProgressHUD.dismiss()
-//                    self.initTableView()
-//                })
-//            }
-//            else {
-//                print (error)
-//            }
-//        })
-
-       
     }
 
     func initTableView() {

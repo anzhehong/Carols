@@ -63,7 +63,6 @@
 		62A2A0761CAE213E00B2D4DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62A2A0741CAE213E00B2D4DC /* LaunchScreen.storyboard */; };
 		62A2A0811CAE213F00B2D4DC /* CarolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A2A0801CAE213F00B2D4DC /* CarolsTests.swift */; };
 		62A2A08C1CAE213F00B2D4DC /* CarolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A2A08B1CAE213F00B2D4DC /* CarolsUITests.swift */; };
-		62EB89C21CB4E20B002EF07F /* PlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */; };
 		62FBE5361CAE22CA0059AD66 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */; };
 		62FFC2F41CCB51270073EBD3 /* AAHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FFC2F31CCB51270073EBD3 /* AAHandler.swift */; };
 		62FFC2F61CCB51A70073EBD3 /* ThirdPartyLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FFC2F51CCB51A70073EBD3 /* ThirdPartyLoginRequest.swift */; };
@@ -186,7 +185,6 @@
 		62A2A0871CAE213F00B2D4DC /* CarolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A2A08B1CAE213F00B2D4DC /* CarolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarolsUITests.swift; sourceTree = "<group>"; };
 		62A2A08D1CAE213F00B2D4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingViewController.swift; sourceTree = "<group>"; };
 		62FBE5351CAE22CA0059AD66 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		62FFC2F31CCB51270073EBD3 /* AAHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAHandler.swift; sourceTree = "<group>"; };
 		62FFC2F51CCB51A70073EBD3 /* ThirdPartyLoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdPartyLoginRequest.swift; sourceTree = "<group>"; };
@@ -441,7 +439,6 @@
 				625EC15F1CB41B5D009BA175 /* RankingViewContainerController.swift */,
 				625EC15D1CB41B47009BA175 /* RankingViewController.swift */,
 				625EC1611CB4233E009BA175 /* RankingGenreViewController.swift */,
-				62EB89C11CB4E20B002EF07F /* PlayingViewController.swift */,
 				E7BFFFC91D11411F008BC02D /* SearchTableViewController.swift */,
 			);
 			name = ViewControllers;
@@ -691,7 +688,6 @@
 				E7C079ED1CF2EE4F00E9948C /* BaseHandler.swift in Sources */,
 				625EC1561CB4123B009BA175 /* RecommendationViewController.swift in Sources */,
 				624837A01CF44F310008CA1E /* EZMicrophone.m in Sources */,
-				62EB89C21CB4E20B002EF07F /* PlayingViewController.swift in Sources */,
 				625EC14E1CB3F291009BA175 /* LeftSideCell.swift in Sources */,
 				628F5CF91CFCF27C00854448 /* MyCell.m in Sources */,
 				62A2A06E1CAE213E00B2D4DC /* MainViewController.swift in Sources */,

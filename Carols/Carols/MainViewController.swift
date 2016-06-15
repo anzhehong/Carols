@@ -20,7 +20,6 @@ class MainViewController: BaseViewController {
     
     //MARK: - CAPSPageMenuDelegate
     func initMenu() {
-        
         let songLibraryVC          = SongLibraryViewController()
         songLibraryVC.title        = "曲库"
         controllerArray.append(songLibraryVC)

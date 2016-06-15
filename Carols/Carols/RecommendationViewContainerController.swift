@@ -18,7 +18,7 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundColor = UIColor.GlobalGray()
-        Song.getRecommendation("1", completion: {result,error in
+        Song.getRecommendation((User.currentUser().id?.stringValue)!, completion: {result,error in
             if error == nil {
                 self.songs = result
                 print(self.songs?.count)
