@@ -22,38 +22,13 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     let recommendationContainer = UIView()
     var songs:[Song]?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-//        SVProgressHUD.show()
-//        SVProgressHUD.showWithStatus("Updating")
-//        SVProgressHUD.setDefaultMaskType(.Gradient)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         superView = self.view
-
-//        Song.getRecommendation("1", completion: {result,error in
-//            if error == nil {
-//                self.songs = result
-//                print(self.songs?.count)
-//                self.delay(0, closure: {
-//                    self.initAlbum()
-//                    self.initThreeButton()
-//                    self.initTableView()
-//                })
-//            }
-//            else {
-//                print (error)
-//            }
-//        })
-
-//        dispatch_async(dispatch_get_main_queue()) {
-//            SVProgressHUD.show()
-//            SVProgressHUD.showWithStatus("Customizing...")
-//            SVProgressHUD.setDefaultMaskType(.Gradient)
-//        }
         
+        startButton.addTarget(self, action: #selector(SongLibraryViewController.searchStar), forControlEvents: .TouchUpInside)
+        groupButton.addTarget(self, action: #selector(SongLibraryViewController.searchGroup), forControlEvents: .TouchUpInside)
+        nameButton.addTarget(self, action: #selector(SongLibraryViewController.searchName), forControlEvents: .TouchUpInside)
         //TODO:- String(User.currentUser().id)
         Song.getRecommendation("1", completion: {result,error in
             SVProgressHUD.dismiss()
@@ -72,30 +47,6 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         })
 
     }
-
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(animated)
-//        SVProgressHUD.show()
-//        SVProgressHUD.showWithStatus("Updating")
-//        SVProgressHUD.setDefaultMaskType(.Gradient)
-//        //TODO:- String(User.currentUser().id)
-//        Song.getRecommendation("1", completion: {result,error in
-//            SVProgressHUD.dismiss()
-//            if error == nil {
-//                self.songs = result
-//                print(self.songs?.count)
-//                self.delay(0, closure: {
-//                    self.initAlbum()
-//                    self.initThreeButton()
-//                    self.initTableView()
-//                })
-//            }
-//            else {
-//                print (error)
-//            }
-//        })
-//
-//    }
     
     func initAlbum()  {
         album.image = UIImage(named: "AlbumLarge")
@@ -227,6 +178,26 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
             make.bottom.equalTo(superView)
         }
         
+    }
+ 
+    func initSearchView(title:String) {
+         let vc =  (UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("serachVC")) as! SearchTableViewController
+         vc.title = title
+         let nav = UINavigationController(rootViewController: vc)
+         presentViewController(nav, animated: true, completion: nil)
+    }
+ 
+    //MARK:- Actions
+    func searchName() {
+        initSearchView("歌曲名")
+    }
+    
+    func searchStar() {
+        initSearchView("歌手")
+    }
+    
+    func searchGroup() {
+        initSearchView("biubiu")
     }
     
 }

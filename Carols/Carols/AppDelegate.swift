@@ -29,22 +29,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-//        MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed("\(AAUser.userDB)")
-//        MagicalRecord.setLoggingLevel(MagicalRecordLoggingLevel.Off)
-//        
-//        configQQWeChat()
-//        
-//        if let _ = User.loggedUser() {
-//            let screenWidth = UIScreen.mainScreen().bounds.width
-//            let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
-//            slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
-//            AppDelegate.rootViewController = slideMenuController
-//            window?.rootViewController = slideMenuController
-//        }else {
-//            let loginViewController = LoginViewController()
-//            AppDelegate.rootViewController = loginViewController
-//            window?.rootViewController = loginViewController
-//        }
+        MagicalRecord.setupCoreDataStackWithAutoMigratingSqliteStoreNamed("\(AAUser.userDB)")
+        MagicalRecord.setLoggingLevel(MagicalRecordLoggingLevel.Off)
+        
+        configQQWeChat()
+        
+        if let _ = User.loggedUser() {
+            let screenWidth = UIScreen.mainScreen().bounds.width
+            let slideMenuController = SlideMenuController(mainViewController: MainViewController(), leftMenuViewController: LeftSideViewController())
+            slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
+            AppDelegate.rootViewController = slideMenuController
+            window?.rootViewController = slideMenuController
+        }else {
+            let loginViewController = LoginViewController()
+            AppDelegate.rootViewController = loginViewController
+            window?.rootViewController = loginViewController
+        }
         
         self.window?.makeKeyAndVisible()
         

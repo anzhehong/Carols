@@ -53,8 +53,8 @@
         <!--Root View Controller-->
         <scene sceneID="tAy-XH-GHI">
             <objects>
-                <tableViewController id="fBL-bS-KCr" customClass="SearchTableViewController" customModule="Carols" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xd8-Rr-4yk">
+                <tableViewController storyboardIdentifier="serachVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fBL-bS-KCr" customClass="SearchTableViewController" customModule="Carols" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xd8-Rr-4yk">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,11 +67,11 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="50" id="I01-hJ-ccw" customClass="SongLibraryCell" customModule="Carols" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="600" height="50"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="64" id="I01-hJ-ccw" customClass="SongLibraryCell" customModule="Carols" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="136" width="600" height="64"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I01-hJ-ccw" id="j2q-BM-FJk">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -82,6 +82,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="EQq-aX-Lv0">
+                        <barButtonItem key="leftBarButtonItem" title="后退" id="rUd-Xy-rB1">
+                            <connections>
+                                <action selector="back:" destination="fBL-bS-KCr" id="sek-VD-2HO"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="v2a-DQ-6nK">
                             <connections>
                                 <action selector="refresh:" destination="fBL-bS-KCr" id="nkz-gr-Q2F"/>

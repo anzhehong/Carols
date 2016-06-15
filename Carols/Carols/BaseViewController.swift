@@ -37,12 +37,9 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
         superView = self.view
         initTitle()
         initPageParams()
+        historyButton.addTarget(self, action: #selector(BaseViewController.searchGroup), forControlEvents: .TouchUpInside)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     //MARK: - UI
     func initPageParams() {
@@ -99,6 +96,11 @@ class BaseViewController: UIViewController, CAPSPageMenuDelegate {
     func leftSideButtonClicked()  {
         self.slideMenuController()?.openLeft()
     }
+    
+    func searchGroup(){
+        print("pressed me!")
+    }
+
     
     // MARK: - Container View Controller
     override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {

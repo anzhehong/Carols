@@ -16,10 +16,6 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate{
     
     var searchResults: [Song]?
     //MARK:- Life Cycle
-    override func viewDidLoad() {
-        title = "歌曲名"
-        super.viewDidLoad()
-    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -120,5 +116,10 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate{
         searchResults = nil
         self.tableView.reloadData()
     }
+    
+    @IBAction func back(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
 }
