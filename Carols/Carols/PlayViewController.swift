@@ -78,7 +78,6 @@ class PlayViewController: UIViewController{
     var musicDurationTimer:NSTimer?
     var currentIndex:Int = 0
     var isReplay:Bool = false
-    
     var like:Bool = false {
         didSet {
             if like {
@@ -130,8 +129,6 @@ class PlayViewController: UIViewController{
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-        configureRecord()
         PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
         streamer = DOUAudioStreamer()
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
@@ -267,6 +264,7 @@ class PlayViewController: UIViewController{
     }
     
     func startSinging() {
+       
         microphone.startFetchingAudio()
         streamer!.play()
         streamer?.volume = 0
@@ -292,6 +290,7 @@ class PlayViewController: UIViewController{
     func score () {
         let alert = UIAlertController(title: "你这次演唱的得分是：", message: "0.00", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "回放", style: .Default, handler: { (action) in
+            print(self.testFilePathURL())
             let audioFile = EZAudioFile(URL: self.testFilePathURL())
             self.player.playAudioFile(audioFile)
             self.musicIsPlaying = true
@@ -390,6 +389,7 @@ class PlayViewController: UIViewController{
                 currentIndex -= 1
             }
         }
+        recordButtonClicked()
         createStreamer()
         musicIsPlaying = false
     }
@@ -406,6 +406,7 @@ class PlayViewController: UIViewController{
         {
             checkNextIndexValue()
         }
+        recordButtonClicked()
         createStreamer()
         musicIsPlaying = false
     }
@@ -525,7 +526,7 @@ class PlayViewController: UIViewController{
             break
         case .EndOfFile:
             if playMode == .SingleSong {
-                streamer?.play()
+                player.play()
             }
             else {
                 nextSong()
@@ -591,6 +592,7 @@ class PlayViewController: UIViewController{
 extension PlayViewController {
     
     @IBAction func recordButtonClicked() {
+         configureRecord()
         if (recorder != nil ) {
             print("delegate:  \(self.recorder.delegate)")
         }
@@ -656,13 +658,14 @@ extension PlayViewController {
     
     func playerDidReachEndOfFile(notification: NSNotification) {}
     
+    
+    
     func testFilePathURL() -> NSURL {
         if let dir = applicationDocumentsDirectory() {
-            return NSURL.fileURLWithPath("\(dir)/test.m4a")
+            return NSURL.fileURLWithPath("\(dir)/\(currentSong?.SongName).m4a")
         }else {
-            return NSURL.fileURLWithPath("\(applicationDocumentsDirectory())/test.m4a")
+            return NSURL.fileURLWithPath("\(applicationDocumentsDirectory())/\(currentSong?.SongName).m4a")
         }
-        
     }
     
     func applicationDocumentsDirectory() -> String? {
