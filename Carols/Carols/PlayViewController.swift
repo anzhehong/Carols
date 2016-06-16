@@ -77,6 +77,8 @@ class PlayViewController: UIViewController{
     var originArray = NSMutableArray()
     var musicDurationTimer:NSTimer?
     var currentIndex:Int = 0
+    var isReplay:Bool = false
+    
     var like:Bool = false {
         didSet {
             if like {
@@ -111,7 +113,7 @@ class PlayViewController: UIViewController{
             {
                 PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
             }
-            view.setNeedsDisplay()
+            PlayButton.setNeedsDisplay()
         }
     }
     
@@ -269,6 +271,7 @@ class PlayViewController: UIViewController{
         streamer!.play()
         streamer?.volume = 0
         musicIsPlaying = true
+        isReplay = false
         player.play()
     }
     
@@ -281,14 +284,21 @@ class PlayViewController: UIViewController{
         if (recorder != nil) {
             recorder.closeAudioFile()
         }
-
+        if !isReplay {
+            self.score()
+        }
+    }
+    
+    func score () {
         let alert = UIAlertController(title: "你这次演唱的得分是：", message: "0.00", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "回放", style: .Default, handler: { (action) in
             let audioFile = EZAudioFile(URL: self.testFilePathURL())
             self.player.playAudioFile(audioFile)
+            self.musicIsPlaying = true
+            self.isReplay = true
         }))
         alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-       // presentViewController(alert, animated: true, completion: nil)
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     //MARK:- Gesture
@@ -342,11 +352,11 @@ class PlayViewController: UIViewController{
     }
     
     @IBAction func Play() {
-        recordButtonClicked()
         if musicIsPlaying {
             finishSing()
         }
         else {
+          recordButtonClicked()
           startSinging()
         }
     }
@@ -381,6 +391,7 @@ class PlayViewController: UIViewController{
             }
         }
         createStreamer()
+        musicIsPlaying = false
     }
     
     @IBAction func nextSong() {
@@ -396,6 +407,7 @@ class PlayViewController: UIViewController{
             checkNextIndexValue()
         }
         createStreamer()
+        musicIsPlaying = false
     }
     
     func checkNextIndexValue() {
@@ -576,18 +588,12 @@ class PlayViewController: UIViewController{
     }
 }
 
-
-
-
-
-
 extension PlayViewController {
     
     @IBAction func recordButtonClicked() {
         if (recorder != nil ) {
             print("delegate:  \(self.recorder.delegate)")
         }
-        self.player.pause()
         allowRecording = !allowRecording
         if allowRecording {
             self.microphone.startFetchingAudio()
