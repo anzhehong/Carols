@@ -129,8 +129,14 @@ class PlayViewController: UIViewController{
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+      //  createStreamer()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
         streamer = DOUAudioStreamer()
+        player = nil
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
         currentIndex = 0
         originArray = [].mutableCopy() as! NSMutableArray
@@ -140,12 +146,8 @@ class PlayViewController: UIViewController{
         createStreamer()
         //歌词
         initTableView()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         navigationController?.navigationBarHidden = true
-        guard currentIndex >= songs.count else {
+        guard currentIndex <= songs.count else {
             return
         }
         currentIndex = 0
@@ -154,7 +156,7 @@ class PlayViewController: UIViewController{
         }
         originArray.removeAllObjects()
         loadOriginArray()
-        createStreamer()
+
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -230,7 +232,6 @@ class PlayViewController: UIViewController{
         StandardView.shouldMirror = true
         StandardView.shouldFill = true
         StandardView.gain = 0.5
-        player = EZAudioPlayer(delegate: self)
         
     }
     
@@ -265,7 +266,6 @@ class PlayViewController: UIViewController{
     }
     
     func startSinging() {
-       
         microphone.startFetchingAudio()
         streamer!.play()
         streamer?.volume = 0
@@ -389,6 +389,8 @@ class PlayViewController: UIViewController{
                 currentIndex -= 1
             }
         }
+        microphone = nil
+        recorder = nil
         recordButtonClicked()
         createStreamer()
         musicIsPlaying = false
@@ -468,6 +470,7 @@ class PlayViewController: UIViewController{
         setBackgroundImage()
         loadPreviousAndNextMusicImage()
         configNowPlayingInfoCenter()
+        player = EZAudioPlayer(delegate: self)
         let stream = Stream()
         let musicURL = NSURL(string: (currentSong?.SongURL)!)
         let filePath = NSBundle.mainBundle().pathForResource(currentSong?.SongFile, ofType: "mp3")

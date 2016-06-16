@@ -13,7 +13,6 @@ import NAKPlaybackIndicatorView
 class SongLibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let album = UIImageView()
-    
     //MARK: - Three Buttons
     let startButton             = UIButton()
     let groupButton             = UIButton()
@@ -35,7 +34,6 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
             SVProgressHUD.dismiss()
             if error == nil {
                 self.songs = result
-                print(self.songs?.count)
                 self.delay(0, closure: {
                     self.initAlbum()
                     self.initThreeButton()
@@ -223,10 +221,10 @@ extension SongLibraryViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let vc = PlayViewController.sharedInstance
+        let vc =  PlayViewController.sharedInstance
+        vc.configureVC(songs!,chooesIndex: indexPath.row)
         let nav = UINavigationController(rootViewController: vc)
         presentViewController(nav, animated: true, completion: nil)
-        vc.configureVC(songs!,chooesIndex: indexPath.row)
     }
 
 }

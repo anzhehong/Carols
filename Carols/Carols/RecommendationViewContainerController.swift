@@ -81,7 +81,7 @@ extension RecommendationViewContainerController {
     
     //MARK:- Delegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let vc =  (UIStoryboard(name: "PlayView", bundle: nil).instantiateViewControllerWithIdentifier("musicVC")) as! PlayViewController
+        let vc =  PlayViewController.sharedInstance
         vc.configureVC(songs!,chooesIndex: indexPath.row)
         let nav = UINavigationController(rootViewController: vc)
         presentViewController(nav, animated: true, completion: nil)

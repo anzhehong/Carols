@@ -46,10 +46,10 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate{
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let vc =  (UIStoryboard(name: "PlayView", bundle: nil).instantiateViewControllerWithIdentifier("musicVC")) as! PlayViewController
+        let vc =  PlayViewController.sharedInstance
+        vc.configureVC(searchResults!,chooesIndex: indexPath.row)
         let nav = UINavigationController(rootViewController: vc)
         presentViewController(nav, animated: true, completion: nil)
-        vc.configureVC(searchResults!,chooesIndex: indexPath.row)
     }
     
     //MARK:- Search Bar Delegate
