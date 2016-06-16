@@ -38,10 +38,10 @@ class SearchTableViewController: UITableViewController,UISearchBarDelegate{
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let searchCell = SongLibraryCell(style: .Default, reuseIdentifier: "searchCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_3")!)
-        let URL = NSURL(string: searchResults![indexPath.row].SongURL!)
+        let URL = NSURL(string: searchResults![indexPath.row].SongImage!)
+        searchCell.singerName.text = self.searchResults![indexPath.row].SongArtist
+        searchCell.songName.text = self.searchResults![indexPath.row].SongName
         searchCell.album.sd_setImageWithURL(URL, placeholderImage: UIImage(named: "AlbumPic_3"))
-        searchCell.singerName.text = searchResults![indexPath.row].SongArtist
-        searchCell.songName.text = searchResults![indexPath.row].SongName
         return searchCell
     }
     

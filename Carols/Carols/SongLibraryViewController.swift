@@ -211,9 +211,10 @@ extension SongLibraryViewController {
             cell.singerName.text = songs![indexPath.row].SongArtist
             return cell
         }
-        cell.album.sd_setImageWithURL(NSURL(string: songs![indexPath.row].SongImage!), placeholderImage: UIImage(named: "AlbumPic_4")!)
-        cell.songName.text = songs![indexPath.row].SongName
-        cell.singerName.text = songs![indexPath.row].SongArtist
+        let url = NSURL(string:songs![indexPath.row].SongImage! )
+        cell.album.sd_setImageWithURL(url, placeholderImage: UIImage(named: "AlbumPic_4")!)
+        cell.songName.text = self.songs![indexPath.row].SongName
+        cell.singerName.text = self.songs![indexPath.row].SongArtist
         return cell
     }
     

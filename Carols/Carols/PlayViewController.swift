@@ -248,7 +248,8 @@ class PlayViewController: UIViewController{
     
     func updateSliderValue (timer:NSTimer) {
         if player.state == .EndOfFile{
-            player.play()
+            //TODO:-Update Recommendation Here
+           // presentViewController(RecommendationViewController(), animated: true, completion: nil)
         }
         
         if player.duration == 0.0 {
@@ -362,8 +363,7 @@ class PlayViewController: UIViewController{
     
     @IBAction func ChangePlayTime(sender: MusicSlider) {
         if player.state == .EndOfFile {
-            player = nil
-            createStreamer()
+            nextSong()
         }
         player.currentTime = player.duration * Double(sender.value)
         updateUI()
@@ -529,7 +529,7 @@ class PlayViewController: UIViewController{
                 player.play()
             }
             else {
-                nextSong()
+               presentViewController(RecommendationViewController(), animated: true, completion: nil)
             }
             break
         case .ReadyToPlay:
