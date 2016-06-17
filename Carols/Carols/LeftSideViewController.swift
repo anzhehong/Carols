@@ -125,7 +125,7 @@ extension LeftSideViewController {
         slideMenuController.changeLeftViewWidth(screenWidth / 1.2)
         
         if indexPath.row == 0 {
-            slideMenuController.mainViewController = MainViewController()
+            slideMenuController.mainViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("mainVC")
         } else if indexPath.row == 1 {
             
             slideMenuController.mainViewController = RankingViewController()

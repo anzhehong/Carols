@@ -81,6 +81,7 @@
 		E7C079FD1CF2EF4600E9948C /* 1770040300_2031329_l.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E7C079FA1CF2EF4600E9948C /* 1770040300_2031329_l.mp3 */; };
 		E7C079FE1CF2EF4600E9948C /* 1770059653_2050944_l.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E7C079FB1CF2EF4600E9948C /* 1770059653_2050944_l.mp3 */; };
 		E7C079FF1CF2EF4600E9948C /* 1771694697_4194836_l.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E7C079FC1CF2EF4600E9948C /* 1771694697_4194836_l.mp3 */; };
+		E7E0AE651D13C6A90044F904 /* RePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E0AE641D13C6A90044F904 /* RePageViewController.swift */; };
 		F26E3FCC09A0C8FBE52E1F2E /* Pods_Carols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C68B8BF5F9B6A07ED10FF290 /* Pods_Carols.framework */; };
 /* End PBXBuildFile section */
 
@@ -207,6 +208,7 @@
 		E7C079FB1CF2EF4600E9948C /* 1770059653_2050944_l.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 1770059653_2050944_l.mp3; sourceTree = "<group>"; };
 		E7C079FC1CF2EF4600E9948C /* 1771694697_4194836_l.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 1771694697_4194836_l.mp3; sourceTree = "<group>"; };
 		E7D5E2A01CD4C91000A03B90 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
+		E7E0AE641D13C6A90044F904 /* RePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RePageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,6 +427,7 @@
 		62FBE5341CAE22BD0059AD66 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E7E0AE631D13C66B0044F904 /* Re-Recommendation */,
 				6259C5261CCB4478006E934F /* LoginAndRegister */,
 				625EC14A1CB27333009BA175 /* BaseViewController.swift */,
 				6256E12B1CAF7F15003BC7E3 /* LeftSideViewController.swift */,
@@ -472,6 +475,14 @@
 				E7C079FC1CF2EF4600E9948C /* 1771694697_4194836_l.mp3 */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		E7E0AE631D13C66B0044F904 /* Re-Recommendation */ = {
+			isa = PBXGroup;
+			children = (
+				E7E0AE641D13C6A90044F904 /* RePageViewController.swift */,
+			);
+			name = "Re-Recommendation";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -682,6 +693,7 @@
 				62FFC2F41CCB51270073EBD3 /* AAHandler.swift in Sources */,
 				625EC1641CB423BF009BA175 /* RankingCell.swift in Sources */,
 				62FBE5361CAE22CA0059AD66 /* LoginViewController.swift in Sources */,
+				E7E0AE651D13C6A90044F904 /* RePageViewController.swift in Sources */,
 				624837A21CF44F310008CA1E /* EZPlot.m in Sources */,
 				629611B51CC9EE1500724A84 /* AAAlertViewController.swift in Sources */,
 				628F5CFE1CFCF28700854448 /* DoModel.m in Sources */,

@@ -250,7 +250,9 @@ class PlayViewController: UIViewController{
     func updateSliderValue (timer:NSTimer) {
         if player.state == .EndOfFile{
             //TODO:-Update Recommendation Here
-           // presentViewController(RecommendationViewController(), animated: true, completion: nil)
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ReRecommendation")
+            navigationController?.presentViewController(vc, animated: true, completion: nil)
+            player.pause()
         }
         
         if player.duration == 0.0 {
