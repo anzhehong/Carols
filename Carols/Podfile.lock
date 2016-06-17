@@ -7,6 +7,7 @@ PODS:
     - CocoaAsyncSocket/RunLoop
   - CocoaAsyncSocket/GCD (7.4.3)
   - CocoaAsyncSocket/RunLoop (7.4.3)
+  - CustomIOSAlertView (0.9.3)
   - DOUAudioStreamer (0.2.15)
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
@@ -36,6 +37,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.3)
   - CocoaAsyncSocket
+  - CustomIOSAlertView
   - DOUAudioStreamer
   - MagicalRecord
   - Mantle
@@ -66,6 +68,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
+  CustomIOSAlertView: 94d2401e34fcfb0ac0134679d6947f5e251b0446
   DOUAudioStreamer: 14f217bab01b52171fc2bd7d96e1f8fdd50fce68
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9

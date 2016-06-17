@@ -18,7 +18,7 @@ pod 'SVProgressHUD'
 pod 'DOUAudioStreamer'
 pod 'Mantle'
 pod 'NAKPlaybackIndicatorView'
-
+pod 'CustomIOSAlertView'
 #第三方登录
 # 主模块(必须)
 pod 'ShareSDK3'

@@ -11,6 +11,7 @@ import DOUAudioStreamer
 import SDWebImage
 import MediaPlayer
 import Alamofire
+import CustomIOSAlertView
 
 enum PlayMode {
     case SingleSong
