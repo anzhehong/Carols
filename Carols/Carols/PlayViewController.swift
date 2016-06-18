@@ -637,8 +637,6 @@ extension PlayViewController {
     
     func playerDidReachEndOfFile(notification: NSNotification) {}
     
-    
-    
     func testFilePathURL() -> NSURL {
         if let dir = applicationDocumentsDirectory() {
             return NSURL.fileURLWithPath("\(dir)/\(currentSong?.SongName).m4a")
@@ -770,15 +768,11 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
         timeArray = NSMutableArray()
         LRCDictionary = NSMutableDictionary()
         //init lrc
-        downloadLRC("http://www.22lrc.com/lrc/40872/4996.lrc") { (path, error) in
+        downloadLRC("http://o8z31on6v.bkt.clouddn.com/hello.lrc") { (path, error) in
                 let pathURL = (path! as NSString).substringFromIndex(7)
-                let pathLRC = NSBundle.mainBundle().pathForResource("梁静茹-偶阵雨", ofType: "lrc")
-           // "/Users/Harold_LIU/Library/Developer/CoreSimulator/Devices/1BD3C5EA-62B4-402F-BBD5-81DD248087C3/data/Containers/Bundle/Application/077A4B69-EDC2-4322-8FFB-8B400494C3A2/Carols.app/梁静茹-偶阵雨.lrc"
-                print(pathURL)
-                print("work url:\(pathLRC)")
                 let mo = DoModel.initSingleModel()
-                let dic: NSDictionary = mo.LRCWithName(pathLRC)
-                let another: NSDictionary = mo.LRCWithName(pathURL)
+                let str = try! String(contentsOfFile: pathURL, encoding: NSUTF8StringEncoding)
+                let dic: NSDictionary = mo.LRCWithName(str)
                 self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
                 self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
                 self.delay(0, closure: {
@@ -982,7 +976,7 @@ extension PlayViewController {
             directory: .DocumentDirectory,
             domain: .UserDomainMask
         )
-        Alamofire.download(.GET, "http://www.22lrc.com/lrc/30731/0024.lrc", destination: destination)
+        Alamofire.download(.GET, url, destination: destination)
             .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
                 print(totalBytesRead)
             }

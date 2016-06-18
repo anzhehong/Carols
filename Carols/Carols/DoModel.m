@@ -25,8 +25,7 @@
 -(NSDictionary *)LRCWithName:(NSString*)songName{
     NSMutableArray *timeArray = [NSMutableArray array];//时间数组
     NSMutableDictionary * LRCDictionary  = [NSMutableDictionary dictionary];//歌词字典
-    NSString * temp = [NSString stringWithContentsOfURL:[[NSURL alloc]initWithString:songName] encoding:NSUTF8StringEncoding error:nil];
-    NSString * contentStr = [NSString stringWithContentsOfFile:songName encoding:NSUTF8StringEncoding error:nil];
+    NSString * contentStr = songName;
     NSArray * array = [contentStr componentsSeparatedByString:@"\n"];
     int num = [array count];
     
@@ -41,15 +40,11 @@
                 NSString * timeStr = [[lineArray objectAtIndex:0]substringWithRange:NSMakeRange(1, 5)];//时间
                 [LRCDictionary setObject:lrcStr forKey:timeStr];//以每行时间为键将歌词加入数组
                 [timeArray addObject:timeStr];//事件列表,timeArray的count就是行数
-                
             }
         }
     }
     NSDictionary * dic =@{@"LRCDictionary": LRCDictionary,@"timeArray":timeArray};
     return dic;
-
-
-
 }
 -(NSString * )timeWithIntival:(int )timer{
     if (timer % 60 < 10) {//播放时间秒在10之内

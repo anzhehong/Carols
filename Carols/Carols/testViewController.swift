@@ -18,9 +18,31 @@ class testViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var path:NSURL? = nil
     
     @IBAction func Alert() {
-        download("http://o7d344xm9.bkt.clouddn.com/demo/They%20Reminisce%20Over%20You/They%20Reminisce%20Over%20You_img.jpg",completion: { (file,error) in
-            
-        })
+        downloadLRC("http://o8z31on6v.bkt.clouddn.com/hello.lrc") { (path, error) in
+            let pathURL = (path! as NSString).substringFromIndex(7)
+            print(pathURL)
+           // let pathURL = "/Users/Harold_LIU/Downloads/1.lrc"
+            let url = NSURL(string: pathURL)
+            let str = try! String(contentsOfFile: pathURL, encoding: NSUTF8StringEncoding)
+            print(str)
+        }
+    
+    }
+    
+    func downloadLRC(url:String,completion:((String?,NSError?)-> Void)) {
+        let destination = Alamofire.Request.suggestedDownloadDestination(
+            directory: .DocumentDirectory,
+            domain: .UserDomainMask
+        )
+        Alamofire.download(.GET, url, destination: destination)
+            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                print(totalBytesRead)
+            }
+            .response { request, response, _, error in
+                print("fileURL: \(destination(NSURL(string: "")!, response!))")
+                let path = "\(destination(NSURL(string: "")!, response!))"
+                completion(path,error)
+        }
     }
     
     //MARK:- Download Music
