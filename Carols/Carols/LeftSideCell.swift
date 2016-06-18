@@ -11,7 +11,6 @@ import UIKit
 class LeftSideCell: UITableViewCell {
     
     let classLabel = UILabel()
-    
     init(style: UITableViewCellStyle, reuseIdentifier: String?, label: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.clearColor()

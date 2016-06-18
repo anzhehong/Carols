@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DOUAudioStreamer
 import SDWebImage
 import MediaPlayer
 import Alamofire
@@ -56,7 +55,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
     @IBOutlet weak var SongTitle: UILabel!
     
     //MARK:- Params
-    var streamer :DOUAudioStreamer?
     var dontReloadMusic:Bool = false
     var songs = NSMutableArray()
     var currentSong:Song?
@@ -137,7 +135,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
-        streamer = DOUAudioStreamer()
         player = nil
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
         currentIndex = 0
@@ -268,8 +265,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
     
     func startSinging() {
         microphone.startFetchingAudio()
-        streamer!.play()
-        streamer?.volume = 0
         musicIsPlaying = true
         isReplay = false
         player.play()
@@ -277,7 +272,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
     
     func finishSing() {
         player.pause()
-        streamer!.pause()
         musicIsPlaying = false
         microphone.stopFetchingAudio()
         isRecording = false
@@ -458,20 +452,20 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
         loadPreviousAndNextMusicImage()
         configNowPlayingInfoCenter()
         player = EZAudioPlayer(delegate: self)
-        let stream = Stream()
         let musicURL = NSURL(string: (currentSong?.SongURL)!)
-        let filePath = NSBundle.mainBundle().pathForResource(currentSong?.SongFile, ofType: "mp3")
-        let fileURL = NSURL(fileURLWithPath: filePath!)
-        player.playAudioFile(EZAudioFile(URL: fileURL))
-        player.pause()
-        lyric = currentSong?.SongLyrics
-        if let LRC = lyric {
-            //MARK: 下载歌词
-            //handleLyricsWithURL(LRC)
+        downloadMusic((currentSong?.SongURL)!) { (file, error) in
+            self.player.playAudioFile(file)
+            self.player.pause()
+            self.lyric = self.currentSong?.SongLyrics
+            if let LRC = self.lyric {
+                //MARK: 下载歌词
+                self.downloadLRC(self.lyric!, completion: { (message, error) in
+                    print("done")
+                })
+            }
         }
-        stream.taudioFileURL = musicURL
-        streamer = nil
-        streamer = DOUAudioStreamer(audioFile: stream)
+//        let filePath = NSBundle.mainBundle().pathForResource(currentSong?.SongFile, ofType: "mp3")
+//        let fileURL = NSURL(fileURLWithPath: filePath!)
     }
     
     func removeStreamerObserver() {
@@ -792,7 +786,6 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
         let dic: NSDictionary = mo.LRCWithName(pathLRC)
         LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
         timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
-   //     AALog.test("origin direcotry: \(pathLRC)")
     }
     
     func showTime() {
@@ -865,7 +858,7 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension PlayViewController {
     func Alert() {
-        Song.getRecommendation("1", completion: {result,error in
+        Song.getRecommendation((User.currentUser().id?.stringValue)!, completion: {result,error in
             if error == nil {
                 self.recommendResult = result
                 self.delay(0, closure: {
@@ -955,3 +948,61 @@ extension PlayViewController {
         alert.close()
     }
 }
+
+//MARK:- Download Func 
+extension PlayViewController {
+    //MARK:- Download Music
+    func downloadMusic (url:String,completion:((EZAudioFile?,NSError?)-> Void)) {
+        let destination = Alamofire.Request.suggestedDownloadDestination(
+            directory: .DocumentDirectory,
+            domain: .UserDomainMask
+        )
+        
+        Alamofire.download(.GET, url, destination: destination)
+            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                print(totalBytesRead)
+            }
+            .response { request, response, _, error in
+                print("fileURL: \(destination(NSURL(string: "")!, response!))")
+                let path = NSURL(string:  "\(destination(NSURL(string: "")!, response!))")
+                let file = EZAudioFile(URL:path)
+                if file != nil {
+                    completion(file,nil)
+                } else {
+                    completion(nil,error)
+                }
+        }
+    }
+    //MARK:- Download Lrc.
+    func downloadLRC(url:String,completion:((String?,NSError?)-> Void)) {
+        let destination = Alamofire.Request.suggestedDownloadDestination(
+            directory: .DocumentDirectory,
+            domain: .UserDomainMask
+        )
+        Alamofire.download(.GET, "http://www.22lrc.com/lrc/30731/0024.lrc", destination: destination)
+            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                print(totalBytesRead)
+            }
+            .response { request, response, _, error in
+                print("fileURL: \(destination(NSURL(string: "")!, response!))")
+                let path = NSURL(string:  "\(destination(NSURL(string: "")!, response!))")
+                let mo = DoModel.initSingleModel()
+                let dic: NSDictionary = mo.LRCWithName(path!.absoluteString)
+                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+                AALog.debug(self.LRCDictionary)
+                AALog.warning(self.timeArray)
+                self.delay(0, closure: {
+                    self.tableView.reloadData()
+                })
+                
+                if path != nil {
+                    completion("Done",nil)
+                } else {
+                    completion(nil,error)
+                }
+        }
+    }
+}
+
+

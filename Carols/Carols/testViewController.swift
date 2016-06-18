@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 import CustomIOSAlertView
 
 class testViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
@@ -14,7 +15,52 @@ class testViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     let alert = CustomIOSAlertView()
     var recommendResult:[Song]?
     
+    var path:NSURL? = nil
+    
     @IBAction func Alert() {
+        download("http://o7d344xm9.bkt.clouddn.com/demo/They%20Reminisce%20Over%20You/They%20Reminisce%20Over%20You_img.jpg",completion: { (file,error) in
+            
+        })
+    }
+    
+    //MARK:- Download Music
+    func download (url:String,completion:((EZAudioFile?,NSError?)-> Void)) {
+        let destination = Alamofire.Request.suggestedDownloadDestination(
+            directory: .DocumentDirectory,
+            domain: .UserDomainMask
+        )
+        
+        Alamofire.download(.GET, url, destination: destination)
+            .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+                print(totalBytesRead)
+            }
+            .response { request, response, _, error in
+                print(response)
+                print("fileURL: \(destination(NSURL(string: "")!, response!))")
+                self.path = NSURL(string:  "\(destination(NSURL(string: "")!, response!))")
+                let file = EZAudioFile(URL:self.path)
+                if file != nil {
+                    completion(file,nil)
+                } else {
+                    completion(nil,error)
+                }
+        }
+    }
+    
+    func getData () {
+        
+        
+//        let pathLRC = NSBundle.mainBundle().pathForResource("梁静茹-偶阵雨", ofType: "lrc")
+//        let mo = DoModel.initSingleModel()
+//        let dic: NSDictionary = mo.LRCWithName(pathLRC)
+//        LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+//        timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+        view.backgroundColor = UIColor(patternImage: UIImage(data: NSData(contentsOfURL: path!)!)!)
+        view.setNeedsDisplay()
+    }
+    
+    //MARK:- Alert
+    func alerttest() {
         Song.getRecommendation("1", completion: {result,error in
             if error == nil {
                 self.recommendResult = result
@@ -32,7 +78,9 @@ class testViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 print ("error")
             }
         })
+
     }
+    
     
     //MARK:- Random Score
     func score() -> Double {
