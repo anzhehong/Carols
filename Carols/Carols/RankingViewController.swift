@@ -14,12 +14,11 @@ class RankingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         nameLabel.text = "排行榜💡"
-     
+        initMenu()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        initMenu()
     }
     
     func initMenu() {

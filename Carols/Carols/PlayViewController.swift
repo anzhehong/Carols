@@ -23,7 +23,7 @@ let kStatusKVOKey = UnsafeMutablePointer<(Void)>()
 let kDurationKVOKey = UnsafeMutablePointer<(Void)>()
 let kBufferingRatioKVOKey = UnsafeMutablePointer<()>()
 
-class PlayViewController: UIViewController{
+class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
     
     //MARK:- Let PlayView be Signton
     static var sharedInstance :PlayViewController {
@@ -133,10 +133,6 @@ class PlayViewController: UIViewController{
     var recommendResult:[Song]?
     
     //MARK:- LifeCycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      //  createStreamer()
-    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -145,6 +141,7 @@ class PlayViewController: UIViewController{
         player = nil
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
         currentIndex = 0
+        alert.delegate = self
         originArray = [].mutableCopy() as! NSMutableArray
         randomArray = NSMutableArray.init(capacity: 0)
         addPanRecognizer()
@@ -255,8 +252,7 @@ class PlayViewController: UIViewController{
     
     func updateSliderValue (timer:NSTimer) {
         if player.state == .EndOfFile{
-            //TODO:-Update Recommendation Here
-            Alert()
+                player.pause()
         }
         if player.duration == 0.0 {
             MusicTimeSlider.setValue(0.0, animated: false)
@@ -934,19 +930,28 @@ extension PlayViewController {
     }
     
     func configureButton() {
-        alert.buttonTitles[0] = "不用了，我接着唱"
+      
+        alert.buttonTitles = NSMutableArray(objects: "不用了，我要接着唱","回放我刚刚唱过的歌") as [AnyObject]
     }
     
     //MARK:- TableView DataSource & Delegate
-    
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if tableView.tag == 1 {
             alert.close()
-            let vc =  PlayViewController.sharedInstance
-            vc.configureVC(recommendResult!,chooesIndex: indexPath.row)
-            let nav = UINavigationController(rootViewController: vc)
-            presentViewController(nav, animated: true, completion: nil)
+            configureVC(recommendResult!,chooesIndex: indexPath.row)
+            createStreamer()
         }
+    }
+    
+    func customIOS7dialogButtonTouchUpInside(alertView: AnyObject!, clickedButtonAtIndex buttonIndex: Int) {
+        print(buttonIndex)
+        if buttonIndex == 1 {
+            print(self.testFilePathURL())
+            let audioFile = EZAudioFile(URL: self.testFilePathURL())
+            self.player.playAudioFile(audioFile)
+            self.musicIsPlaying = true
+            self.isReplay = true
+        }
+        alert.close()
     }
 }
