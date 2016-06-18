@@ -25,6 +25,7 @@
 -(NSDictionary *)LRCWithName:(NSString*)songName{
     NSMutableArray *timeArray = [NSMutableArray array];//时间数组
     NSMutableDictionary * LRCDictionary  = [NSMutableDictionary dictionary];//歌词字典
+    NSString * temp = [NSString stringWithContentsOfURL:[[NSURL alloc]initWithString:songName] encoding:NSUTF8StringEncoding error:nil];
     NSString * contentStr = [NSString stringWithContentsOfFile:songName encoding:NSUTF8StringEncoding error:nil];
     NSArray * array = [contentStr componentsSeparatedByString:@"\n"];
     int num = [array count];

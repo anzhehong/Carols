@@ -67,6 +67,8 @@
 		62FFC2F41CCB51270073EBD3 /* AAHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FFC2F31CCB51270073EBD3 /* AAHandler.swift */; };
 		62FFC2F61CCB51A70073EBD3 /* ThirdPartyLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FFC2F51CCB51A70073EBD3 /* ThirdPartyLoginRequest.swift */; };
 		62FFC2F81CCB5CDD0073EBD3 /* AAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FFC2F71CCB5CDD0073EBD3 /* AAUser.swift */; };
+		E7485D841D15705C00C77C9A /* Immigrant Song.lrc in Resources */ = {isa = PBXBuildFile; fileRef = E7485D831D15705C00C77C9A /* Immigrant Song.lrc */; };
+		E7485D861D15769300C77C9A /* 罗大佑-你的样子.lrc in Resources */ = {isa = PBXBuildFile; fileRef = E7485D851D15769300C77C9A /* 罗大佑-你的样子.lrc */; };
 		E7BFFFCA1D11411F008BC02D /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BFFFC91D11411F008BC02D /* SearchTableViewController.swift */; };
 		E7C079E81CF2EE4100E9948C /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C079E51CF2EE4100E9948C /* Stream.swift */; };
 		E7C079E91CF2EE4100E9948C /* BaseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C079E61CF2EE4100E9948C /* BaseEntity.swift */; };
@@ -193,6 +195,8 @@
 		7179656382A29027B25697E9 /* Pods-Carols.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.release.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.release.xcconfig"; sourceTree = "<group>"; };
 		7C0B0EE4A25643C739A4F4DB /* Pods-Carols.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carols.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Carols/Pods-Carols.debug.xcconfig"; sourceTree = "<group>"; };
 		C68B8BF5F9B6A07ED10FF290 /* Pods_Carols.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Carols.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7485D831D15705C00C77C9A /* Immigrant Song.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Immigrant Song.lrc"; sourceTree = "<group>"; };
+		E7485D851D15769300C77C9A /* 罗大佑-你的样子.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "罗大佑-你的样子.lrc"; sourceTree = "<group>"; };
 		E7BFFFC91D11411F008BC02D /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		E7C079E51CF2EE4100E9948C /* Stream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stream.swift; sourceTree = "<group>"; };
 		E7C079E61CF2EE4100E9948C /* BaseEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEntity.swift; sourceTree = "<group>"; };
@@ -342,7 +346,9 @@
 				628F5CFD1CFCF28700854448 /* Song.m */,
 				628F5CF71CFCF27C00854448 /* MyCell.h */,
 				628F5CF81CFCF27C00854448 /* MyCell.m */,
+				E7485D851D15769300C77C9A /* 罗大佑-你的样子.lrc */,
 				628F5D001CFCF29400854448 /* 梁静茹-偶阵雨.lrc */,
+				E7485D831D15705C00C77C9A /* Immigrant Song.lrc */,
 				628F5D011CFCF29400854448 /* 梁静茹-偶阵雨.mp3 */,
 			);
 			name = Lyric;
@@ -598,8 +604,10 @@
 				628F5D031CFCF29400854448 /* 梁静茹-偶阵雨.mp3 in Resources */,
 				628F5D021CFCF29400854448 /* 梁静茹-偶阵雨.lrc in Resources */,
 				E7C079FD1CF2EF4600E9948C /* 1770040300_2031329_l.mp3 in Resources */,
+				E7485D841D15705C00C77C9A /* Immigrant Song.lrc in Resources */,
 				E7C079FE1CF2EF4600E9948C /* 1770059653_2050944_l.mp3 in Resources */,
 				E7C079FF1CF2EF4600E9948C /* 1771694697_4194836_l.mp3 in Resources */,
+				E7485D861D15769300C77C9A /* 罗大佑-你的样子.lrc in Resources */,
 				62A2A0731CAE213E00B2D4DC /* Assets.xcassets in Resources */,
 				62A2A0711CAE213E00B2D4DC /* Main.storyboard in Resources */,
 				E7C079F21CF2EE6E00E9948C /* PlayView.storyboard in Resources */,

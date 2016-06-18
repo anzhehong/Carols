@@ -63,7 +63,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
             SongTitle.text = songTitl
         }
     }
-    var artistName:String?
     var specialIndex:Int?
     var parentId:NSNumber?
     var isNotPresenting:Bool?
@@ -249,7 +248,9 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
     
     func updateSliderValue (timer:NSTimer) {
         if player.state == .EndOfFile{
-                player.pause()
+          //TODO:- No Disicion here
+            player.pause()
+            musicIsPlaying = false
         }
         if player.duration == 0.0 {
             MusicTimeSlider.setValue(0.0, animated: false)
@@ -447,25 +448,19 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
         }
         currentSong = songs[currentIndex] as? Song
         songTitl = currentSong?.SongName
-        artistName = currentSong?.SongArtist
-        setBackgroundImage()
-        loadPreviousAndNextMusicImage()
-        configNowPlayingInfoCenter()
+      
         player = EZAudioPlayer(delegate: self)
-        let musicURL = NSURL(string: (currentSong?.SongURL)!)
         downloadMusic((currentSong?.SongURL)!) { (file, error) in
-            self.player.playAudioFile(file)
-            self.player.pause()
-            self.lyric = self.currentSong?.SongLyrics
-            if let LRC = self.lyric {
-                //MARK: 下载歌词
-                self.downloadLRC(self.lyric!, completion: { (message, error) in
-                    print("done")
+            if error == nil {
+                self.player.playAudioFile(file)
+                self.player.pause()
+                self.delay(0, closure: {
+                    self.setBackgroundImage()
+                    self.loadPreviousAndNextMusicImage()
+                    self.configNowPlayingInfoCenter()
                 })
             }
         }
-//        let filePath = NSBundle.mainBundle().pathForResource(currentSong?.SongFile, ofType: "mp3")
-//        let fileURL = NSURL(fileURLWithPath: filePath!)
     }
     
     func removeStreamerObserver() {
@@ -770,22 +765,30 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func initTableView() {
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.backgroundColor = UIColor.clearColor()
-        self.tableView.separatorStyle = .None //消除cell间隔的横线
         NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(PlayViewController.showTime), userInfo: nil, repeats: true)
-        
         lrcLineNumber = 0
         timeArray = NSMutableArray()
         LRCDictionary = NSMutableDictionary()
-        
         //init lrc
-        let pathLRC = NSBundle.mainBundle().pathForResource("梁静茹-偶阵雨", ofType: "lrc")
-        let mo = DoModel.initSingleModel()
-        let dic: NSDictionary = mo.LRCWithName(pathLRC)
-        LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
-        timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+        downloadLRC("http://www.22lrc.com/lrc/40872/4996.lrc") { (path, error) in
+                let pathURL = (path! as NSString).substringFromIndex(7)
+                let pathLRC = NSBundle.mainBundle().pathForResource("梁静茹-偶阵雨", ofType: "lrc")
+           // "/Users/Harold_LIU/Library/Developer/CoreSimulator/Devices/1BD3C5EA-62B4-402F-BBD5-81DD248087C3/data/Containers/Bundle/Application/077A4B69-EDC2-4322-8FFB-8B400494C3A2/Carols.app/梁静茹-偶阵雨.lrc"
+                print(pathURL)
+                print("work url:\(pathLRC)")
+                let mo = DoModel.initSingleModel()
+                let dic: NSDictionary = mo.LRCWithName(pathLRC)
+                let another: NSDictionary = mo.LRCWithName(pathURL)
+                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+                self.delay(0, closure: {
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                    self.tableView.backgroundColor = UIColor.clearColor()
+                    self.tableView.separatorStyle = .None
+                })
+        }
+     
     }
     
     func showTime() {
@@ -985,24 +988,8 @@ extension PlayViewController {
             }
             .response { request, response, _, error in
                 print("fileURL: \(destination(NSURL(string: "")!, response!))")
-                let path = NSURL(string:  "\(destination(NSURL(string: "")!, response!))")
-                let mo = DoModel.initSingleModel()
-                let dic: NSDictionary = mo.LRCWithName(path!.absoluteString)
-                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
-                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
-                AALog.debug(self.LRCDictionary)
-                AALog.warning(self.timeArray)
-                self.delay(0, closure: {
-                    self.tableView.reloadData()
-                })
-                
-                if path != nil {
-                    completion("Done",nil)
-                } else {
-                    completion(nil,error)
-                }
+                let path = "\(destination(NSURL(string: "")!, response!))"
+                completion(path,error)
         }
     }
 }
-
-
