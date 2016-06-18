@@ -127,6 +127,11 @@ class PlayViewController: UIViewController{
     var timeArray: NSMutableArray!
     var lrcLineNumber = 0
     
+    
+    //MARK:- Re- Recommendation 
+    let alert = CustomIOSAlertView()
+    var recommendResult:[Song]?
+    
     //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -251,11 +256,8 @@ class PlayViewController: UIViewController{
     func updateSliderValue (timer:NSTimer) {
         if player.state == .EndOfFile{
             //TODO:-Update Recommendation Here
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ReRecommendation")
-            navigationController?.presentViewController(vc, animated: true, completion: nil)
-            player.pause()
+            Alert()
         }
-        
         if player.duration == 0.0 {
             MusicTimeSlider.setValue(0.0, animated: false)
         }
@@ -287,23 +289,9 @@ class PlayViewController: UIViewController{
             recorder.closeAudioFile()
         }
         if !isReplay {
-            self.score()
+            Alert()
         }
     }
-    
-    func score () {
-        let alert = UIAlertController(title: "你这次演唱的得分是：", message: "0.00", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "回放", style: .Default, handler: { (action) in
-            print(self.testFilePathURL())
-            let audioFile = EZAudioFile(URL: self.testFilePathURL())
-            self.player.playAudioFile(audioFile)
-            self.musicIsPlaying = true
-            self.isReplay = true
-        }))
-        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
     //MARK:- Gesture
     @IBAction func ScoreStart(sender: UITapGestureRecognizer) {
         scoreModel = !scoreModel
@@ -726,10 +714,26 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return timeArray.count
+        if tableView.tag == 1 {
+            guard recommendResult != nil else {
+                return 0
+            }
+            return (recommendResult?.count)!
+        } else {
+            return timeArray.count
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if tableView.tag == 1 {
+            let cell = SongLibraryCell(style: .Default, reuseIdentifier: "songLibraryCell", songName: "Ordinary", singerName: "Copeland", albumPic: UIImage(named: "AlbumPic_4")!)
+            let url = recommendResult![indexPath.row].SongImage
+            cell.album.sd_setImageWithURL(NSURL(string: url!), placeholderImage: UIImage(named: "AlbumPic_3")!)
+            cell.songName.text = recommendResult![indexPath.row].SongName
+            cell.singerName.text = recommendResult![indexPath.row].SongArtist
+            return cell
+        } else {
         let identifier = "cell"
         if let cell = tableView.dequeueReusableCellWithIdentifier(identifier) as? MyCell {
             
@@ -763,11 +767,16 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.textLabel?.font = UIFont.systemFontOfSize(13)
             }
             return cell
+            }
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 35
+        if tableView.tag == 1 {
+            return 64
+        } else {
+            return 35
+        }
     }
     
     func initTableView() {
@@ -856,4 +865,88 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
 //                self.tableView.reloadData()
 //        }
 //    }
+}
+
+extension PlayViewController {
+    func Alert() {
+        Song.getRecommendation("1", completion: {result,error in
+            if error == nil {
+                self.recommendResult = result
+                self.delay(0, closure: {
+                    self.alert.backgroundColor = UIColor.GlobalMenuBlack()
+                    self.alert.containerView = UIView(frame:  CGRectMake(0, 0, self.view.bounds.width - 60 , 450))
+                    self.configureButton()
+                    self.alert.containerView.addSubview(self.initScoreView())
+                    self.alert.containerView.addSubview(self.initRecommendationTitle())
+                    self.alert.containerView.addSubview(self.initReTableView())
+                    self.alert.show()
+                })
+            }
+            else {
+                print ("error")
+            }
+        })
+    }
+    
+    //MARK:- Random Score
+    func scoreR() -> Double {
+        var basic = 80.00
+        basic += Double(arc4random()%20)
+        return basic
+    }
+    
+    //MARK:- Init View & UI
+    func initScoreView () -> UILabel {
+        let scoreLabel = UILabel(frame:  CGRectMake(0,0,view.bounds.width - 60,60))
+        let mark = scoreR()
+        if mark >= 90 {
+            scoreLabel.text = "本次得分为\(mark)分!太棒了，简直是专业歌手😍"
+        } else {
+            scoreLabel.text = "本次得分为\(mark)分！音准不错，再接再厉!😊"
+        }
+        scoreLabel.adjustsFontSizeToFitWidth = true
+        scoreLabel.textAlignment = .Center
+        scoreLabel.textColor = UIColor.GlobalRed()
+        scoreLabel.backgroundColor = UIColor( red: 0.1569, green: 0.1333, blue: 0.1451, alpha: 1.0 )
+        scoreLabel.layer.cornerRadius = 8
+        scoreLabel.clipsToBounds = true
+        return scoreLabel
+    }
+    
+    func initRecommendationTitle () -> UILabel {
+        let titleLabel = UILabel(frame:  CGRectMake(0,55,view.bounds.width - 60,60))
+        titleLabel.text = "🎤Carols猜您还喜欢如下歌曲:"
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.textAlignment = .Center
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.backgroundColor = UIColor(red: 0.1569, green: 0.1333, blue: 0.1451, alpha: 1.0 )
+        return titleLabel
+    }
+    
+    func initReTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.tag = 1
+        tableView.frame = CGRectMake(0, 115, view.bounds.width - 60 , 340)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = UIColor( red: 0.1569, green: 0.1333, blue: 0.1451, alpha: 1.0 )
+        return tableView
+    }
+    
+    func configureButton() {
+        alert.buttonTitles[0] = "不用了，我接着唱"
+    }
+    
+    //MARK:- TableView DataSource & Delegate
+    
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if tableView.tag == 1 {
+            alert.close()
+            let vc =  PlayViewController.sharedInstance
+            vc.configureVC(recommendResult!,chooesIndex: indexPath.row)
+            let nav = UINavigationController(rootViewController: vc)
+            presentViewController(nav, animated: true, completion: nil)
+        }
+    }
 }
