@@ -8,6 +8,7 @@
 
 import UIKit
 import SlideMenuControllerSwift
+import PKHUD
 
 class SingUpViewController: UIViewController, UITextFieldDelegate {
 
@@ -135,6 +136,7 @@ class SingUpViewController: UIViewController, UITextFieldDelegate {
         if let username = usernameTextField.text {
             if let password = passwordTextField.text {
                 if let phone = phoneNumTextField.text {
+                    
                     AAUser.register(username, phoneNum: phone, pass: password) { (error) in
                         if error != nil {
                             AAAlertViewController.showAlert("错误", message: error!.localizedDescription)

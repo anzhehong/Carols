@@ -51,10 +51,13 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                for json in jsons! {
-                    let song = parseJson(json)
-                    songs.append(song)
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
+                        let song = parseJson(json)
+                        songs.append(song)
+                    }
+                } else {
+                    songs = []
                 }
                 completion(songs,nil)
             }
@@ -70,9 +73,8 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                if jsons != nil {
-                    for json in jsons! {
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
                         let song = parseJson(json)
                         songs.append(song)
                     }
@@ -93,10 +95,13 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                for json in jsons! {
-                    let song = parseJson(json)
-                    songs.append(song)
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
+                        let song = parseJson(json)
+                        songs.append(song)
+                    }
+                } else {
+                    songs = []
                 }
                 completion(songs,nil)
             }
@@ -113,10 +118,13 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                for json in jsons! {
-                    let song = parseJson(json)
-                    songs.append(song)
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
+                        let song = parseJson(json)
+                        songs.append(song)
+                    }
+                } else {
+                    songs = []
                 }
                 completion(songs,nil)
             }
@@ -132,10 +140,13 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                for json in jsons! {
-                    let song = parseJson(json)
-                    songs.append(song)
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
+                        let song = parseJson(json)
+                        songs.append(song)
+                    }
+                } else {
+                    songs = []
                 }
                 completion(songs,nil)
             }
@@ -151,10 +162,13 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                for json in jsons! {
-                    let song = parseJson(json)
-                    songs.append(song)
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
+                        let song = parseJson(json)
+                        songs.append(song)
+                    }
+                } else {
+                    songs = []
                 }
                 completion(songs,nil)
             }
@@ -170,10 +184,13 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                for json in jsons! {
-                    let song = parseJson(json)
-                    songs.append(song)
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
+                        let song = parseJson(json)
+                        songs.append(song)
+                    }
+                } else {
+                    songs = []
                 }
                 completion(songs,nil)
             }
@@ -189,10 +206,13 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url, parameters: nil, encoding: .JSON, headers: nil).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                for json in jsons! {
-                    let song = parseJson(json)
-                    songs.append(song)
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
+                        let song = parseJson(json)
+                        songs.append(song)
+                    }
+                } else {
+                    songs = []
                 }
                 completion(songs,nil)
             }
@@ -209,10 +229,13 @@ class Song: BaseEntity {
         var songs = [Song]()
         Alamofire.request(.GET, url).responseJSON { (response) in
             if response.result.error == nil {
-                let jsons = JSON(data: response.data!)["songs"].array
-                for json in jsons! {
-                    let song = parseJson(json)
-                    songs.append(song)
+                if let jsons = JSON(data: response.data!)["songs"].array {
+                    for json in jsons {
+                        let song = parseJson(json)
+                        songs.append(song)
+                    }
+                } else {
+                    songs = []
                 }
                 completion(songs,nil)
             }
