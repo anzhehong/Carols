@@ -15,10 +15,10 @@ pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 pod 'MagicalRecord'
 pod 'SDWebImage', '~>3.7'
 pod 'SVProgressHUD'
-pod 'DOUAudioStreamer'
 pod 'Mantle'
 pod 'NAKPlaybackIndicatorView'
 pod 'CustomIOSAlertView'
+pod 'PKHUD'
 #第三方登录
 # 主模块(必须)
 pod 'ShareSDK3'

@@ -45,12 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
             AppDelegate.rootViewController = loginViewController
             window?.rootViewController = loginViewController
         }
-        
         self.window?.makeKeyAndVisible()
-        
         //set statusbar hidden
         application.statusBarHidden = true
-        
         return true
     }
     
@@ -168,7 +165,6 @@ public extension UIView {
         options.insert(UIViewAnimationOptions.CurveEaseInOut)
         options.insert(UIViewAnimationOptions.AllowAnimatedContent)
         options.insert(UIViewAnimationOptions.BeginFromCurrentState)
-        
         UIView.animateWithDuration(0.15, delay: 0, options: options, animations: {
             self.layer.setValue(0.80, forKey: "transform.scale")
             })

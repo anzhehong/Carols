@@ -9,7 +9,7 @@
 import UIKit
 import SlideMenuControllerSwift
 import SDWebImage
-import SVProgressHUD
+import PKHUD
 
 class LeftSideViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -126,6 +126,7 @@ extension LeftSideViewController {
         
         if indexPath.row == 0 {
             slideMenuController.mainViewController = MainViewController()
+            
         } else if indexPath.row == 1 {
             slideMenuController.mainViewController = RankingViewController()
         }
@@ -141,7 +142,6 @@ extension LeftSideViewController {
         }else if indexPath.row == 5 {
             logout()
         }
-        
         self.presentViewController(slideMenuController, animated: false, completion: nil)
     }
 }

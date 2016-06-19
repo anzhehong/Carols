@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SVProgressHUD
+import PKHUD
 
 class RankingGenreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -20,63 +20,68 @@ class RankingGenreViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidLoad()
         superView            = self.view
         tableView            = UITableView(frame: self.view.frame)
-        
+        HUD.show(.LabeledProgress(title: "加载中", subtitle: "⌛️...⌛️"))
         if sortType == "All" {
             Song.getAllSongRank( {result,error in
+                HUD.hide(animated: true)
                 if error == nil {
-                self.songs = result
-                self.delay(0, closure: {
-                self.initMenu()
+                    self.songs = result
+                    self.delay(0, closure: {
+                    self.initMenu()
+                    HUD.flash(.Success, delay: 1.0)
                 })
                 }
                 else {
-                print (error)
+                    HUD.flash(.LabeledError(title: nil, subtitle: "网络错误，请检查您的Wi-Fi设置"), delay: 1.0)
                 }
-                })
+            })
         }
         else if sortType == "Rock" {
             Song.getRockRank( {result,error in
+                HUD.hide(animated: true)
                 if error == nil {
                     self.songs = result
                     print(self.songs?.count)
+                    HUD.flash(.Success, delay: 1.0)
                     self.delay(0, closure: {
-                        SVProgressHUD.dismissWithDelay(2)
                         self.initMenu()
                     })
                 }
                 else {
-                    print (error)
+                    HUD.flash(.LabeledError(title: nil, subtitle: "网络错误，请检查您的Wi-Fi设置"), delay: 1.0)
                 }
             })
         }
         else if sortType == "Pop" {
             Song.getPopRank( {result,error in
+                HUD.hide(animated: true)
                 if error == nil {
                     self.songs = result
+                    HUD.flash(.Success, delay: 1.0)
                     print(self.songs?.count)
                     self.delay(0, closure: {
-                        SVProgressHUD.dismissWithDelay(2)
                         self.initMenu()
                     })
                 }
                 else {
-                    print (error)
+                    HUD.flash(.LabeledError(title: nil, subtitle: "网络错误，请检查您的Wi-Fi设置"), delay: 1.0)
                 }
             })
 
         }
         else {
             Song.getJazzRank( {result,error in
+                HUD.hide(animated: true)
                 if error == nil {
+                    HUD.flash(.Success, delay: 1.0)
                     self.songs = result
                     print(self.songs?.count)
                     self.delay(0, closure: {
-                        SVProgressHUD.dismissWithDelay(2)
                         self.initMenu()
                     })
                 }
                 else {
-                    print (error)
+                    HUD.flash(.LabeledError(title: nil, subtitle: "网络错误，请检查您的Wi-Fi设置"), delay: 1.0)
                 }
             })
         }

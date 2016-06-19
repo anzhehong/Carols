@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PKHUD
 
 class AAAlertViewController: UIViewController {
 
@@ -45,3 +46,12 @@ class AAAlertViewController: UIViewController {
         return vc
     }
 }
+
+extension PKHUD {
+    
+    class func showSuccess(message:String,delay:Double) {
+
+    }
+    
+}
+

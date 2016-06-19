@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SVProgressHUD
+import PKHUD
 
 class RecommendationViewContainerController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -18,10 +18,12 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundColor = UIColor.GlobalGray()
+        HUD.show(.LabeledProgress(title: "加载中", subtitle: "⌛️...⌛️"))
         Song.getRecommendation((User.currentUser().id?.stringValue)!, completion: {result,error in
+            HUD.hide(animated: true)
             if error == nil {
+                HUD.flash(.Success, delay: 1.0)
                 self.songs = result
-                print(self.songs?.count)
                 self.delay(0, closure: {
                     self.initTableView()
                 })

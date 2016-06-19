@@ -9,12 +9,17 @@
 import UIKit
 import SnapKit
 import PageMenu
+import PKHUD
 
 class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initMenu()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     //MARK: - CAPSPageMenuDelegate

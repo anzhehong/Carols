@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SVProgressHUD
+import PKHUD
 
 class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -15,17 +15,19 @@ class ChosenSongsLibraryViewContainerController: UIViewController, UITableViewDa
     var songs:[Song]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        HUD.show(.LabeledProgress(title: "加载中", subtitle: "⌛️...⌛️"))
         tableView = UITableView(frame: self.view.frame)
         Song.getHistory((User.currentUser().id?.stringValue)!, completion: {result,error in
+            HUD.hide(animated: true)
             if error == nil {
                 self.songs = result
+                HUD.flash(.Success, delay: 1.0)
                 self.delay(0, closure: {
-                    SVProgressHUD.dismiss()
                     self.initTableView()
                 })
             }
             else {
-                print (error)
+               HUD.flash(.LabeledError(title: nil, subtitle: "网络错误"), delay: 1.0)
             }
         })
 

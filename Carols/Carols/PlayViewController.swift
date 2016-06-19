@@ -11,6 +11,8 @@ import SDWebImage
 import MediaPlayer
 import Alamofire
 import CustomIOSAlertView
+import PKHUD
+
 
 enum PlayMode {
     case SingleSong
@@ -351,7 +353,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
         updateUI()
     }
     
-    
     @IBAction func preSong() {
         if songs.count == 1 {
             print("已经是第一首歌曲")
@@ -448,17 +449,21 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
         }
         currentSong = songs[currentIndex] as? Song
         songTitl = currentSong?.SongName
-      
         player = EZAudioPlayer(delegate: self)
+        setBackgroundImage()
+        HUD.show(.LabeledProgress(title: "下载资源中", subtitle: "..."))
         downloadMusic((currentSong?.SongURL)!) { (file, error) in
             if error == nil {
                 self.player.playAudioFile(file)
                 self.player.pause()
                 self.delay(0, closure: {
-                    self.setBackgroundImage()
+                    HUD.hide(animated: true)
                     self.loadPreviousAndNextMusicImage()
                     self.configNowPlayingInfoCenter()
+                    HUD.flash(.LabeledSuccess(title: "下载成功", subtitle: nil), delay: 1.0)
                 })
+            } else {
+                HUD.flash(.LabeledError(title: nil, subtitle: "网络错误，请检查您的Wi-Fi设置"), delay: 2.0)
             }
         }
     }
@@ -655,6 +660,7 @@ extension PlayViewController {
     }
 }
 
+//MARK:- Record
 extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicrophoneDelegate {
     func recorderDidClose(recorder: EZRecorder!) {
         recorder.delegate = nil
@@ -691,6 +697,7 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
     }
 }
 
+//MARK:- Lyrics
 extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -822,35 +829,6 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
         }
     }
-    
-//    func handleLyricsWithURL(url: String) {
-//        let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
-//        Alamofire.download(.GET, url , destination: destination)
-//        
-//        var localPath: NSURL?
-//        Alamofire.download(.GET,
-//            url,
-//            destination: { (temporaryURL, response) in
-//                let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-//                let pathComponent = response.suggestedFilename
-//                
-//                localPath = directoryURL.URLByAppendingPathComponent(pathComponent!)
-//                return localPath!
-//        })
-//            .response { (request, response, _, error) in
-//                print(response)
-//                print("Downloaded file to \(localPath!)")
-//                
-//                let mo = DoModel.initSingleModel()
-//                let dic: NSDictionary = mo.LRCWithName(localPath!.absoluteString)
-//                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
-//                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
-//                
-//                AALog.debug(self.LRCDictionary)
-//                AALog.warning(self.timeArray)
-//                self.tableView.reloadData()
-//        }
-//    }
 }
 
 extension PlayViewController {

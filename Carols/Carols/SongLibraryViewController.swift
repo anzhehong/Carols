@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import SVProgressHUD
 import NAKPlaybackIndicatorView
+import PKHUD
 
 class SongLibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -24,35 +24,40 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Load")
+        HUD.show(.LabeledProgress(title: "正在个性化", subtitle: "您的推荐...⌛️"))
         superView = self.view
-        
         startButton.addTarget(self, action: #selector(SongLibraryViewController.searchStar), forControlEvents: .TouchUpInside)
         groupButton.addTarget(self, action: #selector(SongLibraryViewController.searchGroup), forControlEvents: .TouchUpInside)
         nameButton.addTarget(self, action: #selector(SongLibraryViewController.searchName), forControlEvents: .TouchUpInside)
-        //TODO:- String(User.currentUser().id)
-        Song.getRecommendation("1", completion: {result,error in
-            SVProgressHUD.dismiss()
+        Song.getRecommendation((User.currentUser().id?.stringValue)!, completion: {result,error in
+            HUD.hide(animated: true)
             if error == nil {
                 self.songs = result
                 self.delay(0, closure: {
+                    HUD.flash(.Success, delay: 1.0)
                     self.initAlbum()
                     self.initThreeButton()
                     self.initTableView()
                 })
             }
             else {
-                print (error)
+                HUD.flash(.LabeledError(title: nil, subtitle: "网络错误"), delay: 1.0)
             }
         })
-
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        print("Appear")
+    }
+    
     
     func initAlbum()  {
         album.image = UIImage(named: "AlbumLarge")
         superView.addSubview(album)
         album.snp_makeConstraints { (make) in
             make.height.equalTo(170)
-            //MainViewController.titleHeightS + MainViewController.menuHeight
             make.top.equalTo(0)
             make.left.right.equalTo(superView)
         }
