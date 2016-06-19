@@ -16,9 +16,9 @@ class SongHistoryViewContainerController: UIViewController, UITableViewDataSourc
     var songs : [Song]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        HUD.show(.LabeledProgress(title: "加载中", subtitle: "⌛️...⌛️"))
         superView = self.view
         tableView = UITableView(frame: self.view.frame)
+        HUD.show(.LabeledProgress(title: "加载中", subtitle: "⌛️...⌛️"))
         Song.getHistory((User.currentUser().id?.stringValue)!, completion: {result,error in
             if error == nil {
                 self.songs = result

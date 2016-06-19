@@ -17,11 +17,11 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.backgroundColor = UIColor.GlobalGray()
         HUD.show(.LabeledProgress(title: "加载中", subtitle: "⌛️...⌛️"))
+        tableView.backgroundColor = UIColor.GlobalGray()
         Song.getRecommendation((User.currentUser().id?.stringValue)!, completion: {result,error in
-            HUD.hide(animated: true)
             if error == nil {
+                HUD.hide(animated: true)
                 HUD.flash(.Success, delay: 1.0)
                 self.songs = result
                 self.delay(0, closure: {
@@ -29,7 +29,8 @@ class RecommendationViewContainerController: UIViewController, UITableViewDataSo
                 })
             }
             else {
-                print ("error")
+                HUD.hide(animated: true)
+                HUD.flash(.LabeledError(title: nil, subtitle: "网络错误"), delay: 1.0)
             }
         })
     }

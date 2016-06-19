@@ -18,9 +18,9 @@ class RankingGenreViewController: UIViewController, UITableViewDataSource, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        HUD.show(.LabeledProgress(title: "加载中", subtitle: "⌛️...⌛️"))
         superView            = self.view
         tableView            = UITableView(frame: self.view.frame)
-        HUD.show(.LabeledProgress(title: "加载中", subtitle: "⌛️...⌛️"))
         if sortType == "All" {
             Song.getAllSongRank( {result,error in
                 HUD.hide(animated: true)

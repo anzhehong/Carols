@@ -47,12 +47,6 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         })
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        print("Appear")
-    }
-    
-    
     func initAlbum()  {
         album.image = UIImage(named: "AlbumLarge")
         superView.addSubview(album)

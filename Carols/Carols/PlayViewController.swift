@@ -138,14 +138,12 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
         PlayButton.setImage(UIImage(named: "big_play_button"), forState: .Normal)
         player = nil
         musicDurationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(PlayViewController.updateSliderValue(_:)), userInfo: nil, repeats: true)
-        currentIndex = 0
         alert.delegate = self
         originArray = [].mutableCopy() as! NSMutableArray
         randomArray = NSMutableArray.init(capacity: 0)
         addPanRecognizer()
         configureScoreUI()
         createStreamer()
-        //歌词
         initTableView()
         navigationController?.navigationBarHidden = true
         guard currentIndex <= songs.count else {
@@ -233,7 +231,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
         StandardView.shouldMirror = true
         StandardView.shouldFill = true
         StandardView.gain = 0.5
-        
     }
     
     func convertTime(timer:NSTimeInterval) -> String {
@@ -285,6 +282,9 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
             Alert()
         }
     }
+    
+    
+    
     //MARK:- Gesture
     @IBAction func ScoreStart(sender: UITapGestureRecognizer) {
         scoreModel = !scoreModel
@@ -372,10 +372,13 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
                 currentIndex -= 1
             }
         }
+        isReplay = true
+        Play()
         microphone = nil
         recorder = nil
         recordButtonClicked()
         createStreamer()
+        initTableView()
         musicIsPlaying = false
     }
     
@@ -391,8 +394,13 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
         {
             checkNextIndexValue()
         }
+        isReplay = true
+        Play()
+        microphone = nil
+        recorder = nil
         recordButtonClicked()
         createStreamer()
+        initTableView()
         musicIsPlaying = false
     }
     
@@ -428,7 +436,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
             if player.currentTime >= player.duration {
                 player.currentTime -= (player.duration)
             }
-            
             MusicTimeSlider.setValue(Float( player.currentTime/player.duration), animated: true)
             updateUI()
         }
@@ -479,7 +486,6 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
         player.addObserver(self, forKeyPath: "duration", options: .New, context: kDurationKVOKey)
         player.addObserver(self, forKeyPath: "bufferingRatio", options: .New, context: kBufferingRatioKVOKey)
     }
-    
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if context == kStatusKVOKey {
@@ -582,8 +588,8 @@ extension PlayViewController {
         }
         allowRecording = !allowRecording
         if allowRecording {
-            self.microphone.startFetchingAudio()
-            self.recorder = EZRecorder(URL: testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(),
+            microphone.startFetchingAudio()
+            recorder = EZRecorder(URL: testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(),
                                        fileType: .M4A, delegate: self)
         }
         self.isRecording = allowRecording
@@ -673,9 +679,11 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
     }
     
     func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.StandardView.updateBuffer(buffer[0], withBufferSize: bufferSize);
-        });
+        if player != nil {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.StandardView.updateBuffer(buffer[0], withBufferSize: bufferSize);
+            });
+        }
     }
     
     func audioPlayer(audioPlayer: EZAudioPlayer!, updatedPosition framePosition: Int64, inAudioFile audioFile: EZAudioFile!) {
@@ -683,9 +691,11 @@ extension PlayViewController: EZRecorderDelegate, EZAudioPlayerDelegate, EZMicro
     
     
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.ScoreBackgroundView?.updateBuffer(buffer[0], withBufferSize: bufferSize);
-        });
+        if microphone != nil {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.ScoreBackgroundView?.updateBuffer(buffer[0], withBufferSize: bufferSize);
+            });
+        }
     }
     
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
@@ -833,9 +843,12 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension PlayViewController {
     func Alert() {
+        HUD.show(.LabeledProgress(title: nil, subtitle: "推荐中...⏳"))
         Song.getRecommendation((User.currentUser().id?.stringValue)!, completion: {result,error in
+            HUD.hide(animated: true)
             if error == nil {
                 self.recommendResult = result
+                HUD.flash(.Success, delay: 1.0)
                 self.delay(0, closure: {
                     self.alert.backgroundColor = UIColor.GlobalMenuBlack()
                     self.alert.containerView = UIView(frame:  CGRectMake(0, 0, self.view.bounds.width - 60 , 450))
@@ -847,7 +860,7 @@ extension PlayViewController {
                 })
             }
             else {
-                print ("error")
+               HUD.flash(.LabeledError(title: nil, subtitle: "网络错误，请检查您的Wi-Fi"), delay: 1.0)
             }
         })
     }

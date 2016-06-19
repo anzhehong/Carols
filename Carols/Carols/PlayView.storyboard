@@ -227,15 +227,6 @@
                                             <action selector="preSong" destination="HmQ-op-XGW" eventType="touchUpInside" id="zgh-lX-58I"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nm5-Yt-FV8">
-                                        <rect key="frame" x="480" y="66" width="45" height="30"/>
-                                        <state key="normal" title="record">
-                                            <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="recordButtonClicked:" destination="HmQ-op-XGW" eventType="touchUpInside" id="TuK-Af-AMY"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -316,7 +307,6 @@
                         <outlet property="StartTime" destination="u5p-O5-vyQ" id="0k4-CQ-BE1"/>
                         <outlet property="menu" destination="Miu-Qx-t2s" id="eiN-of-Jhl"/>
                         <outlet property="originalLabel" destination="96V-QP-8eL" id="Amf-LM-BG4"/>
-                        <outlet property="recordButton" destination="Nm5-Yt-FV8" id="bAC-Em-tmZ"/>
                         <outlet property="singerLabel" destination="5fT-pH-sD2" id="g22-88-em6"/>
                         <outlet property="tableView" destination="wyH-3d-j2m" id="Oim-XK-WKX"/>
                     </connections>
