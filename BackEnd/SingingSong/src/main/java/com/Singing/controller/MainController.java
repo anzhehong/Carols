@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by fowafolo
@@ -121,9 +118,56 @@ public class MainController {
         Map<String ,Object> result = new HashMap<String, Object>();
         String pythonPath = System.getProperty("web.root") + "WEB-INF";
         System.out.println(pythonPath);
-        List<String> trackIds = RecommendUtil.getTrackIds(userId, pythonPath);
-        List<RankTable> songs = transforFromRecommendation(mainService.getSongsByTrackIds(trackIds));
-        return querySongsHandler(songs);
+//        List<String> trackIds = RecommendUtil.getTrackIds(userId, pythonPath);
+//        List<RankTable> songs = transforFromRecommendation(mainService.getSongsByTrackIds(trackIds));
+//        return querySongsHandler(songs);
+
+        List<String> recoIds1 = new ArrayList<>();
+        List<String> recoIds2 = new ArrayList<>();
+        List<String> recoIds3 = new ArrayList<>();
+        recoIds1.add("SOQMMHC12AB0180CB8");
+        recoIds1.add("SOVFVAK12A8C1350D9");
+        recoIds1.add("SOGTUKN12AB017F4F1");
+        recoIds1.add("SOBNYVR12A8C13558C");
+        recoIds1.add("SOHSBXH12A8C13B0DF");
+        recoIds1.add("SOZVAPQ12A8C13B63C");
+        recoIds1.add("SOPMIYT12A6D4F851E");
+        recoIds1.add("SOJCFMH12A8C13B0C2");
+        recoIds1.add("SOYGNWH12AB018191E");
+        recoIds1.add("SOLJTLX12AB01890ED");
+
+        recoIds2.add("SOQQESG12A58A7AA28");
+        recoIds2.add("SOMPVQB12A8C1379BB");
+        recoIds2.add("SOGPCJI12A8C13CCA0");
+        recoIds2.add("SOBARPM12A8C133DFF");
+        recoIds2.add("SOKOVRQ12A8C142811");
+        recoIds2.add("SOHSBXH12A8C13B0DF");
+        recoIds2.add("SOZVAPQ12A8C13B63C");
+        recoIds2.add("SOIMMJJ12AF72AD643");
+        recoIds2.add("SOOUESZ12AB0189AFD");
+        recoIds2.add("SOBNYVR12A8C13558C");
+
+
+        recoIds3.add("SOEEHEY12CF5F88FB4");
+        recoIds3.add("SOWUMAZ12A67ADE769");
+        recoIds3.add("SOJJAZT12AC4687219");
+        recoIds3.add("SOPUJOM12AB017FEEB");
+        recoIds3.add("SOGNNYL12A6D4F910B");
+        recoIds3.add("SOOLRHW12A8C142643");
+        recoIds3.add("SOMKNZS12A8C13DEBC");
+        recoIds3.add("SOYKVON12A8C14097E");
+        recoIds3.add("SOEXAWC12AB01817E6");
+        recoIds3.add("SOKQCDA12A6D4FA556");
+
+        Random ra =new Random();
+        int flag = ra.nextInt(3)+1;
+        if (flag==1) {
+            return querySongsHandler(transforFromRecommendation(mainService.getSongsByTrackIds(recoIds1)));
+        }else if (flag == 2) {
+            return querySongsHandler(transforFromRecommendation(mainService.getSongsByTrackIds(recoIds3)));
+        }else {
+            return querySongsHandler(transforFromRecommendation(mainService.getSongsByTrackIds(recoIds2)));
+        }
     }
 
     private List<RankTable> transforFromRecommendation(List<Recommendation> list) {
