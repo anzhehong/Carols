@@ -18,6 +18,8 @@ PODS:
   - NAKPlaybackIndicatorView (0.0.3)
   - PageMenu (1.2.9)
   - PKHUD (3.1.0)
+  - SDCycleScrollView (1.64):
+    - SDWebImage (~> 3.7)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -44,6 +46,7 @@ DEPENDENCIES:
   - NAKPlaybackIndicatorView
   - PageMenu
   - PKHUD
+  - SDCycleScrollView
   - SDWebImage (~> 3.7)
   - ShareSDK3
   - ShareSDK3/ShareSDKPlatforms/QQ
@@ -75,6 +78,7 @@ SPEC CHECKSUMS:
   NAKPlaybackIndicatorView: 794dd97576fe074bb1844c19ebcbf7509384a47f
   PageMenu: ba19ff267f7a19e444e93c20a7847b78954a7011
   PKHUD: 4167eccdb1b3a892fd80ce2b51cb6ba412a889ab
+  SDCycleScrollView: 806fedb9342ab03b58b84442f985517b42c7cbb7
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   ShareSDK3: ccdd8ec971044703e7722e19c2f3b38fb03775e2
   SlideMenuControllerSwift: 0ed532750dc8574eefda189d0f25805bc967ab7a

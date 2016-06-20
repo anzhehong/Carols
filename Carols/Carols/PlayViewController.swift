@@ -355,7 +355,7 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
     
     @IBAction func preSong() {
         if songs.count == 1 {
-            print("已经是第一首歌曲")
+            HUD.flash(.Label("已经是第一首歌曲"), delay: 1.0)
             return
         }
         if playMode == .Shuffle && songs.count > 2 {
@@ -384,7 +384,7 @@ class PlayViewController: UIViewController,CustomIOSAlertViewDelegate{
     
     @IBAction func nextSong() {
         if songs.count == 1 {
-            print("已经是最后一首歌曲")
+            HUD.flash(.Label("已经是最后一首歌曲"), delay: 1.0)
             return
         }
         if playMode == .Shuffle && songs.count > 2 {
@@ -650,9 +650,9 @@ extension PlayViewController {
     
     func testFilePathURL() -> NSURL {
         if let dir = applicationDocumentsDirectory() {
-            return NSURL.fileURLWithPath("\(dir)/\(currentSong?.SongName).m4a")
+            return NSURL.fileURLWithPath("\(dir)/\(currentSong?.SongName!).m4a")
         }else {
-            return NSURL.fileURLWithPath("\(applicationDocumentsDirectory())/\(currentSong?.SongName).m4a")
+            return NSURL.fileURLWithPath("\(applicationDocumentsDirectory())/\(currentSong?.SongName!).m4a")
         }
     }
     
@@ -785,20 +785,30 @@ extension PlayViewController: UITableViewDelegate, UITableViewDataSource {
         timeArray = NSMutableArray()
         LRCDictionary = NSMutableDictionary()
         //init lrc
-        downloadLRC("http://o8z31on6v.bkt.clouddn.com/hello.lrc") { (path, error) in
+        downloadLRC((currentSong?.SongLyrics)!) { (path, error) in
                 let pathURL = (path! as NSString).substringFromIndex(7)
                 let mo = DoModel.initSingleModel()
-                let str = try! String(contentsOfFile: pathURL, encoding: NSUTF8StringEncoding)
-                let dic: NSDictionary = mo.LRCWithName(str)
-                self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
-                self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+                do {
+                    let str = try String(contentsOfFile: pathURL, encoding: NSUTF8StringEncoding)
+                    let dic: NSDictionary = mo.LRCWithName(str)
+                    self.LRCDictionary = NSMutableDictionary(dictionary: (dic.objectForKey("LRCDictionary") as! NSDictionary))
+                    self.timeArray = NSMutableArray(array: dic["timeArray"] as! NSArray)
+                    self.delay(0, closure: {
+                        self.tableView.delegate = self
+                        self.tableView.dataSource = self
+                        self.tableView.backgroundColor = UIColor.clearColor()
+                        self.tableView.separatorStyle = .None
+                    })
+                } catch  {
+                HUD.flash(.LabeledError(title: nil, subtitle: "抱歉,暂无歌词"), delay: 1.0)
                 self.delay(0, closure: {
-                    self.tableView.delegate = self
-                    self.tableView.dataSource = self
-                    self.tableView.backgroundColor = UIColor.clearColor()
-                    self.tableView.separatorStyle = .None
-                })
-        }
+                        self.tableView.delegate = self
+                        self.tableView.dataSource = self
+                        self.tableView.backgroundColor = UIColor.clearColor()
+                        self.tableView.separatorStyle = .None
+                    })
+            }
+            }
      
     }
     
@@ -867,8 +877,8 @@ extension PlayViewController {
     
     //MARK:- Random Score
     func scoreR() -> Double {
-        var basic = 80.00
-        basic += Double(arc4random()%20)
+        var basic = 70.00
+        basic += Double(arc4random()%30)
         return basic
     }
     
@@ -877,9 +887,11 @@ extension PlayViewController {
         let scoreLabel = UILabel(frame:  CGRectMake(0,0,view.bounds.width - 60,60))
         let mark = scoreR()
         if mark >= 90 {
-            scoreLabel.text = "本次得分为\(mark)分!太棒了，简直是专业歌手😍"
+            scoreLabel.text = "本次得分为\(mark)分!太棒了,简直是专业歌手😍"
+        } else if mark >= 80 {
+            scoreLabel.text = "本次得分为\(mark)分!音准不错,再接再厉!😊"
         } else {
-            scoreLabel.text = "本次得分为\(mark)分！音准不错，再接再厉!😊"
+            scoreLabel.text = "本次得分为\(mark)分!有些地方还是有点瑕疵哦,加油!🤓"
         }
         scoreLabel.adjustsFontSizeToFitWidth = true
         scoreLabel.textAlignment = .Center
@@ -972,6 +984,10 @@ extension PlayViewController {
                 print(totalBytesRead)
             }
             .response { request, response, _, error in
+                guard response != nil else {
+                    completion(nil,error)
+                    return
+                }
                 print("fileURL: \(destination(NSURL(string: "")!, response!))")
                 let path = "\(destination(NSURL(string: "")!, response!))"
                 completion(path,error)

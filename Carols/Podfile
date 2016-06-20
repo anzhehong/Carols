@@ -19,6 +19,7 @@ pod 'Mantle'
 pod 'NAKPlaybackIndicatorView'
 pod 'CustomIOSAlertView'
 pod 'PKHUD'
+pod 'SDCycleScrollView'
 #第三方登录
 # 主模块(必须)
 pod 'ShareSDK3'

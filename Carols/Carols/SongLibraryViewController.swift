@@ -9,10 +9,12 @@
 import UIKit
 import NAKPlaybackIndicatorView
 import PKHUD
+import SafariServices
+import SDCycleScrollView
 
-class SongLibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class SongLibraryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,SFSafariViewControllerDelegate,SDCycleScrollViewDelegate {
 
-    let album = UIImageView()
+    let album = UIButton()
     //MARK: - Three Buttons
     let startButton             = UIButton()
     let groupButton             = UIButton()
@@ -48,8 +50,18 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func initAlbum()  {
-        album.image = UIImage(named: "AlbumLarge")
+        let cycleScrollView = SDCycleScrollView(frame: album.frame, imageNamesGroup: [UIImage(imageLiteral:"billboard"),UIImage(imageLiteral:"uk"),UIImage(imageLiteral:"oricon"),UIImage(imageLiteral:"Mnet")])
+
+        album.backgroundColor = UIColor.clearColor()
+        album.addTarget(self, action: #selector(SongLibraryViewController.openXiami), forControlEvents: .TouchUpInside)
+        superView.addSubview(cycleScrollView)
         superView.addSubview(album)
+        cycleScrollView.snp_makeConstraints { (make) in
+            make.height.equalTo(170)
+            make.top.equalTo(0)
+            make.left.right.equalTo(superView)
+        }
+        
         album.snp_makeConstraints { (make) in
             make.height.equalTo(170)
             make.top.equalTo(0)
@@ -189,6 +201,15 @@ class SongLibraryViewController: UIViewController, UITableViewDataSource, UITabl
         initSearchView("风格")
     }
     
+    func openXiami() {
+        if #available(iOS 9.0, *) {
+            let webVC = SFSafariViewController(URL: NSURL(string:"http://www.xiami.com/?spm=a1z1s.3521865.226669510.2.0PRZnw")!, entersReaderIfAvailable: true)
+            webVC.delegate = self
+            webVC.navigationItem.rightBarButtonItem?.title = "完成"
+            self.presentViewController(webVC, animated: true, completion: nil)
+        }
+    }
+    
 }
 
 extension SongLibraryViewController {
@@ -198,6 +219,9 @@ extension SongLibraryViewController {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard songs != nil else{
+            return 0
+        }
         return (songs?.count)!
     }
     
